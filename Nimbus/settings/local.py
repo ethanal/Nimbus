@@ -1,5 +1,7 @@
+from fnmatch import fnmatch
+import os
 import logging
-
+from .base import *
 
 logger = logging.getLogger(__name__)
 
@@ -38,7 +40,6 @@ if SHOW_DEBUG_TOOLBAR:
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
     DEBUG_TOOLBAR_CONFIG = {
-        "INTERCEPT_REDIRECTS": False
     }
 
     DEBUG_TOOLBAR_PANELS = [

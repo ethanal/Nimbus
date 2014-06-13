@@ -1,0 +1,49 @@
+{% extends "page_base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} - Login
+{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/login.css" %}" />
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            /* Input */
+            var $username = $("input[name=username]");
+            var $password = $("input[name=password]");
+            if(!$username.hasClass("error") && $password.hasClass("error")) {
+                $password.focus();
+            } else {
+                $username.focus();
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    <div class="login">
+            <div class="title">
+                <div class="logo">
+                </div>
+                <h1>Nimbus</h1>
+            </div>
+        {% if request.GET.next %}
+            <div class="message message-next">
+                Log in to access this page.
+            </div>
+        {% endif %}
+        <form {% if auth_form.errors %}autocomplete="off"{% endif %} action="/login{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="post">
+            {% csrf_token %}
+            {% for field in auth_form %}
+                {{ field }}<br />
+            {% endfor %}
+            <input type="submit" value="Login" />
+        </form>
+    </div>
+{% endblock %}

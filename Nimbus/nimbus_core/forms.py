@@ -15,9 +15,9 @@ class AuthenticateForm(AuthenticationForm):
         form = super(AuthenticateForm, self).is_valid()
 
         for f, error in self.errors.iteritems():
-            if f != "__all__":
-                self.fields[f].widget.attrs.update({"class": "error", "placeholder": strip_tags(error)})
-            else:
+            if f == "__all__":
                 self.fields["password"].widget.attrs.update({"class": "error", "placeholder": "Invalid password"})
-
+            else:
+                self.fields[f].widget.attrs.update({"class": "error", "placeholder": strip_tags(str(error))})
+        logger.debug(self.errors)
         return form

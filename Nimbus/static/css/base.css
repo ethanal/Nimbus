@@ -1,0 +1,16 @@
+input {
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.navbar-text {
+    margin-left: 15px;
+}
+
+input.error {
+    border-color: #f00;
+}
+
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus, .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
+    color: #66afe9;
+}

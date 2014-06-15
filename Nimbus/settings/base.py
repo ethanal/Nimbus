@@ -80,6 +80,7 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.request",
+    "django.contrib.auth.context_processors.auth",
 )
 
 
@@ -93,10 +94,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'Nimbus.urls'
+ROOT_URLCONF = 'nimbus.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'Nimbus.wsgi.application'
+WSGI_APPLICATION = 'nimbus.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -119,8 +120,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     "rest_framework",
-    "storages",
-
+    "widget_tweaks"
 )
 
 # A sample logging configuration. The only tangible logging

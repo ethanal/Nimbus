@@ -1,0 +1,17 @@
+#login-heading {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.cloud-logo {
+    font-size: 72px;
+    margin: 0;
+}
+
+h1 {
+    margin-top: -10px;
+}
+
+#login-form .form-control {
+    margin-bottom: 6px;
+}

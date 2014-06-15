@@ -1,0 +1,33 @@
+#main-nav {
+    border-radius: 0;
+}
+#main-nav .navbar-brand {
+    padding: 7px 15px;
+}
+.cloud-logo {
+    vertical-align: middle;
+    font-size: 36px;
+}
+
+
+#media-type-selector a {
+    color: #777;
+}
+
+#media-type-selector li.active a {
+    background-color: #66afe9;
+    color: #555;
+}
+
+h2 {
+    font-size: 20px;
+    margin-top: 0;
+}
+
+#files input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#files tr input[type="checkbox"]:checked {
+    background-color: green;
+}

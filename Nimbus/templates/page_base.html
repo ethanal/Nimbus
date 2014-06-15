@@ -1,4 +1,5 @@
 {% load staticfiles %}
+
 <!doctype html>
 <html lang='en'>
 <head>
@@ -11,23 +12,21 @@
     <link rel="apple-touch-icon-precomposed" href="{% static 'img/tj_logo_login.png' %}" type="image/png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     -->
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block css %}
-        <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" />
-        <!--[if IE 7]>
-            <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome-ie7.min.css">
-        <![endif]-->
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:100italic,400italic,700italic,100,400,700" />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" />
     {% endblock %}
 
     {% block js %}
-
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     {% endblock %}
 
     {% block head %}
     {% endblock %}
 </head>
-<body class="notransition"{% block bodytag %}{% endblock %}>
+<body data-grid-framework="b3">
     {% block body %}
     {% endblock %}
 </body>

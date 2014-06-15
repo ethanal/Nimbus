@@ -30,8 +30,6 @@ class glob_list(list):
 
 INTERNAL_IPS = glob_list([
     "127.0.0.1",
-    "192.168.1.*",
-    "198.38.*.*"
 ])
 
 SHOW_DEBUG_TOOLBAR = os.getenv("SHOW_DEBUG_TOOLBAR", "YES") == "YES"
@@ -64,14 +62,3 @@ if SHOW_DEBUG_TOOLBAR:
     INSTALLED_APPS += (
         "debug_toolbar",
     )
-
-INSTALLED_APPS += (
-    "django_extensions",
-    "django.contrib.admin",
-)
-
-TEMPLATE_CONTEXT_PROCESSORS += (
-    "django.contrib.auth.context_processors.auth",
-)
-
-STATIC_DOC_ROOT = os.path.join(os.path.dirname(PROJECT_ROOT), "Nimbus/static/")

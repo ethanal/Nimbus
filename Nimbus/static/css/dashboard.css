@@ -24,6 +24,16 @@ h2 {
     margin-top: 0;
 }
 
+#main-content {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#files {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
 #files input[type="checkbox"] {
     margin-right: 10px;
 }
@@ -37,12 +47,12 @@ h2 {
     border: 1px rgb(211, 211, 211) dashed;
     border-radius: 8px;
     background-color: rgb(252, 252, 252);
-    margin: 1em 0;
+    margin-bottom: 1em;
     cursor: pointer;
     display: table;
-    width: 100%;
     color: rgb(211, 211, 211);
     padding: 10px;
+    width: 100%;
 }
 
 .upload-icon {
@@ -52,5 +62,32 @@ h2 {
 
 .upload-message {
     display: table-row;
+}
 
+
+@media (min-width: 992px) {
+    .nav-stacked-responsive > li {
+      float: none;
+    }
+    .nav-stacked-responsive > li + li {
+      margin-top: 2px;
+      margin-left: 0;
+    }
+}
+
+@media (max-width: 992px) {
+    .nav-stacked-responsive {
+        text-align: center;
+    }
+
+    .nav-stacked-responsive>li {
+        float: none;
+        display: inline-block;
+    }
+}
+
+@media (max-width: 768px) {
+    .media-type-label {
+        display: none;
+    }
 }

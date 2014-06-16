@@ -40,21 +40,21 @@
 </nav>
 
 <div class="container">
-    <div class="row">
+    <div class="row" id="main-content">
         <span class="col-md-2">
             <div class="upload-dropzone">
                 <span class="glyphicon glyphicon-upload upload-icon"></span>
                 <span class="upload-message">Drop file or click here to upload</span>
             </div>
-            <ul id="media-type-selector" class="nav nav-pills nav-stacked">
-                <li{% if media_type = "files" %} class="active"{% endif %}><a href="/"><span class="glyphicon glyphicon-th-large"></span> All</a></li>
-                <li{% if media_type = "images" %} class="active"{% endif %}><a href="/images"><span class="glyphicon glyphicon-picture"></span> Images</a></li>
-                <li{% if media_type = "links" %} class="active"{% endif %}><a href="/links"><span class="glyphicon glyphicon-link"></span> Links</a></li>
-                <li{% if media_type = "text" %} class="active"{% endif %}><a href="/text"><span class="glyphicon glyphicon-font"></span> Text</a></li>
-                <li{% if media_type = "archives" %} class="active"{% endif %}><a href="/archives"><span class="glyphicon glyphicon-compressed"></span> Archives</a></li>
-                <li{% if media_type = "audio" %} class="active"{% endif %}><a href="/audio"><span class="glyphicon glyphicon-music"></span> Audio</a></li>
-                <li{% if media_type = "video" %} class="active"{% endif %}><a href="/video"><span class="glyphicon glyphicon-facetime-video"></span> Video</a></li>
-                <li{% if media_type = "other" %} class="active"{% endif %}><a href="/other"><span class="glyphicon glyphicon-file"></span> Other</a></li>
+            <ul id="media-type-selector" class="nav nav-pills nav-stacked-responsive">
+                <li{% if media_type = "files" %} class="active"{% endif %}><a href="/"><span class="glyphicon glyphicon-th-large"></span><span class="media-type-label"> All</span></a></li>
+                <li{% if media_type = "images" %} class="active"{% endif %}><a href="/images"><span class="glyphicon glyphicon-picture"></span><span class="media-type-label"> Images</span></a></li>
+                <li{% if media_type = "links" %} class="active"{% endif %}><a href="/links"><span class="glyphicon glyphicon-link"></span><span class="media-type-label"> Links</span></a></li>
+                <li{% if media_type = "text" %} class="active"{% endif %}><a href="/text"><span class="glyphicon glyphicon-font"></span><span class="media-type-label"> Text</span></a></li>
+                <li{% if media_type = "archives" %} class="active"{% endif %}><a href="/archives"><span class="glyphicon glyphicon-compressed"></span><span class="media-type-label"> Archives</span></a></li>
+                <li{% if media_type = "audio" %} class="active"{% endif %}><a href="/audio"><span class="glyphicon glyphicon-music"></span><span class="media-type-label"> Audio</span></a></li>
+                <li{% if media_type = "video" %} class="active"{% endif %}><a href="/video"><span class="glyphicon glyphicon-facetime-video"></span><span class="media-type-label"> Video</span></a></li>
+                <li{% if media_type = "other" %} class="active"{% endif %}><a href="/other"><span class="glyphicon glyphicon-file"></span><span class="media-type-label"> Other</span></a></li>
             </ul>
         </span>
         <div id="files" class="col-md-10">

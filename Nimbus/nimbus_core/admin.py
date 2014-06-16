@@ -2,10 +2,8 @@ from django.contrib import admin
 from .models import Media
 
 
-
 class MediaAdmin(admin.ModelAdmin):
-    fields = ("id",
-              "name",
+    fields = ("name",
               "target_url",
               "target_file",
               "user")
@@ -17,8 +15,8 @@ class MediaAdmin(admin.ModelAdmin):
                     "target_file",
                     "upload_date",
                     "view_count",
-                    "media_category")
-    list_filter = ("media_category",)
+                    "media_type")
+    list_filter = ("media_type",)
     search_fields = ("id",
                      "url_hash",
                      "name",
@@ -27,6 +25,6 @@ class MediaAdmin(admin.ModelAdmin):
                      "target_file",
                      "upload_date",
                      "view_count",
-                     "media_category")
+                     "media_type")
 
 admin.site.register(Media, MediaAdmin)

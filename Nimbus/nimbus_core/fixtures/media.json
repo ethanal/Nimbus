@@ -1,0 +1,114 @@
+[
+  {
+    "pk": 1,
+    "model": "nimbus_core.media",
+    "fields": {
+      "view_count": 0,
+      "url_hash": "bmGrWg",
+      "target_url": "",
+      "name": "foobar.txt",
+      "upload_date": "2014-06-16",
+      "target_file": "",
+      "user": 1,
+      "media_type": "TXT"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "nimbus_core.media",
+    "fields": {
+      "view_count": 0,
+      "url_hash": "g5e06Q",
+      "target_url": "",
+      "name": "foobar.foo",
+      "upload_date": "2014-06-16",
+      "target_file": "",
+      "user": 1,
+      "media_type": "ETC"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "nimbus_core.media",
+    "fields": {
+      "view_count": 0,
+      "url_hash": "bqIiNc",
+      "target_url": "",
+      "name": "foobar.mp3",
+      "upload_date": "2014-06-16",
+      "target_file": "",
+      "user": 1,
+      "media_type": "AUD"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "nimbus_core.media",
+    "fields": {
+      "view_count": 0,
+      "url_hash": "bsB9lQ",
+      "target_url": "",
+      "name": "foobar.zip",
+      "upload_date": "2014-06-16",
+      "target_file": "",
+      "user": 1,
+      "media_type": "ARC"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "nimbus_core.media",
+    "fields": {
+      "view_count": 0,
+      "url_hash": "buJZDY",
+      "target_url": "",
+      "name": "foobar.avi",
+      "upload_date": "2014-06-16",
+      "target_file": "",
+      "user": 1,
+      "media_type": "VID"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "nimbus_core.media",
+    "fields": {
+      "view_count": 0,
+      "url_hash": "bWUfJm",
+      "target_url": "",
+      "name": "foobar2.txt",
+      "upload_date": "2014-06-16",
+      "target_file": "",
+      "user": 1,
+      "media_type": "TXT"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "nimbus_core.media",
+    "fields": {
+      "view_count": 0,
+      "url_hash": "byLQ4U",
+      "target_url": "",
+      "name": "foobar.cpp",
+      "upload_date": "2014-06-16",
+      "target_file": "",
+      "user": 1,
+      "media_type": "TXT"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "nimbus_core.media",
+    "fields": {
+      "view_count": 0,
+      "url_hash": "cBmCq8",
+      "target_url": "",
+      "name": "foobar.tar.gz",
+      "upload_date": "2014-06-16",
+      "target_file": "",
+      "user": 1,
+      "media_type": "ARC"
+    }
+  }
+]

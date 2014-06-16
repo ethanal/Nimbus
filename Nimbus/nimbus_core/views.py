@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.views.generic.base import View
+from .models import Media
 
 
 logger = logging.getLogger(__name__)
@@ -49,12 +50,17 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request, media_type="files"):
+    media_type_codes = {j.lower(): i for i, j in Media.MEDIA_TYPES_PLURAL}
+    if media_type == "files":
+        media = Media.objects.filter(user=request.user)
+    else:
+        media = Media.objects.filter(media_type=media_type_codes[media_type])
+
     return render(request, "nimbus_core/dashboard.html", {
-        "media_type": media_type
+        "media_type": media_type,
+        "media": media
     })
 
 
 def media_view(request, url_hash):
-    return render(request, "nimbus_core/dashboard.html", {
-        "media_type": "files"
-    })
+    return redirect("/")

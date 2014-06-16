@@ -19,6 +19,16 @@ class Media(models.Model):
         ("VID", "Video"),
         ("ETC", "Other")
     )
+
+    MEDIA_TYPES_PLURAL = (
+        ("IMG", "Images"),
+        ("URL", "Links"),
+        ("TXT", "Text"),
+        ("ARC", "Archives"),
+        ("AUD", "Audio"),
+        ("VID", "Video"),
+        ("ETC", "Other")
+    )
     _random_filename = lambda i, f: str(i.user.id) + "/" + str(uuid.uuid4())
 
     url_hash = models.CharField(max_length=100, blank=True)
@@ -26,9 +36,9 @@ class Media(models.Model):
     target_url = models.URLField(max_length=2048, blank=True)
     target_file = models.FileField(upload_to=_random_filename, blank=True)
     view_count = models.IntegerField(default=0)
-    upload_date = models.DateField(auto_now_add=True)
+    upload_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
-    media_category = models.CharField(max_length=3, choices=MEDIA_TYPES, blank=True)
+    media_type = models.CharField(max_length=3, choices=MEDIA_TYPES, blank=True)
 
     # all prefixed by "application/"
     ARCHIVE_MIME_TYPES = ["x-cpio",
@@ -66,7 +76,7 @@ class Media(models.Model):
                           "x-par2"]
 
     @staticmethod
-    def guess_media_category(resource_name):
+    def guess_media_type(resource_name):
         validator = URLValidator()
         try:
             validator(resource_name)
@@ -99,8 +109,8 @@ class Media(models.Model):
 def fill_auto_fields(sender, **kwargs):
     post_save.disconnect(fill_auto_fields, sender=Media)
     instance = kwargs.get("instance")
-    if not instance.media_category:
-        instance.media_category = Media.guess_media_category(instance.name)
+    if not instance.media_type:
+        instance.media_type = Media.guess_media_type(instance.name)
     if not instance.url_hash:
         instance.url_hash = url_hash_from_pk(instance.pk)
     instance.save()

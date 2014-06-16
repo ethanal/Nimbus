@@ -60,11 +60,11 @@
         <div id="files" class="col-md-10">
             <h2>{% if media_type = "files" %}All {% endif %}Shared Items{% if media_type != "files" %} - {{ media_type.title }}{% endif %}</h2>
             <table class="table table-hover">
-                {% for i in "12345678901234567890" %}
+                {% for m in media %}
                     <tr>
-                        <td><input type="checkbox"><a href="#">Image.png</a></td>
-                        <td>Date</td>
-                        <td>Views</td>
+                        <td><input type="checkbox"><a href="#">{{ m.name }}</a></td>
+                        <td>{{ m.upload_date|date:"D d M Y" }} {{ m.upload_date|time:"H:i" }}</td>
+                        <td>{{ m.view_count }}</td>
                     </tr>
                 {% endfor %}
             </table>

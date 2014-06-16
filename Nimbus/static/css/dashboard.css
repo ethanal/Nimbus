@@ -31,3 +31,26 @@ h2 {
 #files tr input[type="checkbox"]:checked {
     background-color: green;
 }
+
+.upload-dropzone{
+    text-align: center;
+    border: 1px rgb(211, 211, 211) dashed;
+    border-radius: 8px;
+    background-color: rgb(252, 252, 252);
+    margin: 1em 0;
+    cursor: pointer;
+    display: table;
+    width: 100%;
+    color: rgb(211, 211, 211);
+    padding: 10px;
+}
+
+.upload-icon {
+    font-size: 60px;
+    display: table-row;
+}
+
+.upload-message {
+    display: table-row;
+
+}

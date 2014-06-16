@@ -12,7 +12,8 @@
 
 {% block js %}
     {{ block.super }}
-    <script src="{% static 'js/dashboard.js' %}" /></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dropzone/3.8.4/dropzone.min.js"></script>
+    <script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock %}
 
 
@@ -40,18 +41,24 @@
 
 <div class="container">
     <div class="row">
-        <ul id="media-type-selector" class="nav nav-pills nav-stacked col-md-2">
-            <li{% if media_type = "files" %} class="active"{% endif %}><a href="/"><span class="glyphicon glyphicon-th-large"></span> All</a></li>
-            <li{% if media_type = "images" %} class="active"{% endif %}><a href="/images"><span class="glyphicon glyphicon-picture"></span> Images</a></li>
-            <li{% if media_type = "links" %} class="active"{% endif %}><a href="/links"><span class="glyphicon glyphicon-link"></span> Links</a></li>
-            <li{% if media_type = "text" %} class="active"{% endif %}><a href="/text"><span class="glyphicon glyphicon-font"></span> Text</a></li>
-            <li{% if media_type = "archives" %} class="active"{% endif %}><a href="/archives"><span class="glyphicon glyphicon-compressed"></span> Archives</a></li>
-            <li{% if media_type = "audio" %} class="active"{% endif %}><a href="/audio"><span class="glyphicon glyphicon-music"></span> Audio</a></li>
-            <li{% if media_type = "video" %} class="active"{% endif %}><a href="/video"><span class="glyphicon glyphicon-facetime-video"></span> Video</a></li>
-            <li{% if media_type = "other" %} class="active"{% endif %}><a href="/other"><span class="glyphicon glyphicon-file"></span> Other</a></li>
-        </ul>
+        <span class="col-md-2">
+            <div class="upload-dropzone">
+                <span class="glyphicon glyphicon-upload upload-icon"></span>
+                <span class="upload-message">Drop file or click here to upload</span>
+            </div>
+            <ul id="media-type-selector" class="nav nav-pills nav-stacked">
+                <li{% if media_type = "files" %} class="active"{% endif %}><a href="/"><span class="glyphicon glyphicon-th-large"></span> All</a></li>
+                <li{% if media_type = "images" %} class="active"{% endif %}><a href="/images"><span class="glyphicon glyphicon-picture"></span> Images</a></li>
+                <li{% if media_type = "links" %} class="active"{% endif %}><a href="/links"><span class="glyphicon glyphicon-link"></span> Links</a></li>
+                <li{% if media_type = "text" %} class="active"{% endif %}><a href="/text"><span class="glyphicon glyphicon-font"></span> Text</a></li>
+                <li{% if media_type = "archives" %} class="active"{% endif %}><a href="/archives"><span class="glyphicon glyphicon-compressed"></span> Archives</a></li>
+                <li{% if media_type = "audio" %} class="active"{% endif %}><a href="/audio"><span class="glyphicon glyphicon-music"></span> Audio</a></li>
+                <li{% if media_type = "video" %} class="active"{% endif %}><a href="/video"><span class="glyphicon glyphicon-facetime-video"></span> Video</a></li>
+                <li{% if media_type = "other" %} class="active"{% endif %}><a href="/other"><span class="glyphicon glyphicon-file"></span> Other</a></li>
+            </ul>
+        </span>
         <div id="files" class="col-md-10">
-            <h2>Shared Files{% if media_type != "files" %} - {{ media_type.title }}{% endif %}</h2>
+            <h2>{% if media_type = "files" %}All {% endif %}Shared Items{% if media_type != "files" %} - {{ media_type.title }}{% endif %}</h2>
             <table class="table table-hover">
                 {% for i in "12345678901234567890" %}
                     <tr>

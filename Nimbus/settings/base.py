@@ -120,8 +120,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     "rest_framework",
-    "widget_tweaks"
+    "widget_tweaks",
+    "storages",
+    "nimbus.nimbus_core"
 )
+
+DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+MEDIA_ROOT = "/usr/local/nimbus_media"
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -2,6 +2,7 @@ import logging
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 from django.utils.html import strip_tags
+from .models import Media
 
 
 logger = logging.getLogger(__name__)
@@ -21,3 +22,8 @@ class AuthenticateForm(AuthenticationForm):
                 self.fields[f].widget.attrs.update({"class": "error", "placeholder": strip_tags(str(error))})
         logger.debug(self.errors)
         return form
+
+
+class UploadFileForm(forms.ModelForm):
+    class Meta:
+        model = Media

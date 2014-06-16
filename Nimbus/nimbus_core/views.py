@@ -37,6 +37,7 @@ class login_view(View):
         else:
             logger.info("Login failed as {}".format(request.POST.get("username", "unknown")))
             return index(request, auth_form=form)  # Modified to show errors
+
     def get(self, request):
         return index(request)
 
@@ -50,4 +51,10 @@ def logout_view(request):
 def dashboard_view(request, media_type="files"):
     return render(request, "nimbus_core/dashboard.html", {
         "media_type": media_type
+    })
+
+
+def media_view(request, url_hash):
+    return render(request, "nimbus_core/dashboard.html", {
+        "media_type": "files"
     })

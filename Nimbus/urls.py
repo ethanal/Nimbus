@@ -33,5 +33,6 @@ urlpatterns += patterns('',
     url(r"^$", nimbus_core.views.index, name="index"),
     url(r"^login$", nimbus_core.views.login_view.as_view(), name="login"),
     url(r"^logout$", nimbus_core.views.logout_view, name="logout"),
-    url(r"^(?P<media_type>(images)|(links)|(text)|(archives)|(audio)|(video)|(other))$", nimbus_core.views.dashboard_view)
+    url(r"^(?P<media_type>(images)|(links)|(text)|(archives)|(audio)|(video)|(other))$", nimbus_core.views.dashboard_view),
+    url(r"^media/(?P<url_hash>[a-zA-Z0-9]+)$", nimbus_core.views.media_view),
 )

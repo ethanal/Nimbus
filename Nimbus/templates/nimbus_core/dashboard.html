@@ -80,8 +80,14 @@
             </table>
 
         </div>
+        {% if media.num_pages != 1 %}
+            <ul class="pager col-md-10">
+                <li class="{% if not media.has_previous %}disabled{% endif %}"><a href="{% if media.has_previous %}?p={{ media.previous_page_number }}{% else %}#{% endif %}">&larr; Previous</a></li>
+                <li>Page {{ media.number }} of {{ media.paginator.num_pages }}</li>
+                <li class="{% if not media.has_next %}disabled{% endif %}"><a href="{% if media.has_next %}?p={{ media.next_page_number }}{% else %}#{% endif %}">Next &rarr;</a></li>
+            </ul>
+        {% endif %}
     </div>
-
 </div>
 
 {% endblock %}

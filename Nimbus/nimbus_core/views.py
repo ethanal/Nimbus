@@ -1,6 +1,7 @@
 import logging
 from .forms import AuthenticateForm
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
@@ -8,7 +9,7 @@ from django.views.generic.base import View
 from .forms import UploadFileForm
 from .models import Media
 
-import time
+
 logger = logging.getLogger(__name__)
 
 
@@ -55,9 +56,18 @@ def logout_view(request):
 def dashboard_view(request, media_type="files"):
     media_type_codes = {j.lower(): i for i, j in Media.MEDIA_TYPES_PLURAL}
     if media_type == "files":
-        media = Media.objects.filter(user=request.user).order_by("-upload_date", "name")
+        media_list = Media.objects.filter(user=request.user).order_by("-upload_date", "name")
     else:
-        media = Media.objects.filter(media_type=media_type_codes[media_type])
+        media_list = Media.objects.filter(media_type=media_type_codes[media_type])
+
+    paginator = Paginator(media_list, 50)
+    page = request.GET.get("p")
+    try:
+        media = paginator.page(page)
+    except PageNotAnInteger:
+        media = paginator.page(1)
+    except EmptyPage:
+        media = paginator.page(paginator.num_pages)
 
     return render(request, "nimbus_core/dashboard.html", {
         "media_type": media_type,
@@ -70,7 +80,6 @@ def media_view(request, url_hash):
 
 
 def upload_file(request):
-    # time.sleep(5)
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():

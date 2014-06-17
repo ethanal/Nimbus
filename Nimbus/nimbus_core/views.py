@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 def index(request, auth_form=None):
+    print(request.__dict__)
     if request.user.is_authenticated():
         return dashboard_view(request)
     else:

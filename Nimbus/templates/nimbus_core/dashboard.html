@@ -68,7 +68,7 @@
                         <tr data-id="{{ m.id }}">
                             <td><input type="checkbox" class="delete-checkbox"><a href="#">{{ m.name }}</a></td>
                             <td>{{ m.upload_date|fuzzy_date }}</td>
-                            <td>{{ m.view_count }}</td>
+                            <td class="view-count">{{ m.view_count }}</td>
                         </tr>
                     {% endfor %}
                 {% else %}

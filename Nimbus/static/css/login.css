@@ -3,9 +3,8 @@
     text-align: center;
 }
 
-.cloud-logo {
-    font-size: 72px;
-    margin: 0;
+#cloud-logo {
+    margin: 20px;
 }
 
 h1 {

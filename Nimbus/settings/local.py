@@ -62,3 +62,6 @@ if SHOW_DEBUG_TOOLBAR:
     INSTALLED_APPS += (
         "debug_toolbar",
     )
+
+MEDIA_ROOT = "media/"
+MEDIA_URL = "/m/"

@@ -39,7 +39,12 @@ urlpatterns += patterns('',
     url(r"^$", nimbus_core.views.index, name="index"),
     url(r"^login$", nimbus_core.views.login_view.as_view(), name="login"),
     url(r"^logout$", nimbus_core.views.logout_view, name="logout"),
-    url(r"^(?P<media_type>(images)|(links)|(text)|(archives)|(audio)|(video)|(other.png))$", nimbus_core.views.dashboard_view),
-    url(r"^media/(?P<url_hash>[a-zA-Z0-9]+)$", nimbus_core.views.media_view, name="media_view"),
+    url(r"^(?P<media_type>(images)|(links)|(text)|(archives)|(audio)|(video)|(other))$", nimbus_core.views.dashboard_view, name="filter_media"),
+    url(r"^media/(?P<url_hash>[a-zA-Z0-9]+)$", nimbus_core.views.media_view, name="media_share_view"),
     url(r"^upload", nimbus_core.views.upload_file, name="upload")
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^m/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, 'show_indexes': False}),
+    )

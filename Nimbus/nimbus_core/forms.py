@@ -2,7 +2,6 @@ import logging
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
 from django.utils.html import strip_tags
-from .models import Media
 
 
 logger = logging.getLogger(__name__)
@@ -24,6 +23,5 @@ class AuthenticateForm(AuthenticationForm):
         return form
 
 
-class UploadFileForm(forms.ModelForm):
-    class Meta:
-        model = Media
+class UploadFileForm(forms.Form):
+    file = forms.FileField()

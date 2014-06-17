@@ -8,13 +8,13 @@ from django.contrib.auth import login, logout
 from django.views.generic.base import View
 from .forms import UploadFileForm
 from .models import Media
+from nimbus import settings
 
 
 logger = logging.getLogger(__name__)
 
 
 def index(request, auth_form=None):
-    print(request.__dict__)
     if request.user.is_authenticated():
         return dashboard_view(request)
     else:
@@ -71,7 +71,8 @@ def dashboard_view(request, media_type="files"):
 
     return render(request, "nimbus_core/dashboard.html", {
         "media_type": media_type,
-        "media": media
+        "media": media,
+        "media_url": settings.MEDIA_URL
     })
 
 
@@ -83,8 +84,10 @@ def upload_file(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            # handle_uploaded_file(request.FILES['file'])
-            return HttpResponse("It worked")
+            f = request.FILES["file"]
+            m = Media(name=f.name, user=request.user, target_file=f)
+            m.save()
+            return HttpResponse(m.url_hash)
         return HttpResponseBadRequest()
     else:
         return HttpResponseNotAllowed(["POST"])

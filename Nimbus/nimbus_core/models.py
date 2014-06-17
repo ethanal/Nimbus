@@ -29,7 +29,8 @@ class Media(models.Model):
         ("VID", "Video"),
         ("ETC", "Other")
     )
-    _random_filename = lambda i, f: str(i.user.id) + "/" + str(uuid.uuid4())
+
+    _random_filename = lambda i, f: str(uuid.uuid4()) + "/" + f
 
     url_hash = models.CharField(max_length=100, blank=True)
     name = models.CharField(max_length=500)
@@ -99,7 +100,7 @@ class Media(models.Model):
         return "ETC"
 
     def __unicode__(self):
-        return "<{}, {}>".format(self.url_hash, self.name)
+        return self.name
 
     class Meta:
         verbose_name_plural = "Media"
@@ -107,11 +108,15 @@ class Media(models.Model):
 
 @receiver(post_save, sender=Media)
 def fill_auto_fields(sender, **kwargs):
-    post_save.disconnect(fill_auto_fields, sender=Media)
     instance = kwargs.get("instance")
+
+    fields = {}
     if not instance.media_type:
-        instance.media_type = Media.guess_media_type(instance.name)
+        fields["media_type"] = Media.guess_media_type(instance.name)
     if not instance.url_hash:
-        instance.url_hash = url_hash_from_pk(instance.pk)
-    instance.save()
-    post_save.connect(fill_auto_fields, sender=Media)
+        fields["url_hash"] = url_hash_from_pk(instance.pk)
+
+    if fields:
+        for field, value in fields.items():
+            setattr(instance, field, value)
+        instance.save()

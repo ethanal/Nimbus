@@ -14,11 +14,9 @@ $(function() {
             this.removeFile(file);
         },
         success: function(file, response) {
-            console.log(response);
             resetDropzone(this.element);
         },
         error: function(file, error) {
-            console.error(error);
             $e = $(this.element);
             $e.removeClass("loading");
             $e.addClass("error");

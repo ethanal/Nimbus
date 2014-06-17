@@ -2,6 +2,7 @@ import urlparse
 from .base import *
 from secret import *
 
+
 """In production, add a file called secret.py to the settings package that
 defines SECRET_KEY and DATABASE_URL.
 
@@ -26,3 +27,5 @@ DATABASES = {
         'HOST': url.hostname
     }
 }
+
+MEDIA_ROOT = "/usr/local/nimbus_media/"

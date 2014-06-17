@@ -8,9 +8,13 @@ input {
 }
 
 input.error {
-    border-color: #f00;
+    border-color: #d9534f;
 }
 
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus, .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus {
     color: #66afe9;
+}
+
+.btn:focus {
+    outline:none!important;
 }

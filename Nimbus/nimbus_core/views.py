@@ -1,12 +1,14 @@
 import logging
 from .forms import AuthenticateForm
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.views.generic.base import View
+from .forms import UploadFileForm
 from .models import Media
 
-
+import time
 logger = logging.getLogger(__name__)
 
 
@@ -52,7 +54,7 @@ def logout_view(request):
 def dashboard_view(request, media_type="files"):
     media_type_codes = {j.lower(): i for i, j in Media.MEDIA_TYPES_PLURAL}
     if media_type == "files":
-        media = Media.objects.filter(user=request.user)
+        media = Media.objects.filter(user=request.user).order_by("-upload_date", "name")
     else:
         media = Media.objects.filter(media_type=media_type_codes[media_type])
 
@@ -64,3 +66,15 @@ def dashboard_view(request, media_type="files"):
 
 def media_view(request, url_hash):
     return redirect("/")
+
+
+def upload_file(request):
+    # time.sleep(5)
+    if request.method == "POST":
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            # handle_uploaded_file(request.FILES['file'])
+            return HttpResponse("It worked")
+        return HttpResponseBadRequest()
+    else:
+        return HttpResponseNotAllowed(["POST"])

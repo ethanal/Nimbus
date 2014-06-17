@@ -9,20 +9,32 @@
     font-size: 36px;
 }
 
+#media-type-selector {
+    margin-bottom: 50px;
+}
 
 #media-type-selector a {
     color: #777;
 }
 
 #media-type-selector li.active a {
-    background-color: #66afe9;
-    color: #555;
+    background-color: #428bca;;
+    color: white;
 }
 
 h2 {
     font-size: 20px;
     margin-top: 0;
+    margin-bottom: 20px;
+    float: left;
 }
+
+.delete-files {
+    float: right;
+    margin-bottom: 10px;
+    display: none;
+}
+
 
 #main-content {
     margin-left: 0;
@@ -42,7 +54,7 @@ h2 {
     background-color: green;
 }
 
-.upload-dropzone{
+.dropzone{
     text-align: center;
     border: 1px rgb(211, 211, 211) dashed;
     border-radius: 8px;
@@ -55,12 +67,28 @@ h2 {
     width: 100%;
 }
 
+.dropzone.loading {
+    -webkit-animation: loading-pulse 2s infinite;
+}
+
+@-webkit-keyframes loading-pulse {
+    50% {color: #428bca;}
+}
+
+.dropzone.error {
+    -webkit-animation: error-pulse 0.5s infinite;
+}
+
+@-webkit-keyframes error-pulse {
+    50% {color: #d9534f;}
+}
+
 .upload-icon {
     font-size: 60px;
     display: table-row;
 }
 
-.upload-message {
+.dz-message {
     display: table-row;
 }
 
@@ -90,4 +118,8 @@ h2 {
     .media-type-label {
         display: none;
     }
+}
+
+.empty-state {
+    text-align: center;
 }

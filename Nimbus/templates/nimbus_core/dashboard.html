@@ -1,5 +1,6 @@
 {% extends "page_base.html" %}
 {% load staticfiles %}
+{% load dates %}
 
 {% block title %}
     {{ block.super }} - Dashboard
@@ -12,7 +13,7 @@
 
 {% block js %}
     {{ block.super }}
-    <script src="//cdnjs.cloudflare.com/ajax/libs/dropzone/3.8.4/dropzone.min.js"></script>
+    <script src="{% static 'js/lib/dropzone.min.js' %}"></script>
     <script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock %}
 
@@ -42,10 +43,11 @@
 <div class="container">
     <div class="row" id="main-content">
         <span class="col-md-2">
-            <div class="upload-dropzone">
+            <form id="upload-dropzone" class="dropzone" action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <span class="glyphicon glyphicon-upload upload-icon"></span>
-                <span class="upload-message">Drop file or click here to upload</span>
-            </div>
+                <span class="dz-message">Drop file or click here to upload</span>
+            </form>
             <ul id="media-type-selector" class="nav nav-pills nav-stacked-responsive">
                 <li{% if media_type = "files" %} class="active"{% endif %}><a href="/"><span class="glyphicon glyphicon-th-large"></span><span class="media-type-label"> All</span></a></li>
                 <li{% if media_type = "images" %} class="active"{% endif %}><a href="/images"><span class="glyphicon glyphicon-picture"></span><span class="media-type-label"> Images</span></a></li>
@@ -59,14 +61,22 @@
         </span>
         <div id="files" class="col-md-10">
             <h2>{% if media_type = "files" %}All {% endif %}Shared Items{% if media_type != "files" %} - {{ media_type.title }}{% endif %}</h2>
+            <button type="button" class="btn btn-sm btn-danger delete-files">Delete Selected</button>
             <table class="table table-hover">
-                {% for m in media %}
-                    <tr>
-                        <td><input type="checkbox"><a href="#">{{ m.name }}</a></td>
-                        <td>{{ m.upload_date|date:"D d M Y" }} {{ m.upload_date|time:"H:i" }}</td>
-                        <td>{{ m.view_count }}</td>
-                    </tr>
-                {% endfor %}
+                {% if media %}
+                    {% for m in media %}
+                        <tr data-id="{{ m.id }}">
+                            <td><input type="checkbox" class="delete-checkbox"><a href="#">{{ m.name }}</a></td>
+                            <td>{{ m.upload_date|fuzzy_date }}</td>
+                            <td>{{ m.view_count }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state col-md-2 col-md-offset-4">
+                        No {% if media_type = "other" %}files{% else %}{{ media_type }}{% endif %} yet
+                    </div>
+                {% endif %}
+
             </table>
 
         </div>

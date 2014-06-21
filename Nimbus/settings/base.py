@@ -122,13 +122,13 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    "rest_framework",
-    "widget_tweaks",
-    "storages",
     "nimbus.apps.accounts",
     "nimbus.apps.api",
     "nimbus.apps.media",
-    "subdomains"
+    "subdomains",
+    "storages",
+    "rest_framework",
+    "widget_tweaks",
 )
 
 DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"

@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.views.generic.base import View
 from .forms import UploadFileForm
-from .models import Media
+from nimbus.apps.media.models import Media
 from nimbus import settings
 
 
@@ -20,7 +20,7 @@ def index(request, auth_form=None):
     else:
         auth_form = auth_form or AuthenticateForm()
         request.session.set_test_cookie()
-        return render(request, "nimbus_core/login.html", {
+        return render(request, "nimbus/accounts/login.html", {
             "auth_form": auth_form
         })
 
@@ -69,7 +69,7 @@ def dashboard_view(request, media_type="files"):
     except EmptyPage:
         media = paginator.page(paginator.num_pages)
 
-    return render(request, "nimbus_core/dashboard.html", {
+    return render(request, "nimbus/accounts/dashboard.html", {
         "media_type": media_type,
         "media": media,
         "media_url": settings.MEDIA_URL

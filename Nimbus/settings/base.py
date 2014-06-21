@@ -91,11 +91,12 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = "nimbus.urls.media"
+ROOT_URLCONF = "nimbus.apps.media.urls"
 
 SUBDOMAIN_URLCONFS = {
-    None: "nimbus.urls.media",
-    "account": "nimbus.urls.account",
+    None: "nimbus.apps.media.urls",
+    "account": "nimbus.apps.accounts.urls",
+    "api": "nimbus.apps.api.urls"
 }
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -124,7 +125,9 @@ INSTALLED_APPS = (
     "rest_framework",
     "widget_tweaks",
     "storages",
-    "nimbus.nimbus_core",
+    "nimbus.apps.accounts",
+    "nimbus.apps.api",
+    "nimbus.apps.media",
     "subdomains"
 )
 

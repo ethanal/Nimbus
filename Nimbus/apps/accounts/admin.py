@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Media
+from nimbus.apps.media.models import Media
 
 
 class MediaAdmin(admin.ModelAdmin):

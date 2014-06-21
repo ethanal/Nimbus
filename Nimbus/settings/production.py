@@ -1,6 +1,5 @@
 import urlparse
 from .base import *
-from secret import *
 
 
 """In production, add a file called secret.py to the settings package that

@@ -16,8 +16,6 @@ DATABASES = {
     }
 }
 
-SECRET_KEY = "crjl#r4(@8xv*x5ogeygrt@w%$$z9o8jlf7=25^!9k16pqsi!h"
-
 class glob_list(list):
     """A list of glob-style strings."""
 
@@ -64,4 +62,3 @@ if SHOW_DEBUG_TOOLBAR:
     )
 
 MEDIA_ROOT = "media/"
-MEDIA_URL = "/m/"

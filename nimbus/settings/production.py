@@ -2,13 +2,6 @@ import urlparse
 from .base import *
 
 
-"""In production, add a file called secret.py to the settings package that
-defines SECRET_KEY and DATABASE_URL.
-
-DATABASE_URL should be of the following form:
-    postgres://<user>:<password>@<host>/<database>
-"""
-
 DEBUG = os.getenv("DEBUG", "FALSE") == "TRUE"
 TEMPLATE_DEBUG = DEBUG
 

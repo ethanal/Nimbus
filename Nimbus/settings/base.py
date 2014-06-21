@@ -81,6 +81,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 MIDDLEWARE_CLASSES = (
+    "subdomains.middleware.SubdomainURLRoutingMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -90,7 +91,12 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'nimbus.urls'
+ROOT_URLCONF = "nimbus.urls.media"
+
+SUBDOMAIN_URLCONFS = {
+    None: "nimbus.urls.media",
+    "account": "nimbus.urls.account",
+}
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'nimbus.wsgi.application'
@@ -118,7 +124,8 @@ INSTALLED_APPS = (
     "rest_framework",
     "widget_tweaks",
     "storages",
-    "nimbus.nimbus_core"
+    "nimbus.nimbus_core",
+    "subdomains"
 )
 
 DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"

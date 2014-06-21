@@ -76,10 +76,6 @@ def dashboard_view(request, media_type="files"):
     })
 
 
-def media_view(request, url_hash):
-    return redirect("/")
-
-
 def upload_file(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
@@ -91,7 +87,3 @@ def upload_file(request):
         return HttpResponseBadRequest()
     else:
         return HttpResponseNotAllowed(["POST"])
-
-
-def redirect_to_accounts(request):
-    return HttpResponse("redirecting")

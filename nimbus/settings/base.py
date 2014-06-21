@@ -2,10 +2,15 @@ import os
 from secret import *
 
 
+_hostname_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "HOSTNAME")
+HOSTNAME = open(_hostname_file, "r").read().strip()
+
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
+
+ALLOWED_HOSTS = [HOSTNAME]
 
 ADD_SLASHES = False
 
@@ -107,8 +112,12 @@ TEMPLATE_DIRS = (
 )
 
 REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
-    "USE_ABSOLUTE_URLS": True,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
 }
 
 INSTALLED_APPS = (
@@ -129,6 +138,10 @@ INSTALLED_APPS = (
 )
 
 DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
+MEDIA_URL = "http://{}/m/".format(HOSTNAME)
+
+SESSION_COOKIE_DOMAIN = "." + HOSTNAME
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

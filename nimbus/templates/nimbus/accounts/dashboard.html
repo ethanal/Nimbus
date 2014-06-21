@@ -43,7 +43,7 @@
 <div class="container">
     <div class="row" id="main-content">
         <span class="col-md-2">
-            <form id="upload-dropzone" class="dropzone" action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+            <form id="upload-dropzone" class="dropzone" action="{% url 'index' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <span class="glyphicon glyphicon-upload upload-icon"></span>
                 <span class="dz-message">Drop file or click here to upload</span>

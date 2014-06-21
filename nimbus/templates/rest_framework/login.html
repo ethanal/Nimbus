@@ -1,0 +1,11 @@
+{% extends "rest_framework/login_base.html" %}
+
+{% block branding %}
+    <h3 style="margin: 0 0 20px;">Nimbus API</h3>
+{% endblock %}
+
+{% block style %}
+    {# hacky way to add to head tag #}
+    <title>Nimbus API - Login</title>
+    {{ block.super }}
+{% endblock %}

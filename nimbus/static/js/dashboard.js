@@ -17,6 +17,7 @@ $(function() {
             resetDropzone(this.element);
         },
         error: function(file, error) {
+            console.error(error);
             $e = $(this.element);
             $e.removeClass("loading");
             $e.addClass("error");
@@ -40,6 +41,9 @@ $(function() {
             }
             $m.css("line-height", (lines * lineHeight) + "px");
             $m.text("Uploading...");
+        },
+        sending: function(file, xhr, formData) {
+            xhr.withCredentials = true; // send cookies even though this is a cross-site request
         }
     };
 

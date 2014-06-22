@@ -1,4 +1,5 @@
 import os
+import re
 from secret import *
 
 
@@ -83,6 +84,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 
 MIDDLEWARE_CLASSES = (
+    "corsheaders.middleware.CorsMiddleware",
     "subdomains.middleware.SubdomainURLRoutingMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -135,6 +137,7 @@ INSTALLED_APPS = (
     "storages",
     "rest_framework",
     "widget_tweaks",
+    "corsheaders",
 )
 
 DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
@@ -142,6 +145,19 @@ DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 MEDIA_URL = "http://{}/m/".format(HOSTNAME)
 
 SESSION_COOKIE_DOMAIN = "." + HOSTNAME
+CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
+
+CORS_ORIGIN_REGEX_WHITELIST = (r"^(https?://)?(\w+\.)?{}$".format(re.escape(HOSTNAME)),)
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'cache-control'
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

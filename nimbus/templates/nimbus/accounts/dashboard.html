@@ -13,6 +13,7 @@
 
 {% block js %}
     {{ block.super }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="{% static 'js/lib/dropzone.min.js' %}"></script>
     <script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock %}
@@ -43,7 +44,7 @@
 <div class="container">
     <div class="row" id="main-content">
         <span class="col-md-2">
-            <form id="upload-dropzone" class="dropzone" action="{% url 'index' %}" method="post" enctype="multipart/form-data">
+            <form id="upload-dropzone" class="dropzone" action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <span class="glyphicon glyphicon-upload upload-icon"></span>
                 <span class="dz-message">Drop file or click here to upload</span>

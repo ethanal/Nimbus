@@ -74,16 +74,3 @@ def dashboard_view(request, media_type="files"):
         "media": media,
         "media_url": settings.MEDIA_URL
     })
-
-
-def upload_file(request):
-    if request.method == "POST":
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            f = request.FILES["file"]
-            m = Media(name=f.name, user=request.user, target_file=f)
-            m.save()
-            return HttpResponse(m.url_hash)
-        return HttpResponseBadRequest()
-    else:
-        return HttpResponseNotAllowed(["POST"])

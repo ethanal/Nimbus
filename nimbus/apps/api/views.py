@@ -3,10 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from nimbus.apps.media.models import Media
-from nimbus.apps.media.serializers import MediaSerializer
+from nimbus.apps.media.serializers import MediaSerializer, LinkSerializer
 from .exceptions import InvalidFilter
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 
 
 @api_view(("GET",))
@@ -57,4 +55,12 @@ class AddFile(views.APIView):
         f = request.FILES["file"]
         m = Media(name=f.name, user=request.user, target_file=f)
         m.save()
-        return Response(m.url_hash, status=204)
+        return Response(m.url_hash, status=201)
+
+
+class AddLink(generics.CreateAPIView):
+    serializer_class = LinkSerializer
+
+    def pre_save(self, obj):
+        obj.user = self.request.user
+        obj.name = obj.target_url

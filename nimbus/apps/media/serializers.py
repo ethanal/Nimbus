@@ -12,3 +12,9 @@ class MediaSerializer(serializers.ModelSerializer):
                   "view_count",
                   "upload_date",
                   "media_type")
+
+
+class LinkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Media
+        fields = ("target_url",)

@@ -71,6 +71,5 @@ def dashboard_view(request, media_type="files"):
 
     return render(request, "nimbus/accounts/dashboard.html", {
         "media_type": media_type,
-        "media": media,
-        "media_url": settings.MEDIA_URL
+        "media": media
     })

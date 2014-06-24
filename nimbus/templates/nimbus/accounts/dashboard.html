@@ -68,7 +68,7 @@
                 <table class="table table-hover">
                     {% for m in media %}
                         <tr data-id="{{ m.id }}">
-                            <td><input type="checkbox" class="delete-checkbox"><a href="{{ media_url }}{{ m.target_file }}">{{ m.name }}</a></td>
+                            <td><input type="checkbox" class="delete-checkbox"><a href="{{ media_url }}{{ m.target_file }}" title="{{ m.name }}">{{ m.name|truncatechars:80 }}</a></td>
                             <td title="{{ m.upload_date|date:"j N Y, P" }}">{{ m.upload_date|fuzzy_date }}</td>
                             <td class="view-count" title="{{ m.view_count }} Views">{{ m.view_count }}</td>
                         </tr>

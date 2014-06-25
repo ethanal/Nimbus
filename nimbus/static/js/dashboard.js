@@ -18,7 +18,13 @@ $(function() {
             displayedMediaType = $("#media-list").data("media-type-code");
             var mediaItem = $.parseJSON(response);
             if (displayedMediaType == "ALL" || displayedMediaType == mediaItem.media_type) {
-                $("#media-list>table>tbody").prepend(mediaItem.html);
+                var $tbody = $("#media-list>table>tbody");
+
+                if ($("#media-list>table").hasClass("empty-state")) {
+                    $tbody.innerHTML(mediaItem.html);
+                } else {
+                    $tbody.prepend(mediaItem.html);
+                }
             }
         },
         error: function(file, error) {

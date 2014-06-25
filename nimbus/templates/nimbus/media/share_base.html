@@ -23,17 +23,10 @@
                 </button>
                 <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-cloud cloud-logo"></span> Nimbus</a>
             </div>
-
-            <div class="collapse navbar-collapse" id="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="navbar-text">Welcome, {{ request.user.username }}</li>
-                    <li><a href="/logout">Logout</a></li>
-                </ul>
-            </div>
         </div>
     </nav>
 
     {% block media_preview %}
-        <a href="{{ raw_media_url }}">{{ media_item.name }}</a>
+        <a href="{{ media_item.raw_url }}">{{ media_item.name }}</a>
     {% endblock %}
 {% endblock %}

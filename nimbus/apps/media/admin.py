@@ -6,7 +6,8 @@ class MediaAdmin(admin.ModelAdmin):
     fields = ("name",
               "target_url",
               "target_file",
-              "user")
+              "user",
+              "syntax_highlighted")
     list_display = ("id",
                     "url_hash",
                     "name",

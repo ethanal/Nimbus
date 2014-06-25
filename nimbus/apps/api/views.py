@@ -53,8 +53,11 @@ class AddFile(views.APIView):
 
     def post(self, request, format=None):
         f = request.FILES["file"]
+        text = f.file.getvalue()
         m = Media(name=f.name, user=request.user, target_file=f)
         m.save()
+        if m.media_type == "TXT":
+            m.fill_syntax_highlighted(text)
         return Response(m.url_hash, status=201)
 
 

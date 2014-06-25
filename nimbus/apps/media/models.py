@@ -1,11 +1,15 @@
 import mimetypes
 import uuid
+from pygments import highlight
+from pygments.lexers import guess_lexer_for_filename
+from pygments.formatters import HtmlFormatter
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
+from subdomains.utils import reverse
 from .utils import url_hash_from_pk
 
 
@@ -40,6 +44,7 @@ class Media(models.Model):
     upload_date = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User)
     media_type = models.CharField(max_length=3, choices=MEDIA_TYPES, blank=True)
+    syntax_highlighted = models.TextField(blank=True)
 
     # all prefixed by "application/"
     ARCHIVE_MIME_TYPES = ["x-cpio",
@@ -76,6 +81,10 @@ class Media(models.Model):
                           "x-zoo",
                           "x-par2"]
 
+    @property
+    def raw_url(self):
+        return reverse("raw_media", subdomain=None, kwargs={"path": self.target_file})
+
     @staticmethod
     def guess_media_type(resource_name):
         validator = URLValidator()
@@ -98,6 +107,12 @@ class Media(models.Model):
         if (top == "application") and (sub in Media.ARCHIVE_MIME_TYPES):
             return "ARC"
         return "ETC"
+
+    def fill_syntax_highlighted(self, text):
+        lexer = guess_lexer_for_filename(self.name, text)
+        html = highlight(text, lexer, HtmlFormatter())
+        self.syntax_highlighted = html
+        self.save()
 
     def __unicode__(self):
         return self.name

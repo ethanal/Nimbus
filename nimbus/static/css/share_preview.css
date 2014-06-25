@@ -1,0 +1,7 @@
+.wrapper {
+    margin: 30px auto;
+}
+
+#text-preview {
+    max-width: 640px;
+}

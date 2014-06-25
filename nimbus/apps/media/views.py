@@ -1,5 +1,5 @@
+from pygments.formatters import HtmlFormatter
 from django.shortcuts import render, get_object_or_404, redirect
-
 from .models import Media
 
 
@@ -17,6 +17,11 @@ def share_view(request, url_hash):
     }
     template = templates.setdefault(media_item.media_type, "nimbus/media/share_download.html")
 
-    return render(request, template, context={
+    context = {
         "media_item": media_item
-    })
+    }
+
+    if media_item.media_type == "TXT":
+        context["syntax_highlighting_style_defs"] = HtmlFormatter().get_style_defs('.highlight')
+
+    return render(request, template, context)

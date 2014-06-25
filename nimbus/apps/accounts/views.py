@@ -55,7 +55,7 @@ def dashboard_view(request, media_type="all"):
     if media_type == "all":
         media_list = Media.objects.filter(user=request.user).order_by("-upload_date", "name")
     else:
-        media_list = Media.objects.filter(media_type=media_type_codes[media_type])
+        media_list = Media.objects.filter(user=request.user, media_type=media_type_codes[media_type]).order_by("-upload_date", "name")
 
     paginator = Paginator(media_list, 50)
     page = request.GET.get("p")

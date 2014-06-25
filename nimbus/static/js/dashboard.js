@@ -80,6 +80,15 @@ $(function() {
             $p.remove()
             return id;
         });
+
+        var $table = $("#media-list>table"),
+            $tbody = $("#media-list>table>tbody");
+        if ($("#media-list tr").length == 0) {
+            $tbody.append("<tr><td>Nothing here yet</td></tr>");
+            $table.removeClass("table-hover");
+            $table.addClass("empty-state");
+        }
+
         console.log(ids);
         $(this).hide();
     });

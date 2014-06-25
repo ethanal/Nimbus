@@ -8,5 +8,5 @@
         </a>
     </td>
     <td title="{{ media_item.upload_date|date:"j N Y, P" }}"><span data-livestamp="{{ media_item.upload_date|date:'c' }}"></span></td>
-    <td class="view-count" title="{{ media_item.view_count }} Views">{{ media_item.view_count }}</td>
+    <td class="view-count" title="{{ media_item.view_count }} View{{ media_item.view_count|pluralize }}">{{ media_item.view_count }}</td>
 </tr>

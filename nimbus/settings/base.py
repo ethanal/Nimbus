@@ -134,13 +134,10 @@ INSTALLED_APPS = (
     "nimbus.apps.api",
     "nimbus.apps.media",
     "subdomains",
-    "storages",
     "rest_framework",
     "widget_tweaks",
     "corsheaders",
 )
-
-DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 
 MEDIA_URL = "http://{}/m/".format(HOSTNAME)
 

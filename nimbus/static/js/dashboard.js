@@ -18,13 +18,18 @@ $(function() {
             displayedMediaType = $("#media-list").data("media-type-code");
             var mediaItem = $.parseJSON(response);
             if (displayedMediaType == "ALL" || displayedMediaType == mediaItem.media_type) {
-                var $tbody = $("#media-list>table>tbody");
+                var $table = $("#media-list>table"),
+                    $tbody = $("#media-list>table>tbody");
 
-                if ($("#media-list>table").hasClass("empty-state")) {
-                    $tbody.innerHTML(mediaItem.html);
+                if ($table.hasClass("empty-state")) {
+                    $tbody.html(mediaItem.html);
+                    console.log("hi");
                 } else {
                     $tbody.prepend(mediaItem.html);
                 }
+
+                $table.addClass("table-hover");
+                $table.removeClass("empty-state");
             }
         },
         error: function(file, error) {

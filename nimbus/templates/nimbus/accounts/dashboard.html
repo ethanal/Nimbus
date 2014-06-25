@@ -1,4 +1,4 @@
-{% extends "page_base.html" %}
+{% extends "nimbus/page_base.html" %}
 {% load staticfiles %}
 {% load dates %}
 {% load subdomainurls %}
@@ -22,83 +22,83 @@
 
 
 {% block body %}
-<nav id="main-nav" class="navbar navbar-default" role="navigation">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-cloud cloud-logo"></span> Nimbus</a>
-        </div>
+    <nav id="main-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-cloud cloud-logo"></span> Nimbus</a>
+            </div>
 
-        <div class="collapse navbar-collapse" id="navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="navbar-text">Welcome, {{ request.user.username }}</li>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="navbar-text">Welcome, {{ request.user.username }}</li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-<div class="container">
-    <div class="row" id="main-content">
-        <span class="col-md-2">
-            <form id="upload-dropzone" class="dropzone" action="{% url 'add_file' subdomain='api' %}" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <span class="glyphicon glyphicon-upload upload-icon"></span>
-                <span class="dz-message">Drop file or click here to upload</span>
-            </form>
-            <ul id="media-type-selector" class="nav nav-pills nav-stacked-responsive">
-                <li{% if media_type = "files" %} class="active"{% endif %}><a href="{% url 'index' %}"><span class="glyphicon glyphicon-th-large"></span><span class="media-type-label"> All</span></a></li>
-                <li{% if media_type = "images" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='images' %}"><span class="glyphicon glyphicon-picture"></span><span class="media-type-label"> Images</span></a></li>
-                <li{% if media_type = "links" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='links' %}"><span class="glyphicon glyphicon-link"></span><span class="media-type-label"> Links</span></a></li>
-                <li{% if media_type = "text" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='text' %}"><span class="glyphicon glyphicon-font"></span><span class="media-type-label"> Text</span></a></li>
-                <li{% if media_type = "archives" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='archives' %}"><span class="glyphicon glyphicon-compressed"></span><span class="media-type-label"> Archives</span></a></li>
-                <li{% if media_type = "audio" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='audio' %}"><span class="glyphicon glyphicon-music"></span><span class="media-type-label"> Audio</span></a></li>
-                <li{% if media_type = "video" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='video' %}"><span class="glyphicon glyphicon-facetime-video"></span><span class="media-type-label"> Video</span></a></li>
-                <li{% if media_type = "other" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='other' %}"><span class="glyphicon glyphicon-file"></span><span class="media-type-label"> Other</span></a></li>
-            </ul>
-        </span>
-        <div id="files" class="col-md-10">
-            <h2>{% if media_type = "files" %}All {% endif %}Shared Items{% if media_type != "files" %} - {{ media_type.title }}{% endif %}</h2>
-            <button type="button" class="btn btn-sm btn-danger delete-files">Delete Selected</button>
-            {% if media %}
-                <table class="table table-hover">
-                    {% for m in media %}
-                        <tr data-id="{{ m.id }}">
+    <div class="container">
+        <div class="row" id="main-content">
+            <span class="col-md-2">
+                <form id="upload-dropzone" class="dropzone" action="{% url 'add_file' subdomain='api' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <span class="glyphicon glyphicon-upload upload-icon"></span>
+                    <span class="dz-message">Drop file or click here to upload</span>
+                </form>
+                <ul id="media-type-selector" class="nav nav-pills nav-stacked-responsive">
+                    <li{% if media_type = "files" %} class="active"{% endif %}><a href="{% url 'index' %}"><span class="glyphicon glyphicon-th-large"></span><span class="media-type-label"> All</span></a></li>
+                    <li{% if media_type = "images" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='images' %}"><span class="glyphicon glyphicon-picture"></span><span class="media-type-label"> Images</span></a></li>
+                    <li{% if media_type = "links" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='links' %}"><span class="glyphicon glyphicon-link"></span><span class="media-type-label"> Links</span></a></li>
+                    <li{% if media_type = "text" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='text' %}"><span class="glyphicon glyphicon-font"></span><span class="media-type-label"> Text</span></a></li>
+                    <li{% if media_type = "archives" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='archives' %}"><span class="glyphicon glyphicon-compressed"></span><span class="media-type-label"> Archives</span></a></li>
+                    <li{% if media_type = "audio" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='audio' %}"><span class="glyphicon glyphicon-music"></span><span class="media-type-label"> Audio</span></a></li>
+                    <li{% if media_type = "video" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='video' %}"><span class="glyphicon glyphicon-facetime-video"></span><span class="media-type-label"> Video</span></a></li>
+                    <li{% if media_type = "other" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='other' %}"><span class="glyphicon glyphicon-file"></span><span class="media-type-label"> Other</span></a></li>
+                </ul>
+            </span>
+            <div id="files" class="col-md-10">
+                <h2>{% if media_type = "files" %}All {% endif %}Shared Items{% if media_type != "files" %} - {{ media_type.title }}{% endif %}</h2>
+                <button type="button" class="btn btn-sm btn-danger delete-files">Delete Selected</button>
+                {% if media %}
+                    <table class="table table-hover">
+                        {% for m in media %}
+                            <tr data-id="{{ m.id }}">
+                                <td>
+                                    <input type="checkbox" class="delete-checkbox">
+                                    <a href="{% url 'share' subdomain=None url_hash=m.url_hash %}" title="{{ m.name }}">
+                                        {{ m.name|truncatechars:60 }}
+                                    </a>
+                                </td>
+                                <td title="{{ m.upload_date|date:"j N Y, P" }}">{{ m.upload_date|fuzzy_date }}</td>
+                                <td class="view-count" title="{{ m.view_count }} Views">{{ m.view_count }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% else %}
+                    <table class="table empty-state">
+                        <tr>
                             <td>
-                                <input type="checkbox" class="delete-checkbox">
-                                <a href="{% url 'share' subdomain=None url_hash=m.url_hash %}" title="{{ m.name }}">
-                                    {{ m.name|truncatechars:60 }}
-                                </a>
+                                No {% if media_type = "other" %}files{% else %}{{ media_type }}{% endif %} yet
                             </td>
-                            <td title="{{ m.upload_date|date:"j N Y, P" }}">{{ m.upload_date|fuzzy_date }}</td>
-                            <td class="view-count" title="{{ m.view_count }} Views">{{ m.view_count }}</td>
                         </tr>
-                    {% endfor %}
-                </table>
-            {% else %}
-                <table class="table empty-state">
-                    <tr>
-                        <td>
-                            No {% if media_type = "other" %}files{% else %}{{ media_type }}{% endif %} yet
-                        </td>
-                    </tr>
-                </table>
+                    </table>
+                {% endif %}
+
+            </div>
+
+            {% if media.paginator.num_pages > 1 %}
+                <ul class="pager col-md-10 col-md-push-2">
+                    <li class="{% if not media.has_previous %}disabled{% endif %}"><a{% if media.has_previous %} href="?p={{ media.previous_page_number }}"{% endif %}>&larr; Previous</a></li>
+                    <li>Page {{ media.number }} of {{ media.paginator.num_pages }}</li>
+                    <li class="{% if not media.has_next %}disabled{% endif %}"><a{% if media.has_next %} href="?p={{ media.next_page_number }}"{% endif %}>Next &rarr;</a></li>
+                </ul>
             {% endif %}
-
         </div>
-
-        {% if media.paginator.num_pages > 1 %}
-            <ul class="pager col-md-10 col-md-push-2">
-                <li class="{% if not media.has_previous %}disabled{% endif %}"><a{% if media.has_previous %} href="?p={{ media.previous_page_number }}"{% endif %}>&larr; Previous</a></li>
-                <li>Page {{ media.number }} of {{ media.paginator.num_pages }}</li>
-                <li class="{% if not media.has_next %}disabled{% endif %}"><a{% if media.has_next %} href="?p={{ media.next_page_number }}"{% endif %}>Next &rarr;</a></li>
-            </ul>
-        {% endif %}
     </div>
-</div>
-
+    {{ block.super }}
 {% endblock %}

@@ -1,0 +1,39 @@
+{% extends "nimbus/page_base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{ media_item.name }}{% endblock %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/share_preview.css' %}" />
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/share_preview.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+    <nav id="main-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-cloud cloud-logo"></span> Nimbus</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="navbar-text">Welcome, {{ request.user.username }}</li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    {% block media_preview %}
+        {{ raw_media_url }}
+    {% endblock %}
+{% endblock %}

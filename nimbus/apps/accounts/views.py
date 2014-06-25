@@ -2,13 +2,10 @@ import logging
 from .forms import AuthenticateForm
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseBadRequest, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.views.generic.base import View
-from .forms import UploadFileForm
 from nimbus.apps.media.models import Media
-from nimbus import settings
 
 
 logger = logging.getLogger(__name__)

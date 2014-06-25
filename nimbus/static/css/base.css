@@ -1,3 +1,18 @@
+body {
+    margin-bottom: 50px;
+}
+
+#main-nav {
+    border-radius: 0;
+}
+#main-nav .navbar-brand {
+    padding: 7px 15px;
+}
+.cloud-logo {
+    vertical-align: middle;
+    font-size: 36px;
+}
+
 input {
     -webkit-box-shadow: none !important;
     box-shadow: none !important;

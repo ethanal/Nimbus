@@ -1,4 +1,4 @@
-{% extends "page_base.html" %}
+{% extends "nimbus/page_base.html" %}
 {% load staticfiles %}
 {% load widget_tweaks %}
 
@@ -32,7 +32,7 @@
         <div class="row">
             <div class="login col-md-4 col-md-offset-4">
                 <div id="login-heading">
-                    <img id="cloud-logo" src="{% static 'img/exports/login_logo.png' %}" />
+                    <img id="cloud-logo" src="{% static 'img/exports/login_logo@2x.png' %}" />
                     <h1>Nimbus</h1>
                 </div>
                 {% if request.GET.next %}
@@ -49,4 +49,5 @@
             </div>
         </div>
     </div>
+    {{ block.super }}
 {% endblock %}

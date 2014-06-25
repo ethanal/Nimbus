@@ -1,0 +1,12 @@
+{% load subdomainurls %}
+
+<tr data-id="{{ media_item.id }}">
+    <td>
+        <input type="checkbox" class="delete-checkbox">
+        <a href="{% url 'share' subdomain=None url_hash=media_item.url_hash %}" title="{{ media_item.name }}">
+            {{ media_item.name|truncatechars:60 }}
+        </a>
+    </td>
+    <td title="{{ media_item.upload_date|date:"j N Y, P" }}"><span data-livestamp="{{ media_item.upload_date|date:'c' }}"></span></td>
+    <td class="view-count" title="{{ media_item.view_count }} Views">{{ media_item.view_count }}</td>
+</tr>

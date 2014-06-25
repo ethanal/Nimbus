@@ -1,6 +1,5 @@
 {% extends "nimbus/page_base.html" %}
 {% load staticfiles %}
-{% load dates %}
 {% load subdomainurls %}
 
 {% block title %}
@@ -16,6 +15,8 @@
     {{ block.super }}
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="{% static 'js/lib/dropzone.min.js' %}"></script>
+    <script src="{% static 'js/lib/moment.min.js' %}"></script>
+    <script src="{% static 'js/lib/livestamp.min.js' %}"></script>
     <script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock %}
 
@@ -66,17 +67,8 @@
                 <button type="button" class="btn btn-sm btn-danger delete-files">Delete Selected</button>
                 {% if media %}
                     <table class="table table-hover">
-                        {% for m in media %}
-                            <tr data-id="{{ m.id }}">
-                                <td>
-                                    <input type="checkbox" class="delete-checkbox">
-                                    <a href="{% url 'share' subdomain=None url_hash=m.url_hash %}" title="{{ m.name }}">
-                                        {{ m.name|truncatechars:60 }}
-                                    </a>
-                                </td>
-                                <td title="{{ m.upload_date|date:"j N Y, P" }}">{{ m.upload_date|fuzzy_date }}</td>
-                                <td class="view-count" title="{{ m.view_count }} Views">{{ m.view_count }}</td>
-                            </tr>
+                        {% for media_item in media %}
+                            {% include "nimbus/accounts/media_table_row.html" %}
                         {% endfor %}
                     </table>
                 {% else %}

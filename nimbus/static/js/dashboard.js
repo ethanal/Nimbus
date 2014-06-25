@@ -14,6 +14,7 @@ $(function() {
             this.removeFile(file);
         },
         success: function(file, response) {
+            console.log(response);
             resetDropzone(this.element);
         },
         error: function(file, error) {

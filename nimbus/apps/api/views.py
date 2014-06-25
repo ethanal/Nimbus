@@ -54,7 +54,11 @@ class AddFile(views.APIView):
     parser_classes = (MultiPartParser,)
 
     def post(self, request):
-        f = request.FILES["file"]
+        f = request.FILES.get("file", None)
+
+        if not f:
+            return Response(status=400)
+
         text = f.file.getvalue()
         media_item = Media(name=f.name, user=request.user, target_file=f)
         media_item.save()

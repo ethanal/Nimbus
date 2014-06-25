@@ -48,6 +48,8 @@
                     {% csrf_token %}
                     <span class="glyphicon glyphicon-upload upload-icon"></span>
                     <span class="dz-message">Drop file or click here to upload</span>
+                    <div class="fallback">
+                    </div>
                 </form>
                 <ul id="media-type-selector" class="nav nav-pills nav-stacked-responsive">
                     <li{% if media_type = "all" %} class="active"{% endif %}><a href="{% url 'index' %}"><span class="glyphicon glyphicon-th-large"></span><span class="media-type-label"> All</span></a></li>

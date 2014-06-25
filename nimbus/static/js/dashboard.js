@@ -10,6 +10,8 @@ $(function() {
 
     Dropzone.options.uploadDropzone = {
         clickable: "#upload-dropzone, .upload-icon",
+        uploadMultiple: false,
+        maxFiles: 1,
         complete: function(file) {
             this.removeFile(file);
         },

@@ -34,7 +34,7 @@ class Media(models.Model):
         ("ETC", "Other")
     )
 
-    _random_filename = lambda i, f: str(uuid.uuid4()) + "/" + f
+    _random_filename = lambda i, f: str(uuid.uuid4()).replace("-", "") + "/" + f
 
     url_hash = models.CharField(max_length=100, blank=True)
     name = models.CharField(max_length=500)

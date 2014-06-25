@@ -16,14 +16,17 @@
     <nav id="main-nav" class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
                 <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-cloud cloud-logo"></span> Nimbus</a>
             </div>
+            <div class="navbar-text" id="media-name">
+                {{ media_item.name }}
+            </div>
+
+            <a href="{{ media_item.raw_url }}" id="download-original" class="navbar-right navbar-link">
+                <span class="glyphicon glyphicon-download"></span>
+            </a>
         </div>
+
     </nav>
 
     {% block media_preview %}

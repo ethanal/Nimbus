@@ -1,7 +1,22 @@
 .wrapper {
     margin: 30px auto;
+    padding: 10px;
 }
 
 #text-preview {
     max-width: 640px;
+}
+
+#media-name {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    margin-left: -15px;
+    font-weight: bold;
+}
+
+#download-original {
+    line-height: 50px;
+    font-size: 25px;
 }

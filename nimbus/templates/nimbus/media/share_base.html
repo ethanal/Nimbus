@@ -34,6 +34,6 @@
     </nav>
 
     {% block media_preview %}
-        {{ raw_media_url }}
+        <a href="{{ raw_media_url }}">{{ media_item.name }}</a>
     {% endblock %}
 {% endblock %}

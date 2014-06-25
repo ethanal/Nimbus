@@ -53,7 +53,7 @@ class MediaDetail(generics.RetrieveAPIView):
 class AddFile(views.APIView):
     parser_classes = (MultiPartParser,)
 
-    def post(self, request, response_format="json"):
+    def post(self, request):
         f = request.FILES["file"]
         text = f.file.getvalue()
         media_item = Media(name=f.name, user=request.user, target_file=f)
@@ -61,16 +61,17 @@ class AddFile(views.APIView):
         if media_item.media_type == "TXT":
             media_item.fill_syntax_highlighted(text)
 
-        if response_format == "html":
+        data = MediaSerializer(media_item).data
+
+        if "include-html" in request.QUERY_PARAMS:
             context = {
                 "media_item": media_item
             }
-            response_content = render_to_string("nimbus/accounts/media_table_row", context)
-        else:
-            data = MediaSerializer(media_item).data
-            response_content = JSONRenderer().render(data)
+            html = render_to_string("nimbus/accounts/media_table_row.html", context)
+            data["html"] = html
 
-        return Response(response_content, status=201)
+        json = JSONRenderer().render(data)
+        return Response(json, status=201)
 
 
 class AddLink(generics.CreateAPIView):

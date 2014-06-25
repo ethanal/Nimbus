@@ -50,9 +50,9 @@ def logout_view(request):
 
 
 @login_required
-def dashboard_view(request, media_type="files"):
+def dashboard_view(request, media_type="all"):
     media_type_codes = {j.lower(): i for i, j in Media.MEDIA_TYPES_PLURAL}
-    if media_type == "files":
+    if media_type == "all":
         media_list = Media.objects.filter(user=request.user).order_by("-upload_date", "name")
     else:
         media_list = Media.objects.filter(media_type=media_type_codes[media_type])
@@ -68,5 +68,6 @@ def dashboard_view(request, media_type="files"):
 
     return render(request, "nimbus/accounts/dashboard.html", {
         "media_type": media_type,
+        "media_type_code": media_type_codes.get(media_type, "ALL"),
         "media": media
     })

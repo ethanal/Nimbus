@@ -14,8 +14,12 @@ $(function() {
             this.removeFile(file);
         },
         success: function(file, response) {
-            console.log(response);
             resetDropzone(this.element);
+            displayedMediaType = $("#media-list").data("media-type-code");
+            var mediaItem = $.parseJSON(response);
+            if (displayedMediaType == "ALL" || displayedMediaType == mediaItem.media_type) {
+                $("#media-list>table>tbody").prepend(mediaItem.html);
+            }
         },
         error: function(file, error) {
             console.error(error);
@@ -51,12 +55,12 @@ $(function() {
 
     $(".delete-checkbox").click(function() {
         if ($(".delete-checkbox").filter(":checked").length === 0)
-            $(".delete-files").hide()
+            $(".delete-selected").hide()
         else
-            $(".delete-files").show()
+            $(".delete-selected").show()
     });
 
-    $(".delete-files").click(function() {
+    $(".delete-selected").click(function() {
         var ids = $.map($(".delete-checkbox").filter(":checked"), function(e){
             var $p = $(e).parent().parent();
             var id = $p.data("id");

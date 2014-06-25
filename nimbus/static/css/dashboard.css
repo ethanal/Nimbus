@@ -14,7 +14,7 @@ h2 {
     float: left;
 }
 
-.delete-files {
+.delete-selected {
     float: right;
     margin-bottom: 10px;
     display: none;
@@ -26,17 +26,17 @@ h2 {
     margin-right: 0;
 }
 
-#files {
+#media-list {
     margin-left: -15px;
     margin-right: -15px;
     color: rgb(139, 139, 139);
 }
 
-#files input[type="checkbox"] {
+#media-list input[type="checkbox"] {
     margin-right: 10px;
 }
 
-#files tr input[type="checkbox"]:checked {
+#media-list tr input[type="checkbox"]:checked {
     background-color: green;
 }
 

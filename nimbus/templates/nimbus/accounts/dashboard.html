@@ -20,8 +20,6 @@
     <script src="{% static 'js/dashboard.js' %}"></script>
 {% endblock %}
 
-
-
 {% block body %}
     <nav id="main-nav" class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
@@ -46,13 +44,13 @@
     <div class="container">
         <div class="row" id="main-content">
             <span class="col-md-2">
-                <form id="upload-dropzone" class="dropzone" action="{% url 'add_file' subdomain='api' %}" method="post" enctype="multipart/form-data">
+                <form id="upload-dropzone" class="dropzone" action="{% url 'add_file' subdomain='api' %}?include-html" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <span class="glyphicon glyphicon-upload upload-icon"></span>
                     <span class="dz-message">Drop file or click here to upload</span>
                 </form>
                 <ul id="media-type-selector" class="nav nav-pills nav-stacked-responsive">
-                    <li{% if media_type = "files" %} class="active"{% endif %}><a href="{% url 'index' %}"><span class="glyphicon glyphicon-th-large"></span><span class="media-type-label"> All</span></a></li>
+                    <li{% if media_type = "all" %} class="active"{% endif %}><a href="{% url 'index' %}"><span class="glyphicon glyphicon-th-large"></span><span class="media-type-label"> All</span></a></li>
                     <li{% if media_type = "images" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='images' %}"><span class="glyphicon glyphicon-picture"></span><span class="media-type-label"> Images</span></a></li>
                     <li{% if media_type = "links" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='links' %}"><span class="glyphicon glyphicon-link"></span><span class="media-type-label"> Links</span></a></li>
                     <li{% if media_type = "text" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='text' %}"><span class="glyphicon glyphicon-font"></span><span class="media-type-label"> Text</span></a></li>
@@ -62,9 +60,9 @@
                     <li{% if media_type = "other" %} class="active"{% endif %}><a href="{% url 'filter_media' media_type='other' %}"><span class="glyphicon glyphicon-file"></span><span class="media-type-label"> Other</span></a></li>
                 </ul>
             </span>
-            <div id="files" class="col-md-10">
-                <h2>{% if media_type = "files" %}All {% endif %}Shared Items{% if media_type != "files" %} - {{ media_type.title }}{% endif %}</h2>
-                <button type="button" class="btn btn-sm btn-danger delete-files">Delete Selected</button>
+            <div id="media-list" class="col-md-10" data-media-type-code="{{ media_type_code }}">
+                <h2>{% if media_type = "all" %}All {% endif %}Shared Items{% if media_type != "all" %} - {{ media_type.title }}{% endif %}</h2>
+                <button type="button" class="btn btn-sm btn-danger delete-selected">Delete Selected</button>
                 {% if media %}
                     <table class="table table-hover">
                         {% for media_item in media %}
@@ -75,7 +73,7 @@
                     <table class="table empty-state">
                         <tr>
                             <td>
-                                No {% if media_type = "other" %}files{% else %}{{ media_type }}{% endif %} yet
+                                Nothing here yet
                             </td>
                         </tr>
                     </table>

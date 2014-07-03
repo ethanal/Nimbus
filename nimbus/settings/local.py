@@ -16,6 +16,10 @@ DATABASES = {
     }
 }
 
+
+INSTALLED_APPS += ("django_extensions",)
+
+
 class glob_list(list):
     """A list of glob-style strings."""
 
@@ -29,6 +33,7 @@ class glob_list(list):
 INTERNAL_IPS = glob_list([
     "127.0.0.1",
 ])
+
 
 SHOW_DEBUG_TOOLBAR = os.getenv("SHOW_DEBUG_TOOLBAR", "YES") == "YES"
 
@@ -57,8 +62,6 @@ if SHOW_DEBUG_TOOLBAR:
         "debug_toolbar.middleware.DebugToolbarMiddleware",
     ) + MIDDLEWARE_CLASSES
 
-    INSTALLED_APPS += (
-        "debug_toolbar",
-    )
+    INSTALLED_APPS += ("debug_toolbar",)
 
 MEDIA_ROOT = "media/"

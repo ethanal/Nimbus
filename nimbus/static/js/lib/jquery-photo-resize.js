@@ -1,14 +1,3 @@
-/*
-* Adjust photo on browser window resize
-*
-* @example: $('selector').photoResize();
-*
-* @example:
-    $('selector').photoResize({
-        bottomSpacing:"Bottom Spacing adjustment"
-    });
-*/
-
 (function ($) {
 
     $.fn.photoResize = function (options) {
@@ -17,10 +6,12 @@
             defaults = {
                 bottomSpacing: 10
             };
+        if (!element.actualHeight) {
+            element.actualHeight = element.height();
+        }
 
         $(element).load(function () {
             updatePhotoHeight();
-            console.log("hello");
 
             $(window).bind('resize', function () {
                 updatePhotoHeight();
@@ -33,7 +24,7 @@
             var o = options,
                 photoHeight = $(window).height();
 
-            $(element).attr('height', photoHeight - o.bottomSpacing);
+            $(element).attr('height', Math.min(photoHeight - o.bottomSpacing, element.actualHeight));
         }
     };
 

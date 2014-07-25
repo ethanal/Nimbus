@@ -1,11 +1,11 @@
-from django.conf.urls import patterns, url, include
+from django.conf.urls import url, include
 from nimbus.apps import debug_urls
 from . import views
 
 
 urlpatterns = debug_urls()
 
-urlpatterns += patterns('',
+urlpatterns += [
     url(r"^$", views.api_root, name="api_root"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r"^media$", views.MediaList.as_view(), name="media_list"),
@@ -14,4 +14,4 @@ urlpatterns += patterns('',
     url(r"^media/add_file", views.AddFile.as_view(), name="add_file"),
     url(r"^media/add_link", views.AddLink.as_view(), name="add_link"),
     url(r"^media/delete", views.delete_media, name="delete_media"),
-)
+]

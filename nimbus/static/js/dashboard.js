@@ -1,4 +1,13 @@
 $(function() {
+    var deleteCheckboxClicked = function() {
+        if ($(".delete-checkbox").filter(":checked").length === 0)
+            $(".delete-selected").hide()
+        else
+            $(".delete-selected").show()
+    };
+
+    $(".delete-checkbox").click(deleteCheckboxClicked);
+
     var resetDropzone = function(el) {
         var $e = $(el);
         var $m = $e.children(".dz-message");
@@ -32,6 +41,8 @@ $(function() {
                 $table.addClass("table-hover");
                 $table.removeClass("empty-state");
             }
+
+            $(".delete-checkbox").click(deleteCheckboxClicked);
         },
         error: function(file, error) {
             console.error(error);
@@ -64,22 +75,15 @@ $(function() {
         }
     };
 
-
-    $(".delete-checkbox").click(function() {
-        if ($(".delete-checkbox").filter(":checked").length === 0)
-            $(".delete-selected").hide()
-        else
-            $(".delete-selected").show()
-    });
-
     $(".delete-selected").click(function() {
         $(this).css("width", $(this).outerWidth());
         $(this).text("Deleting...");
 
+        var $rows = [];
         var ids = $.map($(".delete-checkbox").filter(":checked"), function(e){
             var $p = $(e).parent().parent();
             var id = $p.data("id");
-            $p.remove()
+            $rows.push($p);
             return id;
         });
 
@@ -97,6 +101,12 @@ $(function() {
             success: function() {
                 $(button).text("Delete Selected");
 
+                $.map($rows, function($r) {
+                    $r.remove();
+                });
+
+                $(button).hide();
+
                 var $table = $("#media-list>table"),
                     $tbody = $("#media-list>table>tbody");
                 if ($("#media-list tr").length == 0) {
@@ -104,8 +114,6 @@ $(function() {
                     $table.removeClass("table-hover");
                     $table.addClass("empty-state");
                 }
-
-                $(button).hide();
             },
             error: function(xhr, status, error) {
                 console.log(xhr);

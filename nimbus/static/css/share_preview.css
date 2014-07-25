@@ -20,3 +20,8 @@
     line-height: 50px;
     font-size: 25px;
 }
+
+#img-preview {
+    text-align: center;
+    padding: 0;
+}

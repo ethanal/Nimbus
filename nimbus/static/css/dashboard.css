@@ -1,3 +1,7 @@
+body {
+    margin-bottom: 50px;
+}
+
 #media-type-selector a {
     color: #777;
 }

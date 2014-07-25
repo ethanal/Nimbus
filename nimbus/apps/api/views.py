@@ -75,10 +75,10 @@ class AddFile(views.APIView):
         if not f:
             return Response(status=400)
 
-        text = f.file.getvalue()
         media_item = Media(name=f.name, user=request.user, target_file=f)
         media_item.save()
         if media_item.media_type == "TXT":
+            text = f.file.getvalue()
             media_item.fill_syntax_highlighted(text)
 
         data = MediaSerializer(media_item).data

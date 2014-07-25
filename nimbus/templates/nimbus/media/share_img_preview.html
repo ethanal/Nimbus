@@ -1,1 +1,20 @@
 {% extends "nimbus/media/share_base.html" %}
+{% load staticfiles %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'js/lib/jquery-photo-resize.js' %}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".wrapper img").photoResize({
+                bottomSpacing: 112
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block media_preview %}
+    <div id="img-preview" class="wrapper">
+        <img src="{{ media_item.raw_url }}" alt="{{ media_item.name }}"/>
+    </div>
+{% endblock %}

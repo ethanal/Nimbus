@@ -54,3 +54,4 @@ docs/_build/
 
 testing_database.db
 secret.py
+collected_static

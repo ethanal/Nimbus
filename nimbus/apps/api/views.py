@@ -27,7 +27,7 @@ class MultipleFieldLookupMixin(object):
 @api_view(("GET",))
 def api_root(request):
     """Welcome to the Nimbus API!
-    Documentation can be found at [github.com/nimbus](http://github.com/ethanal/nimbus)
+    Documentation can be found at [github.com/ethanal/nimbus](http://github.com/ethanal/nimbus)
     """
 
     return Response("Documentation can be found at http://github.com/ethanal/nimbus")

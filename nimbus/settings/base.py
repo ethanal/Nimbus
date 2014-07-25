@@ -9,7 +9,7 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOGIN_URL = "/login"
 LOGIN_REDIRECT_URL = "/"
 
-ALLOWED_HOSTS = [HOSTNAME]
+ALLOWED_HOSTS = ["." + HOSTNAME]
 
 ADD_SLASHES = False
 

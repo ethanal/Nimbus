@@ -3,9 +3,6 @@ import re
 from secret import *
 
 
-_hostname_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "HOSTNAME")
-HOSTNAME = open(_hostname_file, "r").read().strip()
-
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 LOGIN_URL = "/login"
@@ -137,9 +134,8 @@ INSTALLED_APPS = (
     "rest_framework",
     "widget_tweaks",
     "corsheaders",
+    "storages"
 )
-
-MEDIA_URL = "http://{}/m/".format(HOSTNAME)
 
 SESSION_COOKIE_DOMAIN = "." + HOSTNAME
 CSRF_COOKIE_DOMAIN = SESSION_COOKIE_DOMAIN
@@ -155,6 +151,9 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'cache-control'
 )
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
+AWS_STORAGE_BUCKET_NAME = "files." + HOSTNAME
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from rest_framework import generics, views
 from rest_framework.decorators import api_view
@@ -7,6 +8,21 @@ from rest_framework.parsers import MultiPartParser
 from nimbus.apps.media.models import Media
 from nimbus.apps.media.serializers import MediaSerializer, LinkSerializer
 from .exceptions import InvalidFilter
+
+
+class MultipleFieldLookupMixin(object):
+    """
+    Apply this mixin to any view or viewset to get multiple field filtering
+    based on a `lookup_fields` attribute, instead of the default single field filtering.
+    """
+    def get_object(self):
+        queryset = self.get_queryset()             # Get the base queryset
+        queryset = self.filter_queryset(queryset)  # Apply any filter backends
+        filter = {}
+        print (self.kwargs)
+        for field in self.lookup_fields:
+            filter[field] = self.kwargs[field]
+        return get_object_or_404(queryset, **filter)  # Lookup the object
 
 
 @api_view(("GET",))
@@ -41,9 +57,9 @@ class TypeFilteredMediaList(generics.ListAPIView):
         return Media.objects.filter(user=user, media_type=self.kwargs["media_type"])
 
 
-class MediaDetail(generics.RetrieveAPIView):
+class MediaDetail(MultipleFieldLookupMixin, generics.RetrieveAPIView):
     serializer_class = MediaSerializer
-    lookup_field = "url_hash"
+    lookup_fields = ("url_hash",)
 
     def get_queryset(self):
         user = self.request.user
@@ -84,3 +100,12 @@ class AddLink(generics.CreateAPIView):
     def pre_save(self, obj):
         obj.user = self.request.user
         obj.name = obj.target_url
+
+
+class DeleteMedia(MultipleFieldLookupMixin, generics.DestroyAPIView):
+    model = Media
+    lookup_fields = ("id",)
+
+    def get_queryset(self):
+        user = self.request.user
+        return Media.objects.filter(user=user)

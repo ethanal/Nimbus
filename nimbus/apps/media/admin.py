@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Media
 
 
+
 class MediaAdmin(admin.ModelAdmin):
     fields = ("name",
               "target_url",

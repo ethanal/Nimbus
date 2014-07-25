@@ -19,5 +19,3 @@ DATABASES = {
         'HOST': url.hostname
     }
 }
-
-MEDIA_ROOT = "/usr/local/nimbus_media/"

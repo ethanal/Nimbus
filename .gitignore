@@ -53,6 +53,4 @@ coverage.xml
 docs/_build/
 
 testing_database.db
-/media/
 secret.py
-HOSTNAME

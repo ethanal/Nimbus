@@ -63,5 +63,3 @@ if SHOW_DEBUG_TOOLBAR:
     ) + MIDDLEWARE_CLASSES
 
     INSTALLED_APPS += ("debug_toolbar",)
-
-MEDIA_ROOT = "media/"

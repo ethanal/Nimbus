@@ -1,1 +1,10 @@
 {% extends "nimbus/media/share_base.html" %}
+
+{% block media_preview %}
+    <div id="file-download" class="wrapper">
+        <span id="file-icon" class="glyphicon glyphicon-file"></span>
+        <a href="{{ media_item.raw_url }}" class="btn btn-primary btn-lg">
+            <strong>{{ media_item.name }}</strong>
+        </a>
+    </div>
+{% endblock %}

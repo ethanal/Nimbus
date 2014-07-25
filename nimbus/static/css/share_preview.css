@@ -25,3 +25,15 @@
     text-align: center;
     padding: 0;
 }
+
+#file-download {
+    text-align: center;
+}
+
+#file-icon {
+    font-size: 160px;
+    color: #DDD;
+    display: block;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}

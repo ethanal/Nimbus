@@ -6,9 +6,6 @@
             defaults = {
                 bottomSpacing: 10
             };
-        if (!element.actualHeight) {
-            element.actualHeight = element.height();
-        }
 
         $(element).load(function () {
             updatePhotoHeight();
@@ -24,7 +21,7 @@
             var o = options,
                 photoHeight = $(window).height();
 
-            $(element).attr('height', Math.min(photoHeight - o.bottomSpacing, element.actualHeight));
+            $(element).attr('height', Math.min(photoHeight - o.bottomSpacing, element[0].naturalHeight));
         }
     };
 

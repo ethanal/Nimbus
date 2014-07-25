@@ -5,7 +5,7 @@
     {{ block.super }}
     <script src="{% static 'js/lib/jquery-photo-resize.js' %}"></script>
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(function() {
             $(".wrapper img").photoResize({
                 bottomSpacing: 112
             });

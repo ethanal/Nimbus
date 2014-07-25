@@ -19,7 +19,6 @@ class MultipleFieldLookupMixin(object):
         queryset = self.get_queryset()             # Get the base queryset
         queryset = self.filter_queryset(queryset)  # Apply any filter backends
         filter = {}
-        print (self.kwargs)
         for field in self.lookup_fields:
             filter[field] = self.kwargs[field]
         return get_object_or_404(queryset, **filter)  # Lookup the object
@@ -102,10 +101,9 @@ class AddLink(generics.CreateAPIView):
         obj.name = obj.target_url
 
 
-class DeleteMedia(MultipleFieldLookupMixin, generics.DestroyAPIView):
-    model = Media
-    lookup_fields = ("id",)
-
-    def get_queryset(self):
-        user = self.request.user
-        return Media.objects.filter(user=user)
+@api_view(("DELETE",))
+def delete_media(request):
+    user = request.user
+    ids = request.QUERY_PARAMS.getlist("id")
+    Media.objects.filter(user=user, id__in=ids).delete()
+    return Response(status=204)

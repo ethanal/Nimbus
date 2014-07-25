@@ -64,7 +64,7 @@
             </span>
             <div id="media-list" class="col-md-10" data-media-type-code="{{ media_type_code }}">
                 <h2>{% if media_type = "all" %}All {% endif %}Shared Items{% if media_type != "all" %} - {{ media_type.title }}{% endif %}</h2>
-                <button type="button" class="btn btn-sm btn-danger delete-selected">Delete Selected</button>
+                <button type="button" class="btn btn-sm btn-danger delete-selected" data-delete-api-endpoint="{% url 'delete_media' subdomain='api' %}">Delete Selected</button>
                 {% if media %}
                     <table class="table table-hover">
                         {% for media_item in media %}

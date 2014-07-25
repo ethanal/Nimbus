@@ -74,22 +74,49 @@ $(function() {
     });
 
     $(".delete-selected").click(function() {
+        $(this).css("width", $(this).outerWidth());
+        $(this).text("Deleting...");
+
         var ids = $.map($(".delete-checkbox").filter(":checked"), function(e){
             var $p = $(e).parent().parent();
             var id = $p.data("id");
             $p.remove()
             return id;
         });
-
-        var $table = $("#media-list>table"),
-            $tbody = $("#media-list>table>tbody");
-        if ($("#media-list tr").length == 0) {
-            $tbody.append("<tr><td>Nothing here yet</td></tr>");
-            $table.removeClass("table-hover");
-            $table.addClass("empty-state");
-        }
-
         console.log(ids);
-        $(this).hide();
+        var getVars = ids.map(function(id){return "id=" + id}).join("&");
+        var button = this;
+        $.ajax({
+            url: $(this).data("delete-api-endpoint") + "?" + getVars,
+            type: "DELETE",
+            xhrFields: {
+                withCredentials: true
+            },
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", $.cookie("csrftoken"));
+            },
+            success: function() {
+                var $table = $("#media-list>table"),
+                    $tbody = $("#media-list>table>tbody");
+                if ($("#media-list tr").length == 0) {
+                    $tbody.append("<tr><td>Nothing here yet</td></tr>");
+                    $table.removeClass("table-hover");
+                    $table.addClass("empty-state");
+                }
+
+                $(button).text("Delete Selected");
+                $(button).hide();
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr);
+                $(button).text("Error!");
+                setTimeout(function() {
+                    $(button).text("Delete Selected");
+                }, 1000);
+            }
+        });
+
+
+
     });
 });

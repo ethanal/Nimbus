@@ -13,5 +13,5 @@ urlpatterns += patterns('',
     url(r"^media/show", views.MediaDetail.as_view(), name="media_detail"),
     url(r"^media/add_file", views.AddFile.as_view(), name="add_file"),
     url(r"^media/add_link", views.AddLink.as_view(), name="add_link"),
-    url(r"^media/delete", views.DeleteMedia.as_view(), name="delete_media"),
+    url(r"^media/delete", views.delete_media, name="delete_media"),
 )

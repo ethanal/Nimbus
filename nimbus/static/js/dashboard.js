@@ -25,7 +25,6 @@ $(function() {
 
                 if ($table.hasClass("empty-state")) {
                     $tbody.html(mediaItem.html);
-                    console.log("hi");
                 } else {
                     $tbody.prepend(mediaItem.html);
                 }
@@ -83,7 +82,7 @@ $(function() {
             $p.remove()
             return id;
         });
-        console.log(ids);
+
         var getVars = ids.map(function(id){return "id=" + id}).join("&");
         var button = this;
         $.ajax({
@@ -96,6 +95,8 @@ $(function() {
                 xhr.setRequestHeader("X-CSRFToken", $.cookie("csrftoken"));
             },
             success: function() {
+                $(button).text("Delete Selected");
+
                 var $table = $("#media-list>table"),
                     $tbody = $("#media-list>table>tbody");
                 if ($("#media-list tr").length == 0) {
@@ -104,7 +105,6 @@ $(function() {
                     $table.addClass("empty-state");
                 }
 
-                $(button).text("Delete Selected");
                 $(button).hide();
             },
             error: function(xhr, status, error) {

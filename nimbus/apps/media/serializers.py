@@ -9,9 +9,7 @@ class MediaSerializer(serializers.ModelSerializer):
 
     def get_target_file_url(self, obj):
         if obj.target_file:
-            return reverse("raw_media",
-                           subdomain=None,
-                           kwargs={"path": obj.target_file})
+            return obj.raw_url
         return ""
 
     def get_share_url(self, obj):

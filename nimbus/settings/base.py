@@ -1,5 +1,6 @@
 import os
 import re
+from boto.s3.connection import VHostCallingFormat
 from secret import *
 
 
@@ -154,6 +155,9 @@ CORS_ALLOW_HEADERS = (
 
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 AWS_STORAGE_BUCKET_NAME = "files." + HOSTNAME
+AWS_S3_CALLING_FORMAT = VHostCallingFormat()
+AWS_S3_SECURE_URLS = False
+AWS_S3_CUSTOM_DOMAIN = "files." + HOSTNAME
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

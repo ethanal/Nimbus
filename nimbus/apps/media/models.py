@@ -4,12 +4,11 @@ from pygments import highlight
 from pygments.lexers import guess_lexer_for_filename
 from pygments.formatters import HtmlFormatter
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
-from subdomains.utils import reverse
 from .utils import url_hash_from_pk
 
 
@@ -83,7 +82,7 @@ class Media(models.Model):
 
     @property
     def raw_url(self):
-        return reverse("raw_media", subdomain=None, kwargs={"path": self.target_file})
+        return self.target_file.storage.url(self.target_file.name)
 
     @staticmethod
     def guess_media_type(resource_name):
@@ -135,3 +134,11 @@ def fill_auto_fields(sender, **kwargs):
         for field, value in fields.items():
             setattr(instance, field, value)
         instance.save()
+
+
+@receiver(pre_delete, sender=Media)
+def delete_file_from_storage(sender, **kwargs):
+    instance = kwargs.get("instance")
+
+    if instance.target_file:
+        instance.target_file.delete()

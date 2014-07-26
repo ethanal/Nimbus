@@ -22,7 +22,6 @@ class APIClient: NSObject {
     
     func request(uri: NSString, withAuth: Bool) -> NSMutableURLRequest {
         let r = NSMutableURLRequest(URL: NSURL(string: apiRoot + uri))
-        r.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         if withAuth {
             var token = ""
             if let t = authToken {
@@ -32,10 +31,6 @@ class APIClient: NSObject {
         }
         r.timeoutInterval = 10.0
         return r
-    }
-    
-    func request(uri:NSString) -> NSMutableURLRequest {
-        return request(uri, withAuth: false)
     }
     
     func JSONStringify(jsonObj: AnyObject) -> String {
@@ -51,8 +46,10 @@ class APIClient: NSObject {
         }
     }
     
+    
     func getTokenForUsername(username: NSString, password: NSString, successCallback: ((NSString!) -> Void)?, errorCallback: (() -> Void)?) {
         let req = request("/api-token-auth", withAuth: false)
+        req.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         req.HTTPMethod = "POST"
         
         let requestJSON = JSONValue([
@@ -89,4 +86,88 @@ class APIClient: NSObject {
         
         }
     }
+    
+    
+    func addFile(fileData: NSData, filename: NSString, successCallback: ((NSURL!) -> Void)?, errorCallback: (() -> Void)?) {
+        let req = request("/media/add_file", withAuth: true)
+        req.HTTPMethod = "POST"
+        
+        var boundary = "---------------------------gc0p4Jq0M2Yt08jU534c0pgc0p4Jq0M2Yt08jU534c0p"
+        var contentType = "multipart/form-data; boundary=\(boundary)"
+        req.setValue(contentType, forHTTPHeaderField: "Content-Type")
+        
+        var postData = NSMutableData.data()
+        postData.appendData("\r\n--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding))
+        postData.appendData("Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding))
+        postData.appendData("Content-Type: application/octet-stream\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding))
+        postData.appendData(NSData(data: fileData))
+        postData.appendData("\r\n--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding))
+        
+        req.HTTPBody = postData
+        
+        NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
+
+            if error {
+                print(responseString)
+                if let cb = errorCallback {
+                    cb()
+                }
+                return
+            }
+            
+            var responseJSON = JSONValue(data)
+            
+            if let shareURL = responseJSON["share_url"].url {
+                if let cb = successCallback {
+                    cb(shareURL)
+                }
+            } else  {
+                if let cb = errorCallback {
+                    cb()
+                }
+                return
+            }
+
+        }
+    }
+    
+    func addLink(link: NSURL, successCallback: ((NSURL!) -> Void)?, errorCallback: (() -> Void)?) {
+        let req = request("/media/add_link", withAuth: false)
+        req.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        req.HTTPMethod = "POST"
+        
+        let requestJSON = JSONValue([
+            "target_url": link.absoluteString
+            ])
+        
+        req.HTTPBody = requestJSON.rawJSONString.dataUsingEncoding(NSUTF8StringEncoding)
+        NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
+            var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
+            
+            if error {
+                print(responseString)
+                if let cb = errorCallback {
+                    cb()
+                }
+                return
+            }
+            
+            var responseJSON = JSONValue(data)
+            
+            if let shareURL = responseJSON["share_url"].url {
+                if let cb = successCallback {
+                    cb(shareURL)
+                }
+            } else  {
+                if let cb = errorCallback {
+                    cb()
+                }
+                return
+            }
+
+            
+        }
+    }
+
 }

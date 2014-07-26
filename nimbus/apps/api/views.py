@@ -18,9 +18,9 @@ class MultipleFieldLookupMixin(object):
     def get_object(self):
         queryset = self.get_queryset()             # Get the base queryset
         queryset = self.filter_queryset(queryset)  # Apply any filter backends
-       
+
         filter = {}
-        
+
         for field in self.lookup_fields:
             if field in self.request.QUERY_PARAMS:
                 filter[field] = self.request.QUERY_PARAMS[field]

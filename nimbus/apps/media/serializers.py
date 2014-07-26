@@ -32,7 +32,7 @@ class MediaSerializer(serializers.ModelSerializer):
 
 class CreateLinkSerializer(serializers.ModelSerializer):
     target_url = serializers.URLField(max_length=2048)
-    
+
     class Meta:
         model = Media
         fields = ("target_url",)

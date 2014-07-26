@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
-from rest_framework import generics, views
+from rest_framework import generics, views, status
 from rest_framework.decorators import api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from nimbus.apps.media.models import Media
-from nimbus.apps.media.serializers import MediaSerializer, LinkSerializer
+from nimbus.apps.media.serializers import MediaSerializer, CreateLinkSerializer, ViewLinkSerializer
 from .exceptions import InvalidFilter
 
 
@@ -94,12 +94,17 @@ class AddFile(views.APIView):
 
 
 class AddLink(generics.CreateAPIView):
-    serializer_class = LinkSerializer
+    serializer_class = CreateLinkSerializer
 
     def pre_save(self, obj):
         obj.user = self.request.user
         obj.name = obj.target_url
 
+    def create(self, request, *args, **kwargs):
+        response = super(AddLink, self).create(request, *args, **kwargs)
+        if response.status_code == status.HTTP_201_CREATED:
+            response.data = ViewLinkSerializer(self.object).data
+        return response
 
 @api_view(("DELETE",))
 def delete_media(request):

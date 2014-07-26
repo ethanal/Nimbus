@@ -30,7 +30,25 @@ class MediaSerializer(serializers.ModelSerializer):
                   "media_type")
 
 
-class LinkSerializer(serializers.ModelSerializer):
+class CreateLinkSerializer(serializers.ModelSerializer):
+    target_url = serializers.URLField(max_length=2048)
+    
     class Meta:
         model = Media
         fields = ("target_url",)
+
+
+class ViewLinkSerializer(serializers.ModelSerializer):
+    share_url = serializers.SerializerMethodField("get_share_url")
+
+    def get_share_url(self, obj):
+        return reverse("share",
+                       subdomain=None,
+                       kwargs={"url_hash": obj.url_hash})
+
+    class Meta:
+        model = Media
+        fields = ("url_hash",
+                  "share_url",
+                  "target_url",
+                  "upload_date",)

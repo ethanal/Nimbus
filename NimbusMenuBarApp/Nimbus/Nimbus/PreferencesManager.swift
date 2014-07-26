@@ -23,18 +23,6 @@ class PreferencesManager: NSObject {
     }
     }
     
-    var username: String {
-    get {
-        if let val = prefs.stringForKey("username") as NSString! {
-            return val
-        }
-        return ""
-    }
-    set {
-        prefs.setObject(newValue, forKey: "username")
-    }
-    }
-    
     var loggedIn: Bool {
     get {
         if let val = prefs.boolForKey("loggedIn") as Bool! {

@@ -32,6 +32,7 @@
 		AAD4434B19835E9900AA5459 /* PreferencesWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AAD4434919835E9900AA5459 /* PreferencesWindowController.xib */; };
 		AAD4434D19835ED800AA5459 /* PreferencesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD4434C19835ED800AA5459 /* PreferencesManager.swift */; };
 		AAD4434F1983952100AA5459 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD4434E1983952100AA5459 /* KeychainManager.swift */; };
+		AAD443511984085B00AA5459 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD443501984085B00AA5459 /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		AAD4434919835E9900AA5459 /* PreferencesWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindowController.xib; sourceTree = "<group>"; };
 		AAD4434C19835ED800AA5459 /* PreferencesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesManager.swift; sourceTree = "<group>"; };
 		AAD4434E1983952100AA5459 /* KeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		AAD443501984085B00AA5459 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				AA0C678519835367004BBF89 /* APIClient.swift */,
 				AAD4434C19835ED800AA5459 /* PreferencesManager.swift */,
 				AAD4434E1983952100AA5459 /* KeychainManager.swift */,
+				AAD443501984085B00AA5459 /* SwiftyJSON.swift */,
 				AA9325B619831B3E0027847E /* Images.xcassets */,
 				AA9325CF19831B6A0027847E /* Assets */,
 				AA9325B019831B3E0027847E /* Supporting Files */,
@@ -294,6 +297,7 @@
 				AAD4434D19835ED800AA5459 /* PreferencesManager.swift in Sources */,
 				AAD4434A19835E9900AA5459 /* PreferencesWindowController.swift in Sources */,
 				AAD4434F1983952100AA5459 /* KeychainManager.swift in Sources */,
+				AAD443511984085B00AA5459 /* SwiftyJSON.swift in Sources */,
 				AA9325F119831C860027847E /* StatusItemView.swift in Sources */,
 				AA9325B519831B3E0027847E /* AppDelegate.swift in Sources */,
 				AA0C678619835367004BBF89 /* APIClient.swift in Sources */,

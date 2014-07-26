@@ -74,6 +74,8 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
         self.addSubview(imageView)
         
         updateUI()
+        
+        openPreferences(nil)
     }
 
     override func drawRect(dirtyRect: NSRect) {

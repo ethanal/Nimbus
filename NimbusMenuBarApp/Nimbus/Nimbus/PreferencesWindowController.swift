@@ -12,54 +12,79 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     var prefs = PreferencesManager()
     var api = APIClient()
     
-    @IBOutlet weak var websiteHostnameField: NSTextField!
+    @IBOutlet weak var hostnameField: NSTextField!
     @IBOutlet weak var usernameField: NSTextField!
     @IBOutlet weak var passwordField: NSSecureTextField!
     @IBOutlet weak var uploadScreenshotsCheckbox: NSButton!
     @IBOutlet weak var accountActionButton: NSButton!
-    @IBOutlet var usernameLabel: NSTextField
-    @IBOutlet var passwordLabel: NSTextField
+    @IBOutlet weak var hostnameLabel: NSTextField!
+    @IBOutlet weak var usernameLabel: NSTextField!
+    @IBOutlet weak var passwordLabel: NSTextField!
     
     override func windowDidLoad() {
         super.windowDidLoad()
-        websiteHostnameField.stringValue = prefs.hostname
-        usernameField.stringValue = prefs.username
-        uploadScreenshotsCheckbox.state = prefs.uploadScreenshots
         updateAccountUI()
     }
     
+    @IBAction func uploadScreenshotsCheckboxPressed(sender: AnyObject) {
+        prefs.uploadScreenshots = uploadScreenshotsCheckbox.state
+    }
 
     @IBAction func accountActionButtonPressed(sender: AnyObject) {
-        prefs.loggedIn = !prefs.loggedIn
-        updateAccountUI()
+        KeychainManager.loadUsername()
+        if !prefs.loggedIn {
+            api.getTokenForUsername(usernameField.stringValue, password: passwordField.stringValue, successCallback: {(token: NSString!) -> Void in
+                println(token)
+                self.prefs.loggedIn = true
+                KeychainManager.saveToken(token, username: self.usernameField.stringValue)
+                self.updateAccountUI()
+                }, errorCallback: nil)
+            
+            
+        } else {
+            prefs.loggedIn = false
+            updateAccountUI()
+        }
+        
+        
     }
     
     func updateAccountUI() {
+        uploadScreenshotsCheckbox.state = prefs.uploadScreenshots
+
         if prefs.loggedIn {
-            accountActionButton.title = "Login"
-            passwordField.hidden = false
-            passwordLabel.hidden = false
-            usernameField.hidden = false
-            usernameLabel.hidden = true
-            KeychainManager.saveToken("-")
-            
-        } else {
             accountActionButton.title = "Logout"
-            passwordField.hidden = true
-            passwordLabel.hidden = true
+            
+            hostnameField.hidden = true
+            hostnameLabel.hidden = false
+            hostnameLabel.stringValue = prefs.hostname
+            
             usernameField.hidden = true
             usernameLabel.hidden = false
-            usernameLabel.stringValue = usernameField.stringValue
+            if let u = KeychainManager.loadUsername() {
+                usernameLabel.stringValue = u
+            } else {
+                usernameLabel.stringValue = ""
+            }
+            
+            passwordField.hidden = true
+            passwordLabel.hidden = true
+            
+        } else {
+            accountActionButton.title = "Login"
+            
+            hostnameField.hidden = false
+            hostnameField.stringValue = ""
+            hostnameLabel.hidden = true
+            
+            usernameField.hidden = false
+            usernameField.stringValue = ""
+            usernameLabel.hidden = true
+            
+            passwordField.hidden = false
             passwordField.stringValue = ""
-            KeychainManager.saveToken("12345")
+            passwordLabel.hidden = false
         }
-    }
-    
-    // NSWindowDelegate
-    func windowWillClose(notification: NSNotification!) {
-        prefs.hostname = websiteHostnameField.stringValue
-        prefs.username = usernameField.stringValue
-        prefs.uploadScreenshots = uploadScreenshotsCheckbox.state
     }
     
     

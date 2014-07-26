@@ -7,13 +7,14 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PreferencesWindowController" customModule="Nimbus" customModuleProvider="target">
             <connections>
                 <outlet property="accountActionButton" destination="UjG-7X-3hu" id="3Wb-Hf-8nj"/>
+                <outlet property="hostnameField" destination="r7s-Xv-pFO" id="aCi-Hz-xmd"/>
+                <outlet property="hostnameLabel" destination="l4j-7h-KDy" id="fpN-Nw-vaQ"/>
                 <outlet property="passwordField" destination="TkR-l3-2EX" id="Tm3-ZR-hzY"/>
                 <outlet property="passwordLabel" destination="TR0-Ny-FOc" id="Bmp-vE-pE8"/>
                 <outlet property="uploadScreenShotCheckbox" destination="s89-w0-n9y" id="x3V-vV-qo3"/>
                 <outlet property="uploadScreenshotsCheckbox" destination="s89-w0-n9y" id="vce-wA-029"/>
                 <outlet property="usernameField" destination="ZH0-ad-kpJ" id="l2e-rk-lQq"/>
                 <outlet property="usernameLabel" destination="bvA-pA-hcL" id="hbL-cX-7rV"/>
-                <outlet property="websiteHostnameField" destination="r7s-Xv-pFO" id="opF-66-caO"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -21,22 +22,22 @@
         <customObject id="-3" userLabel="Application"/>
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <rect key="contentRect" x="196" y="240" width="355" height="187"/>
+            <rect key="contentRect" x="196" y="240" width="303" height="187"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="355" height="187"/>
+                <rect key="frame" x="0.0" y="0.0" width="303" height="187"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8qV-BX-YSG">
-                        <rect key="frame" x="18" y="150" width="124" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Website Hostname:" id="6EW-XZ-sfN">
+                        <rect key="frame" x="18" y="147" width="72" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hostname:" id="6EW-XZ-sfN">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vtk-rD-6Sw">
-                        <rect key="frame" x="71" y="118" width="71" height="17"/>
+                        <rect key="frame" x="19" y="117" width="71" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Username:" id="WBg-rY-sRf">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -44,7 +45,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TR0-Ny-FOc">
-                        <rect key="frame" x="76" y="86" width="66" height="17"/>
+                        <rect key="frame" x="24" y="85" width="66" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Password:" id="tbC-6h-ka6">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -52,7 +53,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r7s-Xv-pFO">
-                        <rect key="frame" x="148" y="145" width="187" height="22"/>
+                        <rect key="frame" x="96" y="145" width="187" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="" drawsBackground="YES" id="vhC-VW-U1U">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -60,7 +61,7 @@
                         </textFieldCell>
                     </textField>
                     <secureTextField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TkR-l3-2EX">
-                        <rect key="frame" x="148" y="83" width="187" height="22"/>
+                        <rect key="frame" x="96" y="83" width="187" height="22"/>
                         <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="Ly3-lX-Gdc">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -71,7 +72,7 @@
                         </secureTextFieldCell>
                     </secureTextField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UjG-7X-3hu">
-                        <rect key="frame" x="259" y="47" width="75" height="32"/>
+                        <rect key="frame" x="207" y="47" width="75" height="32"/>
                         <buttonCell key="cell" type="push" title="Login" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HXa-qJ-WsE">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -80,15 +81,8 @@
                             <action selector="accountActionButtonPressed:" target="-2" id="lVz-g8-Fgi"/>
                         </connections>
                     </button>
-                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s89-w0-n9y">
-                        <rect key="frame" x="146" y="18" width="145" height="18"/>
-                        <buttonCell key="cell" type="check" title="Upload Screenshots" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6Bw-6k-7Le">
-                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                    </button>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZH0-ad-kpJ">
-                        <rect key="frame" x="148" y="113" width="187" height="22"/>
+                        <rect key="frame" x="96" y="115" width="187" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="left" placeholderString="" drawsBackground="YES" id="BrX-eL-YLY">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -96,19 +90,37 @@
                         </textFieldCell>
                     </textField>
                     <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvA-pA-hcL">
-                        <rect key="frame" x="150" y="115" width="186" height="17"/>
+                        <rect key="frame" x="99" y="117" width="186" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="username" id="Gd6-bB-49G">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="l4j-7h-KDy">
+                        <rect key="frame" x="99" y="147" width="186" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="hostname" id="sct-P4-9oO">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s89-w0-n9y">
+                        <rect key="frame" x="94" y="18" width="145" height="18"/>
+                        <buttonCell key="cell" type="check" title="Upload Screenshots" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6Bw-6k-7Le">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="uploadScreenshotsCheckboxPressed:" target="-2" id="cB0-69-Txb"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="358.5" y="216.5"/>
+            <point key="canvasLocation" x="332.5" y="216.5"/>
         </window>
     </objects>
 </document>

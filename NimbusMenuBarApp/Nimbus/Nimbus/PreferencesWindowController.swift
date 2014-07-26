@@ -33,12 +33,18 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @IBAction func accountActionButtonPressed(sender: AnyObject) {
         KeychainManager.loadUsername()
         if !prefs.loggedIn {
+            prefs.hostname = hostnameField.stringValue
+            
             api.getTokenForUsername(usernameField.stringValue, password: passwordField.stringValue, successCallback: {(token: NSString!) -> Void in
-                println(token)
                 self.prefs.loggedIn = true
                 KeychainManager.saveToken(token, username: self.usernameField.stringValue)
+
                 self.updateAccountUI()
-                }, errorCallback: nil)
+                }, errorCallback: {() -> Void in
+                    var alert = NSAlert()
+                    alert.messageText = "Unable to login with provided credentials"
+                    alert.runModal()
+                })
             
             
         } else {

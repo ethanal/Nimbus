@@ -109,6 +109,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
             preferencesWindowController = PreferencesWindowController(windowNibName: "PreferencesWindowController")
         }
         preferencesWindowController!.showWindow(self)
+        NSApp.activateIgnoringOtherApps(true)
     }
     
     func quitApp(sender: NSStatusItem!) {

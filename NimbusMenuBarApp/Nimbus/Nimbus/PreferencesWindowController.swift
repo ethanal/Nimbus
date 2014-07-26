@@ -17,28 +17,41 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var passwordField: NSSecureTextField!
     @IBOutlet weak var uploadScreenshotsCheckbox: NSButton!
     @IBOutlet weak var accountActionButton: NSButton!
-    
+    @IBOutlet var usernameLabel: NSTextField
+    @IBOutlet var passwordLabel: NSTextField
     
     override func windowDidLoad() {
         super.windowDidLoad()
         websiteHostnameField.stringValue = prefs.hostname
         usernameField.stringValue = prefs.username
         uploadScreenshotsCheckbox.state = prefs.uploadScreenshots
-        
+        updateAccountUI()
     }
     
 
     @IBAction func accountActionButtonPressed(sender: AnyObject) {
+        prefs.loggedIn = !prefs.loggedIn
+        updateAccountUI()
+    }
+    
+    func updateAccountUI() {
         if prefs.loggedIn {
             accountActionButton.title = "Login"
-            passwordField.enabled = true
+            passwordField.hidden = false
+            passwordLabel.hidden = false
+            usernameField.hidden = false
+            usernameLabel.hidden = true
             KeychainManager.saveToken("-")
-            prefs.loggedIn = false
+            
         } else {
             accountActionButton.title = "Logout"
-            passwordField.enabled = false
+            passwordField.hidden = true
+            passwordLabel.hidden = true
+            usernameField.hidden = true
+            usernameLabel.hidden = false
+            usernameLabel.stringValue = usernameField.stringValue
+            passwordField.stringValue = ""
             KeychainManager.saveToken("12345")
-            prefs.loggedIn = true
         }
     }
     

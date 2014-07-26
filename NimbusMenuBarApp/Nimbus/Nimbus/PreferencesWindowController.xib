@@ -8,9 +8,11 @@
             <connections>
                 <outlet property="accountActionButton" destination="UjG-7X-3hu" id="3Wb-Hf-8nj"/>
                 <outlet property="passwordField" destination="TkR-l3-2EX" id="Tm3-ZR-hzY"/>
+                <outlet property="passwordLabel" destination="TR0-Ny-FOc" id="Bmp-vE-pE8"/>
                 <outlet property="uploadScreenShotCheckbox" destination="s89-w0-n9y" id="x3V-vV-qo3"/>
                 <outlet property="uploadScreenshotsCheckbox" destination="s89-w0-n9y" id="vce-wA-029"/>
                 <outlet property="usernameField" destination="ZH0-ad-kpJ" id="l2e-rk-lQq"/>
+                <outlet property="usernameLabel" destination="bvA-pA-hcL" id="hbL-cX-7rV"/>
                 <outlet property="websiteHostnameField" destination="r7s-Xv-pFO" id="opF-66-caO"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -19,7 +21,6 @@
         <customObject id="-3" userLabel="Application"/>
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="355" height="187"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <view key="contentView" id="se5-gp-TjO">
@@ -94,12 +95,20 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvA-pA-hcL">
+                        <rect key="frame" x="150" y="115" width="186" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="username" id="Gd6-bB-49G">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="358.5" y="217"/>
+            <point key="canvasLocation" x="358.5" y="216.5"/>
         </window>
     </objects>
 </document>

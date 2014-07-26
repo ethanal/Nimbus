@@ -16,7 +16,7 @@ class PreferencesManager: NSObject {
         if let val = prefs.stringForKey("hostname") as NSString! {
             return val
         }
-            return ""
+            return "example.com"
     }
     set {
         prefs.setObject(newValue, forKey: "hostname")

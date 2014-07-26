@@ -1,3 +1,4 @@
+
 //
 //  APIClient.swift
 //  Nimbus
@@ -17,33 +18,26 @@ class APIClient: NSObject {
     }
     }
     
-    var authToken: String?
+    var authToken: String
+    
+    init() {
+        if let token = KeychainManager.loadToken() {
+            authToken = token
+        } else {
+            authToken = ""
+        }
+        
+        super.init()
+    }
     
     
     func request(uri: NSString, withAuth: Bool) -> NSMutableURLRequest {
         let r = NSMutableURLRequest(URL: NSURL(string: apiRoot + uri))
         if withAuth {
-            var token = ""
-            if let t = authToken {
-                token = t
-            }
-            r.setValue("Token " + token, forHTTPHeaderField: "Authorization")
+            r.setValue("Token \(authToken)", forHTTPHeaderField: "Authorization")
         }
         r.timeoutInterval = 10.0
         return r
-    }
-    
-    func JSONStringify(jsonObj: AnyObject) -> String {
-        var e: NSError?
-        let jsonData = NSJSONSerialization.dataWithJSONObject(
-            jsonObj,
-            options: NSJSONWritingOptions(0),
-            error: &e)
-        if e {
-            return ""
-        } else {
-            return NSString(data: jsonData, encoding: NSUTF8StringEncoding)
-        }
     }
     
     
@@ -69,6 +63,7 @@ class APIClient: NSObject {
                 return
             }
             
+            println(responseString)
             var responseJSON = JSONValue(data)
             
             if let token = responseJSON["token"].string {
@@ -92,7 +87,7 @@ class APIClient: NSObject {
         let req = request("/media/add_file", withAuth: true)
         req.HTTPMethod = "POST"
         
-        var boundary = "---------------------------gc0p4Jq0M2Yt08jU534c0pgc0p4Jq0M2Yt08jU534c0p"
+        var boundary = "gc0p4Jq0M2Yt08jU534c0pgc0p4Jq0M2Yt08jU534c0p"
         var contentType = "multipart/form-data; boundary=\(boundary)"
         req.setValue(contentType, forHTTPHeaderField: "Content-Type")
         
@@ -101,15 +96,14 @@ class APIClient: NSObject {
         postData.appendData("Content-Disposition: form-data; name=\"file\"; filename=\"\(filename)\"\r\n".dataUsingEncoding(NSUTF8StringEncoding))
         postData.appendData("Content-Type: application/octet-stream\r\n\r\n".dataUsingEncoding(NSUTF8StringEncoding))
         postData.appendData(NSData(data: fileData))
-        postData.appendData("\r\n--\(boundary)\r\n".dataUsingEncoding(NSUTF8StringEncoding))
+        postData.appendData("\r\n--\(boundary)--\r\n".dataUsingEncoding(NSUTF8StringEncoding))
         
         req.HTTPBody = postData
         
         NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
             var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
-
             if error {
-                print(responseString)
+                println(responseString)
                 if let cb = errorCallback {
                     cb()
                 }
@@ -117,7 +111,6 @@ class APIClient: NSObject {
             }
             
             var responseJSON = JSONValue(data)
-            
             if let shareURL = responseJSON["share_url"].url {
                 if let cb = successCallback {
                     cb(shareURL)
@@ -133,7 +126,7 @@ class APIClient: NSObject {
     }
     
     func addLink(link: NSURL, successCallback: ((NSURL!) -> Void)?, errorCallback: (() -> Void)?) {
-        let req = request("/media/add_link", withAuth: false)
+        let req = request("/media/add_link", withAuth: true)
         req.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         req.HTTPMethod = "POST"
         
@@ -146,7 +139,7 @@ class APIClient: NSObject {
             var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
             
             if error {
-                print(responseString)
+                println(responseString)
                 if let cb = errorCallback {
                     cb()
                 }

@@ -8,6 +8,7 @@ urlpatterns = debug_urls()
 urlpatterns += [
     url(r"^$", views.api_root, name="api_root"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', 'rest_framework.authtoken.views.obtain_auth_token'),
     url(r"^media$", views.MediaList.as_view(), name="media_list"),
     url(r"^media/filter_media_type/(?P<media_type>[A-Z]+)", views.TypeFilteredMediaList.as_view(), name="filter_media_api"),
     url(r"^media/show", views.MediaDetail.as_view(), name="media_detail"),

@@ -194,6 +194,47 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
         return .Copy
     }
     
+    override func draggingEnded(sender: NSDraggingInfo!) {
+        if NSPointInRect(sender.draggingLocation(), self.frame) {
+            handleDrop(sender)
+        }
+    }
+    
+    // Manually called instead of performDragOperation
+    // http://openradar.appspot.com/radar?id=1745403
+    func handleDrop(sender: NSDraggingInfo!) -> Bool {
+        var pboard = sender.draggingPasteboard();
+        var types = (pboard.types as NSArray)
+        var appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
+        var fileManager = NSFileManager.defaultManager()
         
+        if types.containsObject(NSFilenamesPboardType) {
+            var fileURL = NSURL.URLFromPasteboard(pboard)
+            var fileData = fileManager.contentsAtPath(fileURL.absoluteString)
+            var fileName = fileURL.lastPathComponent
+            
+            appDelegate.uploadFile(fileData, filename: fileName)
+            
+        } else if types.containsObject(NSURLPboardType) {
+            var url = NSURL.URLFromPasteboard(pboard)
+            
+            appDelegate.uploadLink(url)
+            
+        } else if types.containsObject(NSStringPboardType) {
+            var text = pboard.stringForType(NSStringPboardType) as NSString
+            
+            var legalChars = NSMutableCharacterSet.alphanumericCharacterSet()
+            legalChars.formUnionWithCharacterSet(NSCharacterSet.whitespaceCharacterSet())
+            legalChars.invert()
+            var filename = (text.componentsSeparatedByCharactersInSet(legalChars) as NSArray).componentsJoinedByString("") as NSString
+            filename = filename.substringToIndex(30 > text.length ? text.length : 30) + ".txt"
+            
+            var fileData = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+            
+            appDelegate.uploadFile(fileData, filename: filename)
+        }
+        
+        return true;
+    }
     
 }

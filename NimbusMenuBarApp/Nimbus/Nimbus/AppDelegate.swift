@@ -43,27 +43,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
             pb.clearContents()
             pb.writeObjects([shareURL.absoluteString])
             self.statusView.status = .Success
-        }, errorCallback: {() -> Void in
-            println("Error uploading file")
-            self.statusView.status = .Error
-        })
+            }, errorCallback: {() -> Void in
+                println("Error uploading file")
+                self.statusView.status = .Error
+            })
     }
     
-    
     func uploadLink(link: NSURL) {
-        println("Attempting to upload link...")
         statusView.status = .Working
         api.addLink(link, successCallback: {(shareURL: NSURL!) -> Void in
             var pb = NSPasteboard.generalPasteboard()
             pb.clearContents()
             pb.writeObjects([shareURL.absoluteString])
             self.statusView.status = .Success
-        }, errorCallback: {() -> Void in
-            println("Error uploading link")
-            self.statusView.status = .Error
-        })
+            }, errorCallback: {() -> Void in
+                println("Error uploading link")
+                self.statusView.status = .Error
+            })
         
     }
-    
-
 }

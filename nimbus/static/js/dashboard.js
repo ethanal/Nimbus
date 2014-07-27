@@ -27,7 +27,8 @@ $(function() {
         success: function(file, response) {
             resetDropzone(this.element);
             displayedMediaType = $("#media-list").data("media-type-code");
-            var mediaItem = $.parseJSON(response);
+            
+            var mediaItem = response;
             if (displayedMediaType == "ALL" || displayedMediaType == mediaItem.media_type) {
                 var $table = $("#media-list>table"),
                     $tbody = $("#media-list>table>tbody");

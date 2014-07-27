@@ -11,17 +11,17 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
     
     var statusView = StatusItemView()
-    var query = NSMetadataQuery()
     var prefs = PreferencesManager()
     var api = APIClient()
+    var sw: ScreenshotWatcher?
+    
+    init() {
+        super.init()
+    }
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        query.searchScopes = [self.screenCaptureLocation()]
-        query.predicate = NSPredicate(format: "kMDItemIsScreenCapture = 1")
-        query.delegate = self
-        query.notificationBatchingInterval = 0.1
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "uploadScreenshot:", name: NSMetadataQueryDidUpdateNotification, object: query)
-        query.startQuery()
+        sw = ScreenshotWatcher(uploadFileCallback: uploadFile);
+        sw!.startWatchingPath(screenCaptureLocation())
     }
     
     func screenCaptureLocation() -> String {
@@ -36,24 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
         return "~/Desktop".stringByExpandingTildeInPath + "/"
     }
     
-    func uploadScreenshot(notification: NSNotification) {
-        if prefs.uploadScreenshots == NSOffState {
-            return
-        }
-        
-        var metadataItem: NSMetadataItem? = notification.userInfo["kMDQueryUpdateAddedItems"]?.lastObject as? NSMetadataItem
-        
-        
-        if metadataItem {
-            var screenshotPath: NSString = metadataItem!.valueForAttribute(NSMetadataItemPathKey) as NSString
-            var urlOfFile = NSURL.fileURLWithPath(screenshotPath)
-            var fileData = NSFileManager.defaultManager().contentsAtPath(screenshotPath)
-            uploadFile(fileData, filename: urlOfFile.lastPathComponent)
-        }
-    }
-    
-    
-    func uploadFile(fileData: NSData, filename: NSString) {
+    func uploadFile(fileData: NSData!, filename: String!) {
         statusView.status = .Working
         api.addFile(fileData, filename: filename, successCallback: {(shareURL: NSURL!) -> Void in
             var pb = NSPasteboard.generalPasteboard()
@@ -84,4 +67,3 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
     
 
 }
-

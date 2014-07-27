@@ -31,12 +31,13 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     var status: StatusItemViewStatus = .Normal {
     didSet {
-//        println("status: \(status.toRaw())")
         switch status {
         case .Normal:
             progressFrame = 0
         case .Working:
-            progressFrame = 1
+            if oldValue != .Working {
+                progressFrame = 1
+            }
         default:
             progressFrame = 0
             
@@ -54,20 +55,18 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     var active: Bool = false {
     didSet {
-//        println("active: \(active)")
         self.updateUI()
     }
     }
     
     var progressFrame: Int = 0 {
     didSet {
-//        println("progressFrame: \(progressFrame)")
         delay(0.25) {
             if self.progressFrame != 0 {
                 self.progressFrame = 1 + (self.progressFrame % 3)
             }
         }
-    
+
         updateUI()
     }
     }
@@ -188,8 +187,6 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     func menuDidClose(menu: NSMenu!) {
         active = false
     }
-    
-    
     
     override func draggingEntered(sender: NSDraggingInfo!) -> NSDragOperation {
         return .Copy

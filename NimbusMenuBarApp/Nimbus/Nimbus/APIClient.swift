@@ -57,24 +57,23 @@ class APIClient: NSObject {
             
             if error {
                 print(responseString)
-                if let cb = errorCallback {
-                    cb()
+                if errorCallback {
+                    errorCallback!()
                 }
                 return
             }
-            
-            println(responseString)
+
             var responseJSON = JSONValue(data)
             
             if let token = responseJSON["token"].string {
-                if let cb = successCallback {
+                if successCallback {
                     self.authToken = token
-                    cb(token)
+                    successCallback!(token)
 
                 }
             } else  {
-                if let cb = errorCallback {
-                    cb()
+                if errorCallback {
+                    errorCallback!()
                 }
                 return
             }
@@ -104,20 +103,21 @@ class APIClient: NSObject {
             var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
             if error {
                 println(responseString)
-                if let cb = errorCallback {
-                    cb()
+                if errorCallback {
+                    errorCallback!()
                 }
                 return
             }
             
             var responseJSON = JSONValue(data)
+            
             if let shareURL = responseJSON["share_url"].url {
-                if let cb = successCallback {
-                    cb(shareURL)
+                if successCallback {
+                    successCallback!(shareURL)
                 }
             } else  {
-                if let cb = errorCallback {
-                    cb()
+                if errorCallback {
+                    errorCallback!()
                 }
                 return
             }
@@ -140,8 +140,8 @@ class APIClient: NSObject {
             
             if error {
                 println(responseString)
-                if let cb = errorCallback {
-                    cb()
+                if errorCallback {
+                    errorCallback!()
                 }
                 return
             }
@@ -149,12 +149,12 @@ class APIClient: NSObject {
             var responseJSON = JSONValue(data)
             
             if let shareURL = responseJSON["share_url"].url {
-                if let cb = successCallback {
-                    cb(shareURL)
+                if successCallback {
+                    successCallback!(shareURL)
                 }
             } else  {
-                if let cb = errorCallback {
-                    cb()
+                if errorCallback {
+                    errorCallback!()
                 }
                 return
             }

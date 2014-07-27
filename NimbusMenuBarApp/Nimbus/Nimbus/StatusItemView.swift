@@ -79,13 +79,13 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     var prefs = PreferencesManager()
     
-    @lazy var imageView: NSImageView = {
+    lazy var imageView: NSImageView = {
         let view:NSImageView = NSImageView(frame: self.statusItemRect)
         view.unregisterDraggedTypes()
         return view
         }()
     
-    @lazy var statusItemMenu: NSMenu = {
+    lazy var statusItemMenu: NSMenu = {
         let menu: NSMenu = NSMenu()
         menu.delegate = self
         menu.autoenablesItems = true
@@ -95,19 +95,19 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
         return menu
         }()
     
-    @lazy var websiteItem: NSMenuItem = {
+    lazy var websiteItem: NSMenuItem = {
         let item = NSMenuItem(title: "Launch Nimbus Website", action: "openWebsite:", keyEquivalent: "")
         item.target = self
         return item
         }()
     
-    @lazy var preferencesItem: NSMenuItem = {
+    lazy var preferencesItem: NSMenuItem = {
         let item = NSMenuItem(title: "Preferences", action: "openPreferences:", keyEquivalent: "")
         item.target = self
         return item
         }()
     
-    @lazy var quitItem: NSMenuItem = {
+    lazy var quitItem: NSMenuItem = {
         let item = NSMenuItem(title: "Quit", action: "quitApp:", keyEquivalent: "")
         item.target = self
         return item
@@ -116,8 +116,8 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     
     init() {
-        statusItemRect = NSMakeRect(0, 0, statusItemWidth, statusBarHeight)
-        statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(statusItemWidth)
+        statusItemRect = NSMakeRect(0, 0, CGFloat(statusItemWidth), CGFloat(statusBarHeight))
+        statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(CGFloat(statusItemWidth))
         
         super.init(frame: statusItemRect)
         
@@ -174,7 +174,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     func openPreferences(sender: NSStatusItem!) {
         if !preferencesWindowController {
-            preferencesWindowController = PreferencesWindowController(windowNibName: "PreferencesWindowController")
+            preferencesWindowController = PreferencesWindowController()
         }
         preferencesWindowController!.showWindow(self)
         NSApp.activateIgnoringOtherApps(true)
@@ -192,13 +192,9 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     
     override func draggingEntered(sender: NSDraggingInfo!) -> NSDragOperation {
-        println("entered")
         return .Copy
     }
     
-    override func draggingExited(sender: NSDraggingInfo!) {
         
-    }
-    
     
 }

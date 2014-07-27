@@ -16,14 +16,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
     var api = APIClient()
     
     func applicationDidFinishLaunching(aNotification: NSNotification?) {
-        initScreenshotWatcher()
-    }
-    
-    func initScreenshotWatcher() {
-        query.delegate = self
+        query.searchScopes = [self.screenCaptureLocation()]
         query.predicate = NSPredicate(format: "kMDItemIsScreenCapture = 1")
+        query.delegate = self
+        query.notificationBatchingInterval = 0.1
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "uploadScreenshot:", name: NSMetadataQueryDidUpdateNotification, object: query)
         query.startQuery()
+    }
+    
+    func screenCaptureLocation() -> String {
+        var screenCapturePrefs: NSDictionary? = NSUserDefaults.standardUserDefaults().persistentDomainForName("com.apple.screencapture")
+        
+        var location: NSString? = screenCapturePrefs?.valueForKey("location")?.stringByExpandingTildeInPath as NSString?
+        
+        if let loc = location {
+            return loc.hasSuffix("/") ? loc : (loc + "/")
+        }
+        
+        return "~/Desktop".stringByExpandingTildeInPath + "/"
     }
     
     func uploadScreenshot(notification: NSNotification) {
@@ -34,8 +44,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
         var metadataItem: NSMetadataItem? = notification.userInfo["kMDQueryUpdateAddedItems"]?.lastObject as? NSMetadataItem
         
         
-        if let item = metadataItem {
-            var screenshotPath: NSString = item.valueForAttribute(NSMetadataItemPathKey) as NSString
+        if metadataItem {
+            var screenshotPath: NSString = metadataItem!.valueForAttribute(NSMetadataItemPathKey) as NSString
             var urlOfFile = NSURL.fileURLWithPath(screenshotPath)
             var fileData = NSFileManager.defaultManager().contentsAtPath(screenshotPath)
             uploadFile(fileData, filename: urlOfFile.lastPathComponent)
@@ -50,10 +60,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
             pb.clearContents()
             pb.writeObjects([shareURL.absoluteString])
             self.statusView.status = .Success
-            }, errorCallback: {() -> Void in
-                println("Error uploading file")
-                self.statusView.status = .Error
-            })
+        }, errorCallback: {() -> Void in
+            println("Error uploading file")
+            self.statusView.status = .Error
+        })
     }
     
     
@@ -65,10 +75,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
             pb.clearContents()
             pb.writeObjects([shareURL.absoluteString])
             self.statusView.status = .Success
-            }, errorCallback: {() -> Void in
-                println("Error uploading link")
-                self.statusView.status = .Error
-            })
+        }, errorCallback: {() -> Void in
+            println("Error uploading link")
+            self.statusView.status = .Error
+        })
         
     }
     

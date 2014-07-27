@@ -61,9 +61,11 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     var progressFrame: Int = 0 {
     didSet {
-        delay(0.25) {
-            if self.progressFrame != 0 {
-                self.progressFrame = 1 + (self.progressFrame % 3)
+        if self.progressFrame != 0 {
+            delay(0.25) {
+                if self.progressFrame != 0 {
+                    self.progressFrame = 1 + (self.progressFrame % 3)
+                }
             }
         }
 

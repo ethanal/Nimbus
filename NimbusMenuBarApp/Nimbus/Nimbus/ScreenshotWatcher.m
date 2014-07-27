@@ -38,6 +38,7 @@ void fsEventsCallback(ConstFSEventStreamRef streamRef,
     for (int i = 0; i < numEvents; i++) {
         NSString *path = [NSString stringWithUTF8String:paths[i]];
         NSURL *fileURL = [NSURL fileURLWithPath:path];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
         
         if ((eventFlags[i] & kFSEventStreamEventFlagItemRenamed) && !(eventFlags[i] & kFSEventStreamEventFlagItemInodeMetaMod)) {
             if (![fileURL.lastPathComponent hasPrefix:@"."]) {
@@ -45,7 +46,7 @@ void fsEventsCallback(ConstFSEventStreamRef streamRef,
                 if ([[metadata attributes] containsObject:@"kMDItemIsScreenCapture"]) {
                     BOOL isScreenshot = [[metadata valueForAttribute:@"kMDItemIsScreenCapture"] integerValue] == 1;
                     if (isScreenshot) {
-                        NSData *fileData = [[NSFileManager defaultManager] contentsAtPath:path];
+                        NSData *fileData = [fileManager contentsAtPath:path];
                         ScreenshotWatcher *watcher = (__bridge ScreenshotWatcher*)info;
                         watcher.uploadCallback(fileData, path);
                     }

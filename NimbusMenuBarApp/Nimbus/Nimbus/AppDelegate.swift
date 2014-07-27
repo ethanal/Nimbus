@@ -50,6 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
             var pb = NSPasteboard.generalPasteboard()
             pb.clearContents()
             pb.writeObjects([shareURL.absoluteString])
+            self.statusView.status = .Success
             }, errorCallback: {() -> Void in
                 println("Error uploading file")
                 self.statusView.status = .Error
@@ -64,10 +65,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
             var pb = NSPasteboard.generalPasteboard()
             pb.clearContents()
             pb.writeObjects([shareURL.absoluteString])
+            self.statusView.status = .Success
             }, errorCallback: {() -> Void in
                 println("Error uploading link")
                 self.statusView.status = .Error
             })
+        
     }
     
 

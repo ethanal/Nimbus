@@ -29,15 +29,17 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     let statusBarHeight = NSStatusBar.systemStatusBar().thickness
     let statusItemRect: NSRect
     
-    var status: StatusItemViewStatus {
+    var status: StatusItemViewStatus = .Normal {
     didSet {
-        println(status.toRaw())
+//        println("status: \(status.toRaw())")
         switch status {
         case .Normal:
-            break
+            progressFrame = 0
         case .Working:
-            break
+            progressFrame = 1
         default:
+            progressFrame = 0
+            
             var statusAtDispatch = status
             delay(2.0) {
                 if statusAtDispatch == self.status {
@@ -50,13 +52,25 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     }
     }
     
-    var active: Bool {
+    var active: Bool = false {
     didSet {
+//        println("active: \(active)")
         self.updateUI()
     }
     }
     
-    var progressIndex: Int
+    var progressFrame: Int = 0 {
+    didSet {
+//        println("progressFrame: \(progressFrame)")
+        delay(0.25) {
+            if self.progressFrame != 0 {
+                self.progressFrame = 1 + (self.progressFrame % 3)
+            }
+        }
+    
+        updateUI()
+    }
+    }
     
     
     var statusItem: NSStatusItem
@@ -102,9 +116,6 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     init() {
         statusItemRect = NSMakeRect(0, 0, statusItemWidth, statusBarHeight)
-        active = false
-        status = .Normal
-        progressIndex = 0
         statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(statusItemWidth)
         
         super.init(frame: statusItemRect)
@@ -127,18 +138,22 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     }
     
     func updateUI() {
-        if status != .Working {
-            var imageNames: Dictionary<StatusItemViewStatus, String> = [
-                .Normal: "menubar",
-                .Error: "menubar-error",
-                .Success: "menubar-success",
-            ]
-            self.imageView.image = NSImage(named: active ? "menubar-highlighted" : imageNames[status])
-            self.needsDisplay = true
+        if (active) {
+            self.imageView.image = NSImage(named: "menubar-highlighted")
         } else {
-            
+            if status != .Working {
+                var imageNames: Dictionary<StatusItemViewStatus, String> = [
+                    .Normal: "menubar",
+                    .Error: "menubar-error",
+                    .Success: "menubar-success",
+                ]
+                self.imageView.image = NSImage(named: imageNames[status])
+            } else {
+                self.imageView.image = NSImage(named: "menubar-progress-\(progressFrame)")
+            }
         }
         
+        self.needsDisplay = true
     }
     
     override func mouseDown(theEvent: NSEvent!) {

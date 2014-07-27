@@ -44,7 +44,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
     
     
     func uploadFile(fileData: NSData, filename: NSString) {
-        println("Attempting to upload file...")
         statusView.status = .Working
         api.addFile(fileData, filename: filename, successCallback: {(shareURL: NSURL!) -> Void in
             var pb = NSPasteboard.generalPasteboard()

@@ -80,7 +80,8 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     var prefs = PreferencesManager()
     
     @lazy var imageView: NSImageView = {
-        let view = NSImageView(frame: self.statusItemRect)
+        let view:NSImageView = NSImageView(frame: self.statusItemRect)
+        view.unregisterDraggedTypes()
         return view
         }()
     
@@ -123,6 +124,8 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
         statusItem.view = self
         statusItem.menu = statusItemMenu
         self.addSubview(imageView)
+        
+        self.registerForDraggedTypes([NSFilenamesPboardType, NSURLPboardType, NSStringPboardType])
         
         updateUI()
     }
@@ -185,4 +188,17 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     func menuDidClose(menu: NSMenu!) {
         active = false
     }
+    
+    
+    
+    override func draggingEntered(sender: NSDraggingInfo!) -> NSDragOperation {
+        println("entered")
+        return .Copy
+    }
+    
+    override func draggingExited(sender: NSDraggingInfo!) {
+        
+    }
+    
+    
 }

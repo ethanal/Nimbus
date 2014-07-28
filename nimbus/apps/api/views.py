@@ -41,9 +41,7 @@ class MediaDetail(generics.RetrieveAPIView):
             raise URLHashParameterRequiredException()
 
         queryset = Media.objects.filter(user=self.request.user)
-        return get_object_or_404(queryset, {
-            "url_hash": self.request.QUERY_PARAMS["url_hash"]
-        })
+        return get_object_or_404(queryset, url_hash=self.request.QUERY_PARAMS["url_hash"])
 
 
 class AddFile(views.APIView):

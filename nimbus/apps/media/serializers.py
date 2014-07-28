@@ -71,7 +71,7 @@ class ViewCreatedLinkSerializer(serializers.ModelSerializer):
     share_url = serializers.SerializerMethodField("get_share_url")
 
     def get_share_url(self, obj):
-        _get_share_url(obj)
+        return _get_share_url(obj)
 
     class Meta:
         model = Media

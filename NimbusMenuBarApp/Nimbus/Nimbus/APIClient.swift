@@ -72,6 +72,7 @@ class APIClient: NSObject {
 
                 }
             } else  {
+                println(responseString)
                 if errorCallback {
                     errorCallback!()
                 }
@@ -116,6 +117,7 @@ class APIClient: NSObject {
                     successCallback!(shareURL)
                 }
             } else  {
+                println(responseString)
                 if errorCallback {
                     errorCallback!()
                 }
@@ -148,11 +150,13 @@ class APIClient: NSObject {
             
             var responseJSON = JSONValue(data)
             
+            
             if let shareURL = responseJSON["share_url"].url {
                 if successCallback {
                     successCallback!(shareURL)
                 }
             } else  {
+                println(responseString)
                 if errorCallback {
                     errorCallback!()
                 }

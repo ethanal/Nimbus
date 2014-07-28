@@ -21,10 +21,9 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var usernameLabel: NSTextField!
     @IBOutlet weak var passwordLabel: NSTextField!
     
-    init() {
-        super.init()
+    init(window: NSWindow?){
+        super.init(window: window);
     }
-    
     
     override func windowDidLoad() {
         super.windowDidLoad()

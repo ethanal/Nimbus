@@ -20,32 +20,36 @@ To set up the Django app, perform the following steps on your server (assumes [p
 1. Create a virtualenv and activate it
 2. Clone the repository (from here on, it is assumed that the respository's location is `/usr/local/www/Nimbus`)
 3. While in the repository root, install the Python requirements by running
-
-       pip install -r requirements/production.txt
-4. Create a database and grant a user full access to it
+```bash
+pip install -r requirements/production.txt
+```
+4. Create a database and grant a user full access to it5.
 5. Follow the instructions in `nimbus/settings/secret.sample.py` to create a secrets file with your MySQL and Amazon S3 credentials
 6. Set up the environment for the Django app by running
-
-       export PRODUCTION=TRUE
-7. Set up the database and create your user by running `./manage.py syncdb`       
+```bash
+export PRODUCTION=TRUE
+```
+7. Set up the database and create your user by running `./manage.py syncdb`
 8. Start a Django shell (`./manage.py shell`) and run the following commands, replacing `example.com` with your domain name
-
-       from django.contrib.sites.models import Site
-       Site.objects.update(name="example.com", domain="example.com")       
-
+```python
+from django.contrib.sites.models import Site
+Site.objects.update(name="example.com", domain="example.com")
+```
 9. Collect static files by running
-
-       yes yes | ./manage.py collectstatic
-
+```bash
+yes yes | ./manage.py collectstatic
+```
 
 ###Serving Nimbus
 
 Make sure you have a domain name configured with the following records:
 
-    @	    IN A	<IP address of your server>
-    api	    CNAME	@
-    account	CNAME	@
-    files	CNAME	files.<your domain name>.s3.amazonaws.com.
+```
+@	    IN A	<IP address of your server>
+api	    CNAME	@
+account	CNAME	@
+files	CNAME	files.<your domain name>.s3.amazonaws.com.
+```
 
 Also make sure you have an Amazon S3 bucket called `files.<your domain name>`
 
@@ -58,40 +62,43 @@ The recommended setup for serving Nimbus is [Gunicorn](http://gunicorn.org/) man
 * Supervisor must call the version of gunicorn in your virtualenv
 
 ####Example Supervisor Configuration
-    [program:nimbus]
-    directory = /usr/local/www/Nimbus
-    user = nobody
-    command = /usr/local/virtualenvs/Nimbus/bin/gunicorn nimbus.wsgi:application --user=nobody --workers=1 --bind=127.0.0.1:8080
-    environment = PRODUCTION=TRUE
-    stdout_logfile = /var/log/sites/nimbus.gunicorn.log
-    stderr_logfile = /var/log/sites/nimbus.gunicorn.log
-    autostart = true
-    autorestart = true
-
+```ini
+[program:nimbus]
+directory = /usr/local/www/Nimbus
+user = nobody
+command = /usr/local/virtualenvs/Nimbus/bin/gunicorn nimbus.wsgi:application --user=nobody --workers=1 --bind=127.0.0.1:8080
+environment = PRODUCTION=TRUE
+stdout_logfile = /var/log/sites/nimbus.gunicorn.log
+stderr_logfile = /var/log/sites/nimbus.gunicorn.log
+autostart = true
+autorestart = true
+```
 ####Example Nginx Configuration
-    client_max_body_size 1024M;
-    
-    server {
-        listen 80;
-        server_name example.com account.example.com api.example.com;
-    
-        access_log /var/log/sites/nimbus.access.log;
-        error_log /var/log/sites/nimbus.error.log;
-    
-        location /favicon.ico {
-            alias /usr/local/www/Nimbus/nimbus/static/img/favicon.ico;
-        }
-        
-        location /static/ {
-            alias /usr/local/www/Nimbus/nimbus/collected_static/;
-        }
-    
-        location / {
-            rewrite ^/((?!(api-auth|admin))(.*))/$ /$1 permanent;
-            proxy_pass http://127.0.0.1:8080;
-            proxy_set_header X-Forwarded-Host $host;
-            proxy_set_header Host $host;
-            proxy_set_header X-Real-IP $remote_addr;
-    
-        }
+```nginx
+client_max_body_size 1024M;
+
+server {
+    listen 80;
+    server_name example.com account.example.com api.example.com;
+
+    access_log /var/log/sites/nimbus.access.log;
+    error_log /var/log/sites/nimbus.error.log;
+
+    location /favicon.ico {
+        alias /usr/local/www/Nimbus/nimbus/static/img/favicon.ico;
     }
+
+    location /static/ {
+        alias /usr/local/www/Nimbus/nimbus/collected_static/;
+    }
+
+    location / {
+        rewrite ^/((?!(api-auth|admin))(.*))/$ /$1 permanent;
+        proxy_pass http://127.0.0.1:8080;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+
+    }
+}
+```

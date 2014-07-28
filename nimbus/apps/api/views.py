@@ -85,7 +85,7 @@ class AddLink(generics.CreateAPIView):
         return response
 
 
-@api_view(("POST",))
+@api_view(("DELETE",))
 def delete_media(request):
     user = request.user
     ids = request.QUERY_PARAMS.getlist("id")

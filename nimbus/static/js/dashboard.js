@@ -27,7 +27,7 @@ $(function() {
         success: function(file, response) {
             resetDropzone(this.element);
             displayedMediaType = $("#media-list").data("media-type-code");
-            
+
             var mediaItem = response;
             if (displayedMediaType == "ALL" || displayedMediaType == mediaItem.media_type) {
                 var $table = $("#media-list>table"),
@@ -81,17 +81,17 @@ $(function() {
         $(this).text("Deleting...");
 
         var $rows = [];
-        var ids = $.map($(".delete-checkbox").filter(":checked"), function(e){
+        var hashes = $.map($(".delete-checkbox").filter(":checked"), function(e){
             var $p = $(e).parent().parent();
-            var id = $p.data("id");
+            var hash = $p.data("url_hash");
             $rows.push($p);
-            return id;
+            return hash;
         });
 
-        var getVars = ids.map(function(id){return "id=" + id}).join("&");
+        var params = hashes.map(function(hash){return "url_hash=" + hash}).join("&");
         var button = this;
         $.ajax({
-            url: $(this).data("delete-api-endpoint") + "?" + getVars,
+            url: $(this).data("delete-api-endpoint") + "?" + params,
             type: "DELETE",
             xhrFields: {
                 withCredentials: true

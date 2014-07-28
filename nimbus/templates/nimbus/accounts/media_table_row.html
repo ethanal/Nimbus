@@ -1,6 +1,6 @@
 {% load subdomainurls %}
 
-<tr data-id="{{ media_item.id }}">
+<tr data-url_hash="{{ media_item.url_hash }}">
     <td>
         <input type="checkbox" class="delete-checkbox">
         <a href="{% url 'share' subdomain=None url_hash=media_item.url_hash %}" title="{{ media_item.name }}">

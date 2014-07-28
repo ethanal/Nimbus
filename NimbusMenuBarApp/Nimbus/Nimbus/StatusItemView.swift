@@ -175,7 +175,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     func openPreferences(sender: NSStatusItem!) {
         if !preferencesWindowController {
-            preferencesWindowController = PreferencesWindowController()
+            preferencesWindowController = PreferencesWindowController(windowNibName: "PreferencesWindowController")
         }
         preferencesWindowController!.showWindow(self)
         NSApp.activateIgnoringOtherApps(true)

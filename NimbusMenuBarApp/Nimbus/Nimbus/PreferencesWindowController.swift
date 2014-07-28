@@ -12,18 +12,14 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     var prefs = PreferencesManager()
     var api = APIClient()
     
-    @IBOutlet weak var hostnameField: NSTextField!
-    @IBOutlet weak var usernameField: NSTextField!
-    @IBOutlet weak var passwordField: NSSecureTextField!
-    @IBOutlet weak var uploadScreenshotsCheckbox: NSButton!
-    @IBOutlet weak var accountActionButton: NSButton!
-    @IBOutlet weak var hostnameLabel: NSTextField!
-    @IBOutlet weak var usernameLabel: NSTextField!
-    @IBOutlet weak var passwordLabel: NSTextField!
-    
-    init(window: NSWindow?){
-        super.init(window: window);
-    }
+    @IBOutlet weak var hostnameField: NSTextField?
+    @IBOutlet weak var usernameField: NSTextField?
+    @IBOutlet weak var passwordField: NSSecureTextField?
+    @IBOutlet weak var uploadScreenshotsCheckbox: NSButton?
+    @IBOutlet weak var accountActionButton: NSButton?
+    @IBOutlet weak var hostnameLabel: NSTextField?
+    @IBOutlet weak var usernameLabel: NSTextField?
+    @IBOutlet weak var passwordLabel: NSTextField?
     
     override func windowDidLoad() {
         super.windowDidLoad()
@@ -31,17 +27,17 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func uploadScreenshotsCheckboxPressed(sender: AnyObject) {
-        prefs.uploadScreenshots = uploadScreenshotsCheckbox.state
+        prefs.uploadScreenshots = uploadScreenshotsCheckbox!.state
     }
 
     @IBAction func accountActionButtonPressed(sender: AnyObject) {
         KeychainManager.loadUsername()
         if !prefs.loggedIn {
-            prefs.hostname = hostnameField.stringValue
+            prefs.hostname = hostnameField!.stringValue
             
-            api.getTokenForUsername(usernameField.stringValue, password: passwordField.stringValue, successCallback: {(token: NSString!) -> Void in
+            api.getTokenForUsername(usernameField!.stringValue, password: passwordField!.stringValue, successCallback: {(token: NSString!) -> Void in
                 self.prefs.loggedIn = true
-                KeychainManager.saveToken(token, username: self.usernameField.stringValue)
+                KeychainManager.saveToken(token, username: self.usernameField!.stringValue)
 
                 self.updateAccountUI()
                 }, errorCallback: {() -> Void in
@@ -60,40 +56,40 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     }
     
     func updateAccountUI() {
-        uploadScreenshotsCheckbox.state = prefs.uploadScreenshots
+        uploadScreenshotsCheckbox!.state = prefs.uploadScreenshots
 
         if prefs.loggedIn {
-            accountActionButton.title = "Logout"
+            accountActionButton!.title = "Logout"
             
-            hostnameField.hidden = true
-            hostnameLabel.hidden = false
-            hostnameLabel.stringValue = prefs.hostname
+            hostnameField!.hidden = true
+            hostnameLabel!.hidden = false
+            hostnameLabel!.stringValue = prefs.hostname
             
-            usernameField.hidden = true
-            usernameLabel.hidden = false
+            usernameField!.hidden = true
+            usernameLabel!.hidden = false
             if let u = KeychainManager.loadUsername() {
-                usernameLabel.stringValue = u
+                usernameLabel!.stringValue = u
             } else {
-                usernameLabel.stringValue = ""
+                usernameLabel!.stringValue = ""
             }
             
-            passwordField.hidden = true
-            passwordLabel.hidden = true
+            passwordField!.hidden = true
+            passwordLabel!.hidden = true
             
         } else {
-            accountActionButton.title = "Login"
+            accountActionButton!.title = "Login"
             
-            hostnameField.hidden = false
-            hostnameField.stringValue = ""
-            hostnameLabel.hidden = true
+            hostnameField!.hidden = false
+            hostnameField!.stringValue = ""
+            hostnameLabel!.hidden = true
             
-            usernameField.hidden = false
-            usernameField.stringValue = ""
-            usernameLabel.hidden = true
+            usernameField!.hidden = false
+            usernameField!.stringValue = ""
+            usernameLabel!.hidden = true
             
-            passwordField.hidden = false
-            passwordField.stringValue = ""
-            passwordLabel.hidden = false
+            passwordField!.hidden = false
+            passwordField!.stringValue = ""
+            passwordLabel!.hidden = false
         }
     }
     

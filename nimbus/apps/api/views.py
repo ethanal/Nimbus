@@ -88,6 +88,6 @@ class AddLink(generics.CreateAPIView):
 @api_view(("DELETE",))
 def delete_media(request):
     user = request.user
-    ids = request.QUERY_PARAMS.getlist("id")
-    Media.objects.filter(user=user, id__in=ids).delete()
+    hashes = request.QUERY_PARAMS.getlist("url_hash")
+    Media.objects.filter(user=user, url_hash__in=hashes).delete()
     return Response(status=204)

@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
-from rest_framework import generics, views, status
+from rest_framework import generics, views, status, APIException
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
@@ -8,27 +8,9 @@ from nimbus.apps.media.models import Media
 from nimbus.apps.media.serializers import MediaSerializer, CreateLinkSerializer, ViewCreatedFileSerializer, ViewCreatedLinkSerializer
 
 
-class MultipleFieldLookupMixin(object):
-    """
-    Apply this mixin to any view or viewset to get multiple field filtering
-    based on a `lookup_fields` attribute, instead of the default single field filtering.
-    """
-    def get_object(self):
-        queryset = self.get_queryset()             # Get the base queryset
-        queryset = self.filter_queryset(queryset)  # Apply any filter backends
-
-        filter = {}
-
-        for field in self.lookup_fields:
-            if field in self.request.QUERY_PARAMS:
-                filter[field] = self.request.QUERY_PARAMS[field]
-        if len(filter.items()) == 0:
-            msg = {
-                "detail": "At least one query parameter is required."
-                          "Valid options are: " + ", ".join(map(lambda x: "'{}'".format(x), self.lookup_fields)) + "."
-            }
-            return Response(msg, status=status.HTTP_400_BAD_REQUEST)
-        return get_object_or_404(queryset, **filter)  # Lookup the object
+class URLHashParameterRequiredException(APIException):
+    status_code = 400
+    default_detail = "'url_hash' parameter required"
 
 
 @api_view(("GET",))
@@ -50,13 +32,17 @@ class MediaList(generics.ListAPIView):
         return Media.objects.filter(user=user)
 
 
-class MediaDetail(MultipleFieldLookupMixin, generics.RetrieveAPIView):
+class MediaDetail(generics.RetrieveAPIView):
     serializer_class = MediaSerializer
-    lookup_fields = ("url_hash",)
 
-    def get_queryset(self):
-        user = self.request.user
-        return Media.objects.filter(user=user)
+    def get_object(self):
+        if "url_hash" not in self.request.QUERY_PARAMS:
+            raise URLHashParameterRequiredException()
+
+        queryset = Media.objects.filter(user=self.request.user)
+        return get_object_or_404(queryset, {
+            "url_hash": self.request.QUERY_PARAMS["url_hash"]
+        })
 
 
 class AddFile(views.APIView):

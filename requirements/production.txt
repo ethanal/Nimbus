@@ -1,2 +1,4 @@
 -r base.txt
+
+gunicorn==19.0.0
 MySQL-python==1.2.5

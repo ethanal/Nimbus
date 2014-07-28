@@ -213,11 +213,14 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
             var fileData = fileManager.contentsAtPath(fileURL.absoluteString)
             var fileName = fileURL.lastPathComponent
             
-            appDelegate.uploadFile(fileData, filename: fileName)
+            if (fileData != nil) && (fileName != nil) {
+                appDelegate.uploadFile(fileData!, filename: fileName!)
+            } else {
+                status = .Error
+            }
             
         } else if types.containsObject(NSURLPboardType) {
             var url = NSURL.URLFromPasteboard(pboard)
-            
             appDelegate.uploadLink(url)
             
         } else if types.containsObject(NSStringPboardType) {
@@ -231,7 +234,11 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
             
             var fileData = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
             
-            appDelegate.uploadFile(fileData, filename: filename)
+            if (fileData != nil) && (filename != nil) {
+                appDelegate.uploadFile(fileData, filename: filename)
+            } else {
+                status = .Error
+            }
         }
         
         return true;

@@ -5,6 +5,7 @@
 
 #cloud-logo {
     margin: 20px;
+    height: 240px;
 }
 
 h1 {
@@ -14,3 +15,5 @@ h1 {
 #login-form .form-control {
     margin-bottom: 6px;
 }
+
+

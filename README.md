@@ -20,25 +20,32 @@ To set up the Django app, perform the following steps on your server (assumes [p
 1. Create a virtualenv and activate it
 2. Clone the repository (from here on, it is assumed that the respository's location is `/usr/local/www/Nimbus`)
 3. While in the repository root, install the Python requirements by running
-   ```bash
-   pip install -r requirements/production.txt
-   ```
+
+    ```bash
+    pip install -r requirements/production.txt
+    ```
+
 4. Create a database and grant a user full access to it5.
 5. Follow the instructions in `nimbus/settings/secret.sample.py` to create a secrets file with your MySQL and Amazon S3 credentials
 6. Set up the environment for the Django app by running
-   ```bash
-   export PRODUCTION=TRUE
-   ```
+
+    ```bash
+    export PRODUCTION=TRUE
+    ```
+
 7. Set up the database and create your user by running `./manage.py syncdb`
 8. Start a Django shell (`./manage.py shell`) and run the following commands, replacing `example.com` with your domain name
-   ```python
-   from django.contrib.sites.models import Site
-   Site.objects.update(name="example.com", domain="example.com")
-   ```
+
+    ```python
+    from django.contrib.sites.models import Site
+    Site.objects.update(name="example.com", domain="example.com")
+    ```
+
 9. Collect static files by running
-   ```bash
-   yes yes | ./manage.py collectstatic
-   ```
+
+    ```bash
+    yes yes | ./manage.py collectstatic
+    ```
 
 ###Serving Nimbus
 

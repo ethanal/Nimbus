@@ -210,7 +210,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
         
         if types.containsObject(NSFilenamesPboardType) {
             var fileURL = NSURL.URLFromPasteboard(pboard)
-            var fileData = fileManager.contentsAtPath(fileURL.absoluteString)
+            var fileData = fileManager.contentsAtPath(fileURL.path)
             var fileName = fileURL.lastPathComponent
             
             if (fileData != nil) && (fileName != nil) {

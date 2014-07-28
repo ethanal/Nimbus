@@ -22,6 +22,12 @@ class MultipleFieldLookupMixin(object):
         for field in self.lookup_fields:
             if field in self.request.QUERY_PARAMS:
                 filter[field] = self.request.QUERY_PARAMS[field]
+        if len(filter.items()) == 0:
+            msg = {
+                "detail": "At least one query parameter is required."
+                          "Valid options are: " + ", ".join(map(lambda x: "'{}'".format(x), self.lookup_fields)) + "."
+            }
+            return Response(msg, status=status.HTTP_400_BAD_REQUEST)
         return get_object_or_404(queryset, **filter)  # Lookup the object
 
 

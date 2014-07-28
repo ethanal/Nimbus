@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
-from rest_framework import generics, views, status, APIException
+from rest_framework import generics, views, status
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import APIException
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from nimbus.apps.media.models import Media

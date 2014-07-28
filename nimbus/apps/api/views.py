@@ -6,7 +6,6 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from nimbus.apps.media.models import Media
 from nimbus.apps.media.serializers import MediaSerializer, CreateLinkSerializer, ViewCreatedFileSerializer, ViewCreatedLinkSerializer
-from .exceptions import InvalidFilter
 
 
 class MultipleFieldLookupMixin(object):
@@ -40,22 +39,9 @@ class MediaList(generics.ListAPIView):
 
     def get_queryset(self):
         user = self.request.user
+        if "media_type" in self.request.QUERY_PARAMS:
+            return Media.objects.filter(user=user, media_type=self.requeset.QUERY_PARAMS["media_type"])
         return Media.objects.filter(user=user)
-
-
-class TypeFilteredMediaList(generics.ListAPIView):
-    serializer_class = MediaSerializer
-
-    def get(self, request, *args, **kwargs):
-        valid_types = [m[0] for m in Media.MEDIA_TYPES]
-        if self.kwargs["media_type"] not in valid_types:
-            detail = "Invalid media type. Valid options are ({}).".format(", ".join(valid_types))
-            raise InvalidFilter(detail=detail)
-        return super(TypeFilteredMediaList, self).get(request, *args, **kwargs)
-
-    def get_queryset(self):
-        user = self.request.user
-        return Media.objects.filter(user=user, media_type=self.kwargs["media_type"])
 
 
 class MediaDetail(MultipleFieldLookupMixin, generics.RetrieveAPIView):

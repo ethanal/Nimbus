@@ -1,6 +1,7 @@
+
 #Nimbus
 
-Nimbus is a private file sharer and url shortener. Heavily inspired by [Cloudapp](http://www.getcloudapp.com/), Nimbus is a free and open source solution to file sharing and url shortening that you can host yourself and fully control.
+Nimbus is a private file sharer and URL shortener. Heavily inspired by [Cloudapp](http://www.getcloudapp.com/), Nimbus is a free and open source solution to file sharing and URL shortening that you can host yourself and fully control.
 
 Nimbus consists of several components:
 
@@ -9,9 +10,16 @@ Nimbus consists of several components:
 * An API to manipulate shared items
 * A Mac OS X menubar app to upload files and shorten links
 
-The menubar app is only compatible with OS X 10.9 and up since it is written in [Swift](https://developer.apple.com/swift/).
+The menubar app is only compatible with OS X 10.9 and up since it is written in [Swift](https://developer.apple.com/swift/). The files are stored in Amazon S3, so you must have an AWS account.
 
-The files are stored in Amazon S3, so you must have an AWS account.
+##Features
+
+- Screenshots are automatically uploaded and the share link is copied to the clipboard
+- Drag a file or text to the menubar icon to upload it and copy the share link to the clipboard
+- Drag a URL to the menubar icon to create a shortened link and copy it to the clipboard
+- Keep track of view counts for files and shortened URLS with the web interface
+
+
 
 ##Setup
 
@@ -21,31 +29,31 @@ To set up the Django app, perform the following steps on your server (assumes [p
 2. Clone the repository (from here on, it is assumed that the respository's location is `/usr/local/www/Nimbus`)
 3. While in the repository root, install the Python requirements by running
 
-    ```bash
-    pip install -r requirements/production.txt
-    ```
+   ```bash
+   pip install -r requirements/production.txt
+   ```
 
 4. Create a database and grant a user full access to it5.
 5. Follow the instructions in `nimbus/settings/secret.sample.py` to create a secrets file with your MySQL and Amazon S3 credentials
 6. Set up the environment for the Django app by running
 
-    ```bash
-    export PRODUCTION=TRUE
-    ```
+   ```bash
+   export PRODUCTION=TRUE
+   ```
 
 7. Set up the database and create your user by running `./manage.py syncdb`
 8. Start a Django shell (`./manage.py shell`) and run the following commands, replacing `example.com` with your domain name
 
-    ```python
-    from django.contrib.sites.models import Site
-    Site.objects.update(name="example.com", domain="example.com")
-    ```
+   ```python
+   from django.contrib.sites.models import Site
+   Site.objects.update(name="example.com", domain="example.com")
+   ```
 
 9. Collect static files by running
 
-    ```bash
-    yes yes | ./manage.py collectstatic
-    ```
+   ```bash
+   yes yes | ./manage.py collectstatic
+   ```
 
 ###Serving Nimbus
 
@@ -69,6 +77,7 @@ The recommended setup for serving Nimbus is [Gunicorn](http://gunicorn.org/) man
 * Supervisor must call the version of gunicorn in your virtualenv
 
 ####Example Supervisor Configuration
+
 ```ini
 [program:nimbus]
 directory = /usr/local/www/Nimbus
@@ -80,6 +89,7 @@ stderr_logfile = /var/log/sites/nimbus.gunicorn.log
 autostart = true
 autorestart = true
 ```
+
 ####Example Nginx Configuration
 ```nginx
 client_max_body_size 1024M;
@@ -109,3 +119,61 @@ server {
     }
 }
 ```
+
+##API Reference
+
+The authe
+
+The term "media item" refers to a file or a shortened link.
+
+***
+
+###Obtain Authorization Token
+Obtain the API authorization token corresponding to a username/password pair.
+
+###List Media Items
+List all media items created by the authorized user.
+
+###List Media Items With Media Type
+List all media items with the specified media type.
+
+###Show Media Item Details
+Show details for a media item.
+
+###Upload File
+Create a media item for a file.
+
+***
+
+###Add Link
+Create a media item for a URL.
+
+####Request
+- Requires: [Authentication](#obtain-authorization-token)
+- HTTP Request Method: `POST`
+- URL: `/media/add_link`
+- Body:
+
+  ```js
+  {
+    "target_url": "http://en.wikipedia.org/wiki/Example"
+  }
+  ```
+
+####Response
+- Status: 201 CREATED
+- Body:
+
+  ```js
+  {
+      "url_hash": "i7UrcU",
+      "share_url": "http://example.com/i7UrcU",
+      "target_url": "http://en.wikipedia.org/wiki/Example",
+      "upload_date": "2014-01-02T03:04:05.567Z"
+  }
+  ```
+
+***
+
+###Delete Media Item
+Delete a media item.

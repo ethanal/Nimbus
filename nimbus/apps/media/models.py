@@ -6,9 +6,11 @@ from pygments.formatters import HtmlFormatter
 from django.db import models
 from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
+from rest_framework.authtoken.models import Token
 from .utils import url_hash_from_pk
 
 
@@ -142,3 +144,10 @@ def delete_file_from_storage(sender, **kwargs):
 
     if instance.target_file:
         instance.target_file.delete()
+
+
+# No real better place to put this...
+@receiver(post_save, sender=get_user_model())
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)

@@ -43,15 +43,13 @@ void fsEventsCallback(ConstFSEventStreamRef streamRef,
         if ((eventFlags[i] & kFSEventStreamEventFlagItemRenamed) && !(eventFlags[i] & kFSEventStreamEventFlagItemInodeMetaMod)) {
             if (![fileURL.lastPathComponent hasPrefix:@"."]) {
                 NSMetadataItem *metadata = [[NSMetadataItem alloc] initWithURL:fileURL];
-                if (metadata != nil && [[metadata attributes] containsObject:@"kMDItemIsScreenCapture"]) {
+                if ([fileManager fileExistsAtPath:path]) {
                     BOOL isScreenshot = [[metadata valueForAttribute:@"kMDItemIsScreenCapture"] integerValue] == 1;
                     if (isScreenshot) {
                         NSData *fileData = [fileManager contentsAtPath:path];
                         ScreenshotWatcher *watcher = (__bridge ScreenshotWatcher*)info;
                         watcher.uploadCallback(fileData, path);
                     }
-                } else {
-                    NSLog(@"Bad URL: %@", fileURL);
                 }
             }
 

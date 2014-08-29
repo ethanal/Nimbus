@@ -15,14 +15,44 @@
 
 @end
 
+static NSMutableSet *uploadedFilenames;
+
 @implementation ScreenshotWatcher
 
 - (instancetype)initWithUploadFileCallback:(FileCallbackBlock) callback {
     self = [super init];
     if (self) {
+        if (uploadedFilenames == nil) {
+            uploadedFilenames = [NSMutableSet new];
+        }
+        
         self.uploadCallback = callback;
     }
     return self;
+}
+
+void describeFSEvent(FSEventStreamEventFlags eventFlags) {
+    // if (eventFlags & kFSEventStreamEventFlagNone)               printf("None\t");
+    if (eventFlags & kFSEventStreamEventFlagMustScanSubDirs)    printf("MustScanSubDirs\t");
+    if (eventFlags & kFSEventStreamEventFlagUserDropped)        printf("UserDropped\t");
+    if (eventFlags & kFSEventStreamEventFlagKernelDropped)      printf("KernelDropped\t");
+    if (eventFlags & kFSEventStreamEventFlagEventIdsWrapped)    printf("EventIdsWrapped\t");
+    if (eventFlags & kFSEventStreamEventFlagHistoryDone)        printf("HistoryDone\t");
+    if (eventFlags & kFSEventStreamEventFlagRootChanged)        printf("RootChanged\t");
+    if (eventFlags & kFSEventStreamEventFlagMount)              printf("Mount\t");
+    if (eventFlags & kFSEventStreamEventFlagUnmount)            printf("Unmount\t");
+    if (eventFlags & kFSEventStreamEventFlagItemCreated)        printf("ItemCreated\t");
+    if (eventFlags & kFSEventStreamEventFlagItemRemoved)        printf("ItemRemoved\t");
+    if (eventFlags & kFSEventStreamEventFlagItemInodeMetaMod)   printf("ItemInodeMetaMod\t");
+    if (eventFlags & kFSEventStreamEventFlagItemRenamed)        printf("ItemRenamed\t");
+    if (eventFlags & kFSEventStreamEventFlagItemModified)       printf("ItemModified\t");
+    if (eventFlags & kFSEventStreamEventFlagItemFinderInfoMod)  printf("ItemFinderInfoMod\t");
+    if (eventFlags & kFSEventStreamEventFlagItemChangeOwner)    printf("ItemChangeOwner\t");
+    if (eventFlags & kFSEventStreamEventFlagItemXattrMod)       printf("ItemXattrMod\t");
+    if (eventFlags & kFSEventStreamEventFlagItemIsFile)         printf("ItemIsFile\t");
+    if (eventFlags & kFSEventStreamEventFlagItemIsDir)          printf("ItemIsDir\t");
+    if (eventFlags & kFSEventStreamEventFlagItemIsSymlink)      printf("ItemIsSymlink\t");
+    printf("\n");
 }
 
 
@@ -40,15 +70,26 @@ void fsEventsCallback(ConstFSEventStreamRef streamRef,
         NSURL *fileURL = [NSURL fileURLWithPath:path];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         
-        if ((eventFlags[i] & kFSEventStreamEventFlagItemRenamed) && !(eventFlags[i] & kFSEventStreamEventFlagItemInodeMetaMod)) {
+//        if (![fileURL.lastPathComponent hasPrefix:@"."]) {
+//            printf("%s\t", [fileURL.lastPathComponent cStringUsingEncoding:NSUTF8StringEncoding]);
+//            describeFSEvent(eventFlags[i]);
+//        }
+        
+        if ((eventFlags[i] & kFSEventStreamEventFlagItemRenamed) &&
+            (eventFlags[i] & kFSEventStreamEventFlagItemXattrMod) &&
+            !([uploadedFilenames containsObject:path])) {
+            
             if (![fileURL.lastPathComponent hasPrefix:@"."]) {
                 NSMetadataItem *metadata = [[NSMetadataItem alloc] initWithURL:fileURL];
                 if ([fileManager fileExistsAtPath:path]) {
                     BOOL isScreenshot = [[metadata valueForAttribute:@"kMDItemIsScreenCapture"] integerValue] == 1;
                     if (isScreenshot) {
+//                        printf("Uploading %s\n", [fileURL.lastPathComponent cStringUsingEncoding:NSUTF8StringEncoding]);
                         NSData *fileData = [fileManager contentsAtPath:path];
                         ScreenshotWatcher *watcher = (__bridge ScreenshotWatcher*)info;
                         watcher.uploadCallback(fileData, path);
+                        
+                        [uploadedFilenames addObject:path];
                     }
                 }
             }

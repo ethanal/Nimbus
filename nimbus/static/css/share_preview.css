@@ -39,6 +39,10 @@
     margin-bottom: 20px;
 }
 
+#file-download .glyphicon-file {
+    margin-left: 14px;
+}
+
 .navbar-header:after {
     clear: none;
 }

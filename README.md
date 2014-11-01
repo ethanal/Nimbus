@@ -33,7 +33,7 @@ To set up the Django app, perform the following steps on your server (assumes [p
    pip install -r requirements/production.txt
    ```
 
-4. Create a database and grant a user full access to it5.
+4. Create a database and grant a user full access to it.
 5. Follow the instructions in `nimbus/settings/secret.sample.py` to create a secrets file with your MySQL and Amazon S3 credentials
 6. Set up the environment for the Django app by running
 

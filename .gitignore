@@ -84,3 +84,4 @@ DerivedData
 testing_database.db
 secret.py
 collected_static
+newrelic.ini

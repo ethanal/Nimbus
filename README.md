@@ -325,5 +325,4 @@ Delete one or more media items.
 ## Contact
 Ethan Lowman
 - https://github.com/ethanal
-- https://twitter.com/ethanalowman
-- github@ethanlowman.com
+- ethan@ethanlowman.com

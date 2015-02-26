@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
     var api = APIClient()
     var sw: ScreenshotWatcher?
     
-    init() {
+    override init() {
         super.init()
     }
     
@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
         api.addFile(fileData, filename: filename, successCallback: {(shareURL: NSURL!) -> Void in
             var pb = NSPasteboard.generalPasteboard()
             pb.clearContents()
-            pb.writeObjects([shareURL.absoluteString])
+            pb.writeObjects([shareURL.absoluteString!])
             self.statusView.status = .Success
             }, errorCallback: {() -> Void in
                 println("Error uploading file")
@@ -54,7 +54,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
         api.addLink(link, successCallback: {(shareURL: NSURL!) -> Void in
             var pb = NSPasteboard.generalPasteboard()
             pb.clearContents()
-            pb.writeObjects([shareURL.absoluteString])
+            pb.writeObjects([shareURL.absoluteString!])
             self.statusView.status = .Success
             }, errorCallback: {() -> Void in
                 println("Error uploading link")

@@ -116,7 +116,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     
     
-    init() {
+    override init() {
         statusItemRect = NSMakeRect(0, 0, CGFloat(statusItemWidth), CGFloat(statusBarHeight))
         statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(CGFloat(statusItemWidth))
         
@@ -129,6 +129,10 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
         self.registerForDraggedTypes([NSFilenamesPboardType, NSURLPboardType, NSStringPboardType])
         
         updateUI()
+    }
+
+    required convenience init?(coder: NSCoder) {
+        self.init()
     }
 
     override func drawRect(dirtyRect: NSRect) {
@@ -151,7 +155,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
                     .Error: "menubar-error",
                     .Success: "menubar-success",
                 ]
-                self.imageView.image = NSImage(named: imageNames[status])
+                self.imageView.image = NSImage(named: imageNames[status]!)
             } else {
                 self.imageView.image = NSImage(named: "menubar-progress-\(progressFrame)")
             }
@@ -160,21 +164,21 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
         self.needsDisplay = true
     }
     
-    override func mouseDown(theEvent: NSEvent!) {
+    override func mouseDown(theEvent: NSEvent) {
         active = true
         statusItem.popUpStatusItemMenu(statusItemMenu)
     }
     
-    override func mouseUp(theEvent: NSEvent!) {
+    override func mouseUp(theEvent: NSEvent) {
         active = false
     }
     
     func openWebsite(sender: NSStatusItem!) {
-        NSWorkspace.sharedWorkspace().openURL(NSURL(string: "http://account." + prefs.hostname))
+        NSWorkspace.sharedWorkspace().openURL(NSURL(string: "http://account." + prefs.hostname)!)
     }
     
     func openPreferences(sender: NSStatusItem!) {
-        if !preferencesWindowController {
+        if !(preferencesWindowController != nil) {
             preferencesWindowController = PreferencesWindowController(windowNibName: "PreferencesWindowController")
         }
         preferencesWindowController!.showWindow(self)
@@ -190,7 +194,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
         active = false
     }
     
-    override func draggingEntered(sender: NSDraggingInfo!) -> NSDragOperation {
+    override func draggingEntered(sender: NSDraggingInfo) -> NSDragOperation {
         return .Copy
     }
     
@@ -204,13 +208,13 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     // http://openradar.appspot.com/radar?id=1745403
     func handleDrop(sender: NSDraggingInfo!) -> Bool {
         var pboard = sender.draggingPasteboard();
-        var types = (pboard.types as NSArray)
+        var types: NSArray = pboard.types!
         var appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
         var fileManager = NSFileManager.defaultManager()
         
         if types.containsObject(NSFilenamesPboardType) {
-            var fileURL = NSURL.URLFromPasteboard(pboard)
-            var fileData = fileManager.contentsAtPath(fileURL.path)
+            var fileURL = NSURL(fromPasteboard: pboard)!
+            var fileData = fileManager.contentsAtPath(fileURL.path!)
             var fileName = fileURL.lastPathComponent
             
             if (fileData != nil) && (fileName != nil) {
@@ -220,11 +224,11 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
             }
             
         } else if types.containsObject(NSURLPboardType) {
-            var url = NSURL.URLFromPasteboard(pboard)
+            var url = NSURL(fromPasteboard: pboard)!
             appDelegate.uploadLink(url)
             
         } else if types.containsObject(NSStringPboardType) {
-            var text = pboard.stringForType(NSStringPboardType) as NSString
+            var text = pboard.stringForType(NSStringPboardType) as NSString!
             
             var legalChars = NSMutableCharacterSet.alphanumericCharacterSet()
             legalChars.formUnionWithCharacterSet(NSCharacterSet.whitespaceCharacterSet())
@@ -234,8 +238,8 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
             
             var fileData = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
             
-            if (fileData != nil) && (filename != nil) {
-                appDelegate.uploadFile(fileData, filename: filename)
+            if let d = fileData {
+                    appDelegate.uploadFile(d, filename: filename)
             } else {
                 status = .Error
             }

@@ -21,6 +21,8 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var usernameLabel: NSTextField?
     @IBOutlet weak var passwordLabel: NSTextField?
     
+    @IBOutlet var appMenu: NSMenu!
+    
     override func windowDidLoad() {
         super.windowDidLoad()
         updateAccountUI()
@@ -31,15 +33,14 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     }
 
     @IBAction func accountActionButtonPressed(sender: AnyObject) {
-        KeychainManager.loadUsername()
         if !prefs.loggedIn {
             prefs.hostname = hostnameField!.stringValue
             
             api.getTokenForUsername(usernameField!.stringValue, password: passwordField!.stringValue, successCallback: {(token: NSString!) -> Void in
-                self.prefs.loggedIn = true
-                KeychainManager.saveToken(token, username: self.usernameField!.stringValue)
+                    self.prefs.loggedIn = true
+                    KeychainService.saveToken(token)
 
-                self.updateAccountUI()
+                    self.updateAccountUI()
                 }, errorCallback: {() -> Void in
                     var alert = NSAlert()
                     alert.messageText = "Unable to login with provided credentials"
@@ -67,11 +68,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
             
             usernameField!.hidden = true
             usernameLabel!.hidden = false
-            if let u = KeychainManager.loadUsername() {
-                usernameLabel!.stringValue = u
-            } else {
-                usernameLabel!.stringValue = ""
-            }
+            usernameLabel!.stringValue = prefs.username
             
             passwordField!.hidden = true
             passwordLabel!.hidden = true

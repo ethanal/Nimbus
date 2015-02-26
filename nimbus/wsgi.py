@@ -21,7 +21,6 @@ try:
 except ImportError:
     pass
 
-os.environ["HTTPS"] = "on"
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "nimbus.settings")
 
 # This application object is used by any WSGI server configured to use this

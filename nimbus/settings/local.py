@@ -1,4 +1,3 @@
-from fnmatch import fnmatch
 import os
 import logging
 from .base import *
@@ -18,22 +17,6 @@ DATABASES = {
 
 
 INSTALLED_APPS += ("django_extensions",)
-
-
-class glob_list(list):
-    """A list of glob-style strings."""
-
-    def __contains__(self, key):
-        """Check if a string matches a glob in the list."""
-        for elt in self:
-            if fnmatch(key, elt):
-                return True
-        return False
-
-INTERNAL_IPS = glob_list([
-    "127.0.0.1",
-])
-
 
 SHOW_DEBUG_TOOLBAR = os.getenv("SHOW_DEBUG_TOOLBAR", "YES") == "YES"
 
@@ -63,3 +46,4 @@ if SHOW_DEBUG_TOOLBAR:
     ) + MIDDLEWARE_CLASSES
 
     INSTALLED_APPS += ("debug_toolbar",)
+

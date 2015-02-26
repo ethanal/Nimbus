@@ -1,5 +1,6 @@
 import os
 import re
+from fnmatch import fnmatch
 from boto.s3.connection import VHostCallingFormat
 from secret import *
 
@@ -88,6 +89,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
@@ -114,8 +116,9 @@ TEMPLATE_DIRS = (
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
+        "nimbus.utils.SessionAuthentication",
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -155,12 +158,30 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'cache-control'
 )
+CORS_REPLACE_HTTPS_REFERER = True
 
 DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
 AWS_STORAGE_BUCKET_NAME = "files." + HOSTNAME
 AWS_S3_CALLING_FORMAT = VHostCallingFormat()
 AWS_S3_SECURE_URLS = False
 AWS_S3_CUSTOM_DOMAIN = "files." + HOSTNAME
+
+
+class glob_list(list):
+    """A list of glob-style strings."""
+
+    def __contains__(self, key):
+        print(key)
+        """Check if a string matches a glob in the list."""
+        for elt in self:
+            if fnmatch(key, elt):
+                return True
+        return False
+
+INTERNAL_IPS = glob_list([
+    "127.0.0.1"
+])
+
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -190,3 +211,4 @@ LOGGING = {
         },
     }
 }
+

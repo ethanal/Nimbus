@@ -2,9 +2,9 @@ import Cocoa
 import Security
 
 // Identifiers
-let serviceIdentifier = "MySerivice"
+let serviceIdentifier = "Nimbus"
 let userAccount = "authenticatedUser"
-let accessGroup = "MySerivice"
+let accessGroup = "Nimbus"
 
 // Arguments for the keychain queries
 let kSecClassValue = NSString(format: kSecClass)

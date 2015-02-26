@@ -63,7 +63,7 @@ class APIClient: NSObject {
                 return
             }
 
-            var responseJSON = JSON(data: data!)
+            var responseJSON = JSON(data: data)
             
             if let token = responseJSON["token"].string {
                 if (successCallback != nil) {
@@ -110,7 +110,7 @@ class APIClient: NSObject {
                 return
             }
             
-            var responseJSON = JSON(data)
+            var responseJSON = JSON(data: data)
             
             if let shareURL = responseJSON["share_url"].URL {
                 if (successCallback != nil) {
@@ -148,7 +148,7 @@ class APIClient: NSObject {
                 return
             }
             
-            var responseJSON = JSON(data)
+            var responseJSON = JSON(data: data)
             
             
             if let shareURL = responseJSON["share_url"].URL {

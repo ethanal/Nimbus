@@ -14,7 +14,7 @@ class APIClient: NSObject {
     
     var apiRoot: String {
     get {
-        return "http://api." + prefs.hostname
+        return "https://api." + prefs.hostname
     }
     }
     

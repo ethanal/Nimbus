@@ -1,5 +1,7 @@
 import mimetypes
 import uuid
+import string
+import random
 from pygments import highlight
 from pygments.lexers import guess_lexer_for_filename
 from pygments.formatters import HtmlFormatter
@@ -11,7 +13,6 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from rest_framework.authtoken.models import Token
-from .utils import url_hash_from_pk
 
 
 class Media(models.Model):
@@ -130,7 +131,16 @@ def fill_auto_fields(sender, **kwargs):
     if not instance.media_type:
         fields["media_type"] = Media.guess_media_type(instance.name)
     if not instance.url_hash:
-        fields["url_hash"] = url_hash_from_pk(instance.pk)
+        url_hash = None
+        alphabet = string.uppercase + string.lowercase + string.digits
+        length = 5
+        tries = 0
+        while url_hash is None or Media.objects.filter(url_hash=url_hash).exists():
+            url_hash = "".join(random.SystemRandom().choice(alphabet) for _ in range(length))
+            tries += 1
+            if tries % 3 == 0:
+                length += 1
+        fields["url_hash"] = url_hash
 
     if fields:
         for field, value in fields.items():

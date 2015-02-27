@@ -4,24 +4,28 @@
 
         var element = $(this),
             defaults = {
-                bottomSpacing: 10
+                padding: 10
             };
 
         $(element).load(function () {
-            updatePhotoHeight();
+            updatePhotoSize();
 
             $(window).bind('resize', function () {
-                updatePhotoHeight();
+                updatePhotoSize();
             });
         });
 
         options = $.extend(defaults, options);
 
-        function updatePhotoHeight() {
+        function updatePhotoSize() {
             var o = options,
-                photoHeight = $(window).height();
+                windowHeight = $(window).height(),
+                windowWidth = $(window).width();
 
-            $(element).attr('height', Math.min(photoHeight - o.bottomSpacing, element[0].naturalHeight));
+            $(element).attr('height', Math.min(windowHeight - 2 * o.padding, element[0].naturalHeight));
+            if ($(element).attr('width') > (windowWidth - o.padding)) {
+                $(element).attr('width', Math.min(windowWidth - 2 * o.padding, element[0].naturalWidth));
+            }
         }
     };
 

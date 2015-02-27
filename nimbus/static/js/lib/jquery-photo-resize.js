@@ -10,7 +10,7 @@
         $(element).load(function () {
             updatePhotoSize();
 
-            $(window).bind('resize', function () {
+            $(window).bind("resize", function () {
                 updatePhotoSize();
             });
         });
@@ -18,14 +18,10 @@
         options = $.extend(defaults, options);
 
         function updatePhotoSize() {
-            var o = options,
-                windowHeight = $(window).height(),
-                windowWidth = $(window).width();
-
-            $(element).attr('height', Math.min(windowHeight - 2 * o.padding, element[0].naturalHeight));
-            if ($(element).attr('width') > (windowWidth - o.padding)) {
-                $(element).attr('width', Math.min(windowWidth - 2 * o.padding, element[0].naturalWidth));
-            }
+            var verticalShrink = $(window).height() - 2 * options.padding,
+                horizontalShrink = ($(window).width() - 2 * options.padding) * $(element).height() / $(element).width(),
+                noShrink = element[0].naturalHeight;
+            $(element).attr("height", Math.min(verticalShrink, horizontalShrink, noShrink));
         }
     };
 

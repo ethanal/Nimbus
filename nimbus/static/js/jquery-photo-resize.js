@@ -18,7 +18,7 @@
         options = $.extend(defaults, options);
 
         function updatePhotoSize() {
-            var verticalShrink = $(window).height() - 2 * options.padding,
+            var verticalShrink = $(window).height() - 52 - 2 * options.padding,
                 horizontalShrink = ($(window).width() - 2 * options.padding) * $(element).height() / $(element).width(),
                 noShrink = element[0].naturalHeight;
             $(element).attr("height", Math.min(verticalShrink, horizontalShrink, noShrink));

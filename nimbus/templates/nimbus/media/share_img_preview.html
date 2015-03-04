@@ -3,7 +3,7 @@
 
 {% block js %}
     {{ block.super }}
-    <script src="{% static 'js/lib/jquery-photo-resize.js' %}"></script>
+    <script src="{% static 'js/jquery-photo-resize.js' %}"></script>
     <script type="text/javascript">
         $(function() {
             $(".wrapper img").photoResize({
@@ -15,6 +15,6 @@
 
 {% block media_preview %}
     <div id="img-preview" class="wrapper">
-        <img src="{{ media_item.raw_url }}" alt="{{ media_item.name }}"/>
+        <img src="{{ media_item.raw_ssl_url }}" alt="{{ media_item.name }}"/>
     </div>
 {% endblock %}

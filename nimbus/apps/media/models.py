@@ -12,6 +12,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
+from django.utils.encoding import filepath_to_uri
 from rest_framework.authtoken.models import Token
 
 
@@ -86,6 +87,12 @@ class Media(models.Model):
     @property
     def raw_url(self):
         return self.target_file.storage.url(self.target_file.name)
+
+    @property
+    def raw_ssl_url(self):
+        storage = self.target_file.storage
+        name = storage._normalize_name(storage._clean_name(self.target_file.name))
+        return "https://s3.amazonaws.com/{}/{}".format(storage.bucket_name, filepath_to_uri(name))
 
     @staticmethod
     def guess_media_type(resource_name):

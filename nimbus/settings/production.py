@@ -24,3 +24,11 @@ SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 DEFAULT_URL_SCHEME = "https"
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+try:
+    RAVEN_CONFIG
+    INSTALLED_APPS += (
+        'raven.contrib.django.raven_compat',
+    )
+except NameError:
+    pass

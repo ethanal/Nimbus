@@ -125,6 +125,7 @@ REST_FRAMEWORK = {
     ),
 }
 
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',

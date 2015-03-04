@@ -53,16 +53,14 @@ class APIClient: NSObject {
         
         req.HTTPBody = requestJSON.rawString()!.dataUsingEncoding(NSUTF8StringEncoding)
         NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-            var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
-            
             if (error != nil) {
-                print(responseString)
                 if (errorCallback != nil) {
                     errorCallback!()
                 }
                 return
             }
-
+            
+            var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
             var responseJSON = JSON(data: data)
             
             if let token = responseJSON["token"].string {
@@ -101,15 +99,14 @@ class APIClient: NSObject {
         req.HTTPBody = postData
         
         NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-            var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
             if (error != nil) {
-                println(responseString)
                 if (errorCallback != nil) {
                     errorCallback!()
                 }
                 return
             }
             
+            var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
             var responseJSON = JSON(data: data)
             
             if let shareURL = responseJSON["share_url"].URL {
@@ -138,18 +135,15 @@ class APIClient: NSObject {
         
         req.HTTPBody = requestJSON.rawString()!.dataUsingEncoding(NSUTF8StringEncoding)
         NSURLConnection.sendAsynchronousRequest(req, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-            var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
-            
             if (error != nil) {
-                println(responseString)
                 if (errorCallback != nil) {
                     errorCallback!()
                 }
                 return
             }
             
+            var responseString = NSString(data: data, encoding: NSUTF8StringEncoding)
             var responseJSON = JSON(data: data)
-            
             
             if let shareURL = responseJSON["share_url"].URL {
                 if (successCallback != nil) {

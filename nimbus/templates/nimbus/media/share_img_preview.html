@@ -15,6 +15,6 @@
 
 {% block media_preview %}
     <div id="img-preview" class="wrapper">
-        <img src="{{ media_item.raw_ssl_url }}" alt="{{ media_item.name }}"/>
+        <img src="{% firstof media_item.raw_ssl_url media_item.raw_url %}" alt="{{ media_item.name }}"/>
     </div>
 {% endblock %}

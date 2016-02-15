@@ -161,17 +161,11 @@ CORS_ALLOW_HEADERS = (
 )
 CORS_REPLACE_HTTPS_REFERER = True
 
-FS_STORAGE = (os.getenv("FS_STORAGE", "FALSE") == "TRUE")
-if FS_STORAGE:
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-    MEDIA_ROOT = os.path.join(PROJECT_ROOT, "uploaded_media")
-    MEDIA_URL = "files." + HOSTNAME
-else:
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
-    AWS_STORAGE_BUCKET_NAME = "files." + HOSTNAME
-    AWS_S3_CALLING_FORMAT = VHostCallingFormat()
-    AWS_S3_SECURE_URLS = False
-    AWS_S3_CUSTOM_DOMAIN = "files." + HOSTNAME
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto.S3BotoStorage"
+AWS_STORAGE_BUCKET_NAME = "files." + HOSTNAME
+AWS_S3_CALLING_FORMAT = VHostCallingFormat()
+AWS_S3_SECURE_URLS = False
+AWS_S3_CUSTOM_DOMAIN = "files." + HOSTNAME
 
 
 class glob_list(list):

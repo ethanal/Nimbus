@@ -9,7 +9,7 @@ Nimbus consists of several components:
 * An API to manipulate shared items
 * A Mac OS X menubar app to upload files and shorten links
 
-The menubar app is only compatible with OS X 10.9 and up since it is written in [Swift](https://developer.apple.com/swift/). Amazon S3 is the recommended and default file storage method, but Nimbus can be easily configured to store files on your own server.
+The menubar app is only compatible with OS X 10.9 and up since it is written in [Swift](https://developer.apple.com/swift/). The files are stored in Amazon S3, so you must have an AWS account.
 
 ##Features
 
@@ -34,7 +34,7 @@ To set up the Django app, perform the following steps on your server (assumes [p
    ```
 
 4. Create a database and grant a user full access to it.
-5. Follow the instructions in `nimbus/settings/secret.sample.py` to create a secrets file with your MySQL and Amazon S3 credentials (if you are using S3).
+5. Follow the instructions in `nimbus/settings/secret.sample.py` to create a secrets file with your MySQL and Amazon S3 credentials
 6. Set up the environment for the Django app by running
 
    ```bash
@@ -63,19 +63,10 @@ Make sure you have a domain name configured with the following records:
 @       IN A  <IP address of your server>
 api     CNAME @
 account CNAME @
-```
-
-If you are using S3, make sure you have an Amazon S3 bucket called `files.<your domain name>` and the following DNS record:
-
-```
 files   CNAME files.<your domain name>.s3.amazonaws.com.
 ```
 
-If you are not using S3, use the following DNS record instead:
-
-```
-files   CNAME  @
-```
+Also make sure you have an Amazon S3 bucket called `files.<your domain name>`
 
 The recommended setup for serving Nimbus is [Gunicorn](http://gunicorn.org/) managed by [Supervisor](http://supervisord.org/) with [nginx](http://nginx.org/) as a reverse proxy. Configuration requirements are as follows.
 
@@ -91,15 +82,12 @@ The recommended setup for serving Nimbus is [Gunicorn](http://gunicorn.org/) man
 directory = /usr/local/www/Nimbus
 user = nobody
 command = /usr/local/virtualenvs/Nimbus/bin/gunicorn nimbus.wsgi:application --user=nobody --workers=1 --bind=127.0.0.1:8080
-environment = PRODUCTION=TRUE, FS_STORAGE=FALSE
+environment = PRODUCTION=TRUE
 stdout_logfile = /var/log/sites/nimbus.gunicorn.log
 stderr_logfile = /var/log/sites/nimbus.gunicorn.log
 autostart = true
 autorestart = true
 ```
-
-If you are not using S3, set the `FS_STORAGE` variable to `TRUE`.
-
 
 ####Example Nginx Configuration
 ```nginx
@@ -140,8 +128,6 @@ server {
     }
 }
 ```
-
-If you are not using S3, include another `server` directive for the `files` subdomain with an alias to your Django media directory for the `/` location.
 
 ##API Reference
 

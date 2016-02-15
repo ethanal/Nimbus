@@ -22,7 +22,7 @@ class APIClient: NSObject {
     
     override init() {
         if let token = KeychainService.loadToken() {
-            authToken = token
+            authToken = token as String
         } else {
             authToken = ""
         }
@@ -32,7 +32,7 @@ class APIClient: NSObject {
     
     
     func request(uri: NSString, withAuth: Bool) -> NSMutableURLRequest {
-        let r = NSMutableURLRequest(URL: NSURL(string: apiRoot + uri)!)
+        let r = NSMutableURLRequest(URL: NSURL(string: apiRoot + (uri as String))!)
         if withAuth {
             r.setValue("Token \(authToken)", forHTTPHeaderField: "Authorization")
         }

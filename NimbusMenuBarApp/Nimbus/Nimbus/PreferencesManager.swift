@@ -13,7 +13,7 @@ class PreferencesManager: NSObject {
     
     var hostname: String {
         get {
-            if let val = prefs.stringForKey("hostname") as NSString! {
+            if let val = prefs.stringForKey("hostname") as String! {
                 return val
             }
             return "example.com"

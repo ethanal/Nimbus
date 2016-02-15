@@ -209,7 +209,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     func handleDrop(sender: NSDraggingInfo!) -> Bool {
         var pboard = sender.draggingPasteboard();
         var types: NSArray = pboard.types!
-        var appDelegate = NSApplication.sharedApplication().delegate as AppDelegate
+        var appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
         var fileManager = NSFileManager.defaultManager()
         
         if types.containsObject(NSFilenamesPboardType) {

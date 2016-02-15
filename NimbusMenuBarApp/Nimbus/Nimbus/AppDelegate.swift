@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
         super.init()
     }
     
-    func applicationDidFinishLaunching(aNotification: NSNotification?) {
+    func applicationDidFinishLaunching(aNotification: NSNotification) {
         sw = ScreenshotWatcher(uploadFileCallback: uploadFile);
         sw!.startWatchingPath(screenCaptureLocation())
     }
@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
     func screenCaptureLocation() -> String {
         var screenCapturePrefs: NSDictionary? = NSUserDefaults.standardUserDefaults().persistentDomainForName("com.apple.screencapture")
         
-        var location: NSString? = screenCapturePrefs?.valueForKey("location")?.stringByExpandingTildeInPath as NSString?
+        var location: String? = screenCapturePrefs?.valueForKey("location")?.stringByExpandingTildeInPath as String?
         
         if let loc = location {
             return loc.hasSuffix("/") ? loc : (loc + "/")
@@ -37,6 +37,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
     }
     
     func uploadFile(fileData: NSData!, filename: String!) {
+        print(filename);
+//        NSMetadataItem *metadata = NSMetadataItem(URL: filename)
+//        BOOL isScreenshot = [[metadata valueForAttribute:@"kMDItemIsScreenCapture"] integerValue] == 1;
         statusView.status = .Working
         api.addFile(fileData, filename: filename, successCallback: {(shareURL: NSURL!) -> Void in
             var pb = NSPasteboard.generalPasteboard()

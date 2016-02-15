@@ -41,7 +41,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
         default:
             progressFrame = 0
             
-            var statusAtDispatch = status
+            let statusAtDispatch = status
             delay(2.0) {
                 if statusAtDispatch == self.status {
                     self.status = .Normal
@@ -116,7 +116,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     
     
     
-    override init() {
+    init() {
         statusItemRect = NSMakeRect(0, 0, CGFloat(statusItemWidth), CGFloat(statusBarHeight))
         statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(CGFloat(statusItemWidth))
         
@@ -190,7 +190,7 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     }
     
     // NSMenuDelegate
-    func menuDidClose(menu: NSMenu!) {
+    func menuDidClose(menu: NSMenu) {
         active = false
     }
     
@@ -207,15 +207,15 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
     // Manually called instead of performDragOperation
     // http://openradar.appspot.com/radar?id=1745403
     func handleDrop(sender: NSDraggingInfo!) -> Bool {
-        var pboard = sender.draggingPasteboard();
-        var types: NSArray = pboard.types!
-        var appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
-        var fileManager = NSFileManager.defaultManager()
+        let pboard = sender.draggingPasteboard();
+        let types: NSArray = pboard.types!
+        let appDelegate = NSApplication.sharedApplication().delegate as! AppDelegate
+        let fileManager = NSFileManager.defaultManager()
         
         if types.containsObject(NSFilenamesPboardType) {
-            var fileURL = NSURL(fromPasteboard: pboard)!
-            var fileData = fileManager.contentsAtPath(fileURL.path!)
-            var fileName = fileURL.lastPathComponent
+            let fileURL = NSURL(fromPasteboard: pboard)!
+            let fileData = fileManager.contentsAtPath(fileURL.path!)
+            let fileName = fileURL.lastPathComponent
             
             if (fileData != nil) && (fileName != nil) {
                 appDelegate.uploadFile(fileData!, filename: fileName!)
@@ -224,22 +224,22 @@ class StatusItemView: NSView, NSMenuDelegate, NSWindowDelegate {
             }
             
         } else if types.containsObject(NSURLPboardType) {
-            var url = NSURL(fromPasteboard: pboard)!
+            let url = NSURL(fromPasteboard: pboard)!
             appDelegate.uploadLink(url)
             
         } else if types.containsObject(NSStringPboardType) {
-            var text = pboard.stringForType(NSStringPboardType) as NSString!
+            let text = pboard.stringForType(NSStringPboardType) as NSString!
             
-            var legalChars = NSMutableCharacterSet.alphanumericCharacterSet()
+            let legalChars = NSMutableCharacterSet.alphanumericCharacterSet()
             legalChars.formUnionWithCharacterSet(NSCharacterSet.whitespaceCharacterSet())
             legalChars.invert()
             var filename = (text.componentsSeparatedByCharactersInSet(legalChars) as NSArray).componentsJoinedByString("") as NSString
             filename = filename.substringToIndex(30 > text.length ? text.length : 30) + ".txt"
             
-            var fileData = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+            let fileData = text.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
             
             if let d = fileData {
-                    appDelegate.uploadFile(d, filename: filename)
+                    appDelegate.uploadFile(d, filename: filename as String)
             } else {
                 status = .Error
             }

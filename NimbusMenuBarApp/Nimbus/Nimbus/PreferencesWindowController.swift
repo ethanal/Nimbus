@@ -42,7 +42,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
 
                     self.updateAccountUI()
                 }, errorCallback: {() -> Void in
-                    var alert = NSAlert()
+                    let alert = NSAlert()
                     alert.messageText = "Unable to login with provided credentials"
                     alert.runModal()
                 })

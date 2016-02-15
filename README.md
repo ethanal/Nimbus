@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="graphics_assets/exports/login_logo.png" alt="Nimbus Logo">
+  <img src="https://raw.githubusercontent.com/ethanal/Nimbus/master/graphics_assets/exports/login_logo.png" alt="Nimbus Logo">
   <br>
   Nimbus
 </h1>
@@ -18,12 +18,12 @@ The menubar app is only compatible with OS X 10.9 and up since it is written in 
 ##Screenshots
 <table>
   <tr>
-    <td><img src="graphics_assets/docs/screenshot_management.png" alt="Screenshot"></td>
-    <td><img src="graphics_assets/docs/screenshot_img_preview.png" alt="Screenshot"></td>
+    <td><img src="https://raw.githubusercontent.com/ethanal/Nimbus/master/graphics_assets/docs/screenshot_management.png" alt="Screenshot"></td>
+    <td><img src="https://raw.githubusercontent.com/ethanal/Nimbus/master/graphics_assets/docs/screenshot_img_preview.png" alt="Screenshot"></td>
   </tr>
   <tr>
-    <td><img src="graphics_assets/docs/screenshot_code_preview.png" alt="Screenshot"></td>
-    <td><img src="graphics_assets/docs/screenshot_upload.png" alt="Screenshot"></td>
+    <td><img src="https://raw.githubusercontent.com/ethanal/Nimbus/master/graphics_assets/docs/screenshot_code_preview.png" alt="Screenshot"></td>
+    <td><img src="https://raw.githubusercontent.com/ethanal/Nimbus/master/graphics_assets/docs/screenshot_upload.png" alt="Screenshot"></td>
   </tr>
 </table>
 

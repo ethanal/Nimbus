@@ -35,6 +35,7 @@ class PreferencesWindowController: NSWindowController, NSWindowDelegate {
     @IBAction func accountActionButtonPressed(sender: AnyObject) {
         if !prefs.loggedIn {
             prefs.hostname = hostnameField!.stringValue
+            prefs.username = usernameField!.stringValue
             
             api.getTokenForUsername(usernameField!.stringValue, password: passwordField!.stringValue, successCallback: {(token: NSString!) -> Void in
                     self.prefs.loggedIn = true

@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMetadataQueryDelegate {
     }
     
     func uploadFile(fileData: NSData!, filename: String!) {
-        print(filename, terminator: "");
+        print(filename);
 //        NSMetadataItem *metadata = NSMetadataItem(URL: filename)
 //        BOOL isScreenshot = [[metadata valueForAttribute:@"kMDItemIsScreenCapture"] integerValue] == 1;
         statusView.status = .Working

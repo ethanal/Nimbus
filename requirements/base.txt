@@ -2,7 +2,7 @@ Django==1.6.5
 Markdown==2.4.1
 Pygments==1.6
 boto==2.31.1
--e git+https://github.com/ottoyiu/django-cors-headers.git
+-e git+https://github.com/ottoyiu/django-cors-headers.git#egg=Package
 django-storages==1.1.8
 django-subdomains==2.0.4
 django-widget-tweaks==1.3

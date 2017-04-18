@@ -15,7 +15,7 @@ Nimbus consists of several components:
 
 The menubar app is only compatible with OS X 10.9 and up since it is written in [Swift](https://developer.apple.com/swift/). The files are stored in Amazon S3, so you must have an AWS account.
 
-##Screenshots
+## Screenshots
 <table>
   <tr>
     <td><img src="https://raw.githubusercontent.com/ethanal/Nimbus/master/graphics_assets/docs/screenshot_management.png" alt="Screenshot"></td>
@@ -27,7 +27,7 @@ The menubar app is only compatible with OS X 10.9 and up since it is written in 
   </tr>
 </table>
 
-##Features
+## Features
 
 - Share pages that show file previews or redirect to the shortened link
   - Image file previews
@@ -37,7 +37,7 @@ The menubar app is only compatible with OS X 10.9 and up since it is written in 
 - Drag a URL to the menubar icon to create a shortened link and copy it to the clipboard
 - Keep track of view counts for files and shortened URLS
 
-##Setup
+## Setup
 
 To set up the Django app, perform the following steps on your server (assumes [pip](http://pip.readthedocs.org/en/latest/), [virtualenv](http://virtualenv.readthedocs.org/en/latest/), and [MySQL](http://www.mysql.com/) are already installed)
 
@@ -71,7 +71,7 @@ To set up the Django app, perform the following steps on your server (assumes [p
    yes yes | ./manage.py collectstatic
    ```
 
-###Serving Nimbus
+### Serving Nimbus
 
 Make sure you have a domain name configured with the following records:
 
@@ -91,7 +91,7 @@ The recommended setup for serving Nimbus is [Gunicorn](http://gunicorn.org/) man
 * Static file requests (`/static/`) should be aliased to `nimbus/collected_static` in the repository root
 * Supervisor must call the version of gunicorn in your virtualenv
 
-####Example Supervisor Configuration
+#### Example Supervisor Configuration
 
 ```ini
 [program:nimbus]
@@ -105,7 +105,7 @@ autostart = true
 autorestart = true
 ```
 
-####Example Nginx Configuration
+#### Example Nginx Configuration
 ```nginx
 server {
     listen 80;
@@ -145,7 +145,7 @@ server {
 }
 ```
 
-##API Reference
+## API Reference
 API documentation can be found [here](api_docs.md).
 
 ## Contact

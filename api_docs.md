@@ -1,4 +1,4 @@
-#API Reference
+# API Reference
 
 The Nimbus API uses token authentication, so it is recommended that you secure the `account` and `api` subdomains with HTTPS. The `Authorization` header for requests that require it should have the following form:
 
@@ -10,10 +10,10 @@ The term "media item" refers to a file or a shortened link.
 
 ***
 
-##Obtain Authorization Token
+## Obtain Authorization Token
 Obtain the API authorization token corresponding to a username/password pair.
 
-###Request
+### Request
 - Requires: Authentication
 - HTTP Request Method: `POST`
 - URL: `/api-token-auth`
@@ -21,7 +21,7 @@ Obtain the API authorization token corresponding to a username/password pair.
   - `username`: The username for the user whose token should be returned
   - `password`: The password for the user whose token should be returned
 
-###Response
+### Response
 - Status: 200 OK
 - Body:
 
@@ -31,7 +31,7 @@ Obtain the API authorization token corresponding to a username/password pair.
   }
   ```
 
-###Errors
+### Errors
 
 If the provided credentials are not valid, the following response is returned:
 
@@ -48,7 +48,7 @@ If the provided credentials are not valid, the following response is returned:
 
 ***
 
-##List Media Items
+## List Media Items
 List all media items created by the authorized user.
 
 All media items are serialized the same way. Links and files can be differentiated using the `media_type` attribute.
@@ -63,14 +63,14 @@ Valid media type codes are as follows:
 - `VID`: Video files
 - `ETC`: Other files
 
-###Request
+### Request
 - Requires: Authentication
 - HTTP Request Method: `GET`
 - URL: `/media/list`
 - Optional URL Parameters:
   - `media_type`: The media type code used to filter the list (e.g. `GET /media/list?media_type=IMG` will list all images)
 
-###Response
+### Response
 - Status: 200 OK
 - Body:
 
@@ -103,17 +103,17 @@ Valid media type codes are as follows:
 
 ***
 
-##Show Media Item Details
+## Show Media Item Details
 Show details for a media item.
 
-###Request
+### Request
 - Requires: Authentication
 - HTTP Request Method: `GET`
 - URL: `/media/show`
 - URL Parameters:
   - `url_hash`: The media type code used to filter the list (e.g. `GET /media/list?media_type=IMG` will list all images)
 
-###Response
+### Response
 - Status: 200 OK
 - Body:
 
@@ -133,17 +133,17 @@ Show details for a media item.
 
 ***
 
-##Upload File
+## Upload File
 Create a media item for a file.
 
-###Request
+### Request
 - Requires: Authentication
 - HTTP Request Method: `POST`
 - URL: `/media/add_file`
 - Parameters
   - `file`: The file to upload.
 
-###Response
+### Response
 - Status: 201 Created
 - Body:
 
@@ -161,17 +161,17 @@ Create a media item for a file.
 
 ***
 
-##Add Link
+## Add Link
 Create a media item for a URL.
 
-###Request
+### Request
 - Requires: Authentication
 - HTTP Request Method: `POST`
 - URL: `/media/add_link`
 - Parameters
   - `target_url`: The URL to shorten.
 
-###Response
+### Response
 - Status: 201 Created
 - Body:
 
@@ -186,17 +186,17 @@ Create a media item for a URL.
 
 ***
 
-##Delete Media Items
+## Delete Media Items
 Delete one or more media items.
 
-###Request
+### Request
 - Requires: Authentication
 - HTTP Request Method: `DELETE`
 - URL: `/media/delete`
 - URL Parameters
   - `url_hash`: The URL hash of the media item that should be deleted. This parameter can be repeated to delete multiple items.
 
-###Response
+### Response
 - Status: 204 No Content
 
 ***
